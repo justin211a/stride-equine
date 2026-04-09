@@ -92,10 +92,14 @@ footer a{color:var(--gold);text-decoration:none;}
 <body>
 
 <nav class="prod-nav">
-  <div class="logo">STRIDE</div>
+  <a href="/" class="logo" style="text-decoration:none;">STRIDE</a>
   <a href="#daily" class="active" onclick="document.querySelectorAll('.prod-nav a:not(.logo)').forEach(a=>a.classList.remove('active'));this.classList.add('active');">DAILY</a>
   <a href="#flex" onclick="document.querySelectorAll('.prod-nav a:not(.logo)').forEach(a=>a.classList.remove('active'));this.classList.add('active');">FLEX</a>
   <a href="#electro" onclick="document.querySelectorAll('.prod-nav a:not(.logo)').forEach(a=>a.classList.remove('active'));this.classList.add('active');">ELECTRO</a>
+  <span style="flex:1;"></span>
+  <a href="/visual/" style="color:#555;">사이언스</a>
+  <a href="/coach/" style="color:#555;">코치</a>
+  <a href="/oem/" style="color:#555;">파트너십</a>
 </nav>
 
 <!-- ==================== DAILY ==================== -->
