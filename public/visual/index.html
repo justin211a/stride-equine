@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIDE — Equine Science Visual</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@200;300;400&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#050507;color:#ccc;font-family:'Outfit',sans-serif;overflow-x:hidden;overflow-y:auto;}
+::selection{background:#C6A55C;color:#050507;}
+
+.visual-hero{position:relative;width:100%;height:100vh;min-height:700px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+canvas{position:absolute;inset:0;width:100%;height:100%;}
+
+/* Overlay UI */
+.overlay{position:absolute;inset:0;z-index:10;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between;padding:40px;}
+.top-bar{display:flex;justify-content:space-between;align-items:flex-start;}
+.logo{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;letter-spacing:10px;color:rgba(255,255,255,0.9);}
+.label-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:4px;color:rgba(198,165,92,0.5);text-align:right;}
+
+.center-content{text-align:center;opacity:0;animation:fadeUp 1.5s 1s forwards;}
+.center-content h1{font-family:'Cormorant Garamond',serif;font-size:clamp(48px,8vw,90px);font-weight:300;letter-spacing:.12em;color:rgba(255,255,255,0.95);line-height:1;}
+.center-content .tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(14px,2vw,20px);font-weight:300;font-style:italic;color:rgba(198,165,92,0.6);margin-top:16px;letter-spacing:2px;}
+
+.bottom-bar{display:flex;justify-content:space-between;align-items:flex-end;}
+.system-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(198,165,92,0.7);pointer-events:auto;cursor:pointer;transition:color .3s;}
+.system-label:hover{color:rgba(198,165,92,1);}
+.system-label.active{color:#C6A55C;text-decoration:underline;text-underline-offset:4px;}
+.systems{display:flex;gap:24px;}
+.scroll-hint{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:4px;color:rgba(255,255,255,0.15);}
+
+/* Info panels - float around the horse */
+.info-panel{position:absolute;z-index:15;pointer-events:none;opacity:0;transition:opacity .8s,transform .8s;transform:translateY(10px);}
+.info-panel.show{opacity:1;transform:translateY(0);}
+.info-panel .ip-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:3px;color:#C6A55C;margin-bottom:4px;}
+.info-panel .ip-value{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:300;color:rgba(255,255,255,0.9);}
+.info-panel .ip-desc{font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px;max-width:180px;line-height:1.5;}
+.ip-line{width:40px;height:1px;background:linear-gradient(90deg,#C6A55C,transparent);margin:6px 0;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:.8}}
+</style>
+</head>
+<body>
+
+<div class="visual-hero">
+  <canvas id="c"></canvas>
+  
+  <div class="overlay">
+    <div class="top-bar">
+      <div class="logo">STRIDE</div>
+      <div class="label-tag">EQUINE NUTRITION<br>BY SCIENCE</div>
+    </div>
+    <div class="center-content">
+      <h1>STRIDE</h1>
+      <div class="tagline">Every stride begins with the right nutrition.</div>
+    </div>
+    <div class="bottom-bar">
+      <div class="systems">
+        <div class="system-label active" onclick="setSystem('skeletal')">SKELETAL</div>
+        <div class="system-label" onclick="setSystem('muscular')">MUSCULAR</div>
+        <div class="system-label" onclick="setSystem('vascular')">VASCULAR</div>
+        <div class="system-label" onclick="setSystem('nutrition')">NUTRITION</div>
+      </div>
+      <div class="scroll-hint">INTERACTIVE</div>
+    </div>
+  </div>
+
+  <!-- Floating info panels -->
+  <div class="info-panel show" id="panel1" style="top:25%;left:8%;">
+    <div class="ip-label">JOINT SUPPORT</div>
+    <div class="ip-value">Boswellia 10,000mg</div>
+    <div class="ip-line"></div>
+    <div class="ip-desc">MSM + 글루코사민과 시너지 작용하여 관절 연골을 보호합니다</div>
+  </div>
+  <div class="info-panel" id="panel2" style="top:20%;right:8%;">
+    <div class="ip-label">MUSCLE RECOVERY</div>
+    <div class="ip-value">Vitamin E 3,000IU</div>
+    <div class="ip-line"></div>
+    <div class="ip-desc">천연 d-alpha-tocopherol이 운동 유발 산화 스트레스로부터 근육을 보호</div>
+  </div>
+  <div class="info-panel" id="panel3" style="bottom:30%;left:6%;">
+    <div class="ip-label">BONE DENSITY</div>
+    <div class="ip-value">Ca:P = 1.5:1</div>
+    <div class="ip-line"></div>
+    <div class="ip-desc">NRC 기준 최적 칼슘:인 비율로 골밀도를 유지합니다</div>
+  </div>
+  <div class="info-panel" id="panel4" style="bottom:25%;right:6%;">
+    <div class="ip-label">ELECTROLYTE BALANCE</div>
+    <div class="ip-value">Na:K:Cl = 3:1:5</div>
+    <div class="ip-line"></div>
+    <div class="ip-desc">말의 땀 조성에 맞춘 과학적 전해질 비율 설계</div>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H, cx, cy, t = 0, currentSystem = 'skeletal';
+const dpr = window.devicePixelRatio || 1;
+
+function resize() {
+  W = canvas.clientWidth; H = canvas.clientHeight;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  cx = W / 2; cy = H / 2;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// Horse body points (normalized -1 to 1, will be scaled)
+const horseScale = Math.min(W, H) * 0.3;
+
+function getHorsePoints(phase) {
+  const s = Math.min(W, H) * 0.28;
+  const ox = cx, oy = cy + 20;
+  const gallop = Math.sin(phase * 2) * 8;
+  const breathe = Math.sin(phase * 0.5) * 3;
+  
+  return {
+    // Main body outline
+    body: [
+      {x: ox - s*0.6, y: oy - s*0.1 + gallop},     // tail base
+      {x: ox - s*0.45, y: oy - s*0.3 + breathe},     // back hip
+      {x: ox - s*0.2, y: oy - s*0.38 + breathe},     // back
+      {x: ox + s*0.05, y: oy - s*0.42 + breathe},    // withers
+      {x: ox + s*0.25, y: oy - s*0.5},                // neck base
+      {x: ox + s*0.4, y: oy - s*0.7},                 // neck mid
+      {x: ox + s*0.5, y: oy - s*0.8},                 // poll
+      {x: ox + s*0.58, y: oy - s*0.78},               // forehead
+      {x: ox + s*0.62, y: oy - s*0.72},               // nose bridge
+      {x: ox + s*0.6, y: oy - s*0.65},                // muzzle
+      {x: ox + s*0.55, y: oy - s*0.68},               // jaw
+      {x: ox + s*0.42, y: oy - s*0.58},               // throat
+      {x: ox + s*0.3, y: oy - s*0.4},                 // chest top
+      {x: ox + s*0.25, y: oy - s*0.15},               // chest
+      {x: ox + s*0.15, y: oy + s*0.05},               // belly front
+      {x: ox - s*0.15, y: oy + s*0.08 - breathe},     // belly mid
+      {x: ox - s*0.4, y: oy + s*0.05},                // belly back
+      {x: ox - s*0.55, y: oy - s*0.05 + gallop},      // hip bottom
+    ],
+    // Leg positions (4 legs with animation)
+    legs: [
+      // Front left
+      [{x: ox + s*0.2, y: oy + s*0.05}, {x: ox + s*0.22 + Math.sin(phase)*12, y: oy + s*0.3}, {x: ox + s*0.18 + Math.sin(phase)*18, y: oy + s*0.5}],
+      // Front right  
+      [{x: ox + s*0.15, y: oy + s*0.05}, {x: ox + s*0.12 - Math.sin(phase)*10, y: oy + s*0.3}, {x: ox + s*0.15 - Math.sin(phase)*15, y: oy + s*0.5}],
+      // Back left
+      [{x: ox - s*0.4, y: oy + s*0.05}, {x: ox - s*0.38 - Math.sin(phase+1)*12, y: oy + s*0.3}, {x: ox - s*0.42 - Math.sin(phase+1)*18, y: oy + s*0.5}],
+      // Back right
+      [{x: ox - s*0.45, y: oy + s*0.05}, {x: ox - s*0.48 + Math.sin(phase+1)*10, y: oy + s*0.3}, {x: ox - s*0.45 + Math.sin(phase+1)*15, y: oy + s*0.5}],
+    ],
+    // Joint positions
+    joints: [
+      {x: ox + s*0.22, y: oy + s*0.3, label: 'Fetlock'},
+      {x: ox - s*0.38, y: oy + s*0.3, label: 'Hock'},
+      {x: ox + s*0.05, y: oy - s*0.42, label: 'Withers'},
+      {x: ox - s*0.2, y: oy - s*0.38, label: 'Lumbar'},
+      {x: ox + s*0.3, y: oy - s*0.4, label: 'Shoulder'},
+    ],
+    // Spine
+    spine: [
+      {x: ox - s*0.5, y: oy - s*0.2},
+      {x: ox - s*0.3, y: oy - s*0.35},
+      {x: ox - s*0.1, y: oy - s*0.4},
+      {x: ox + s*0.1, y: oy - s*0.42},
+      {x: ox + s*0.25, y: oy - s*0.45},
+      {x: ox + s*0.4, y: oy - s*0.65},
+      {x: ox + s*0.5, y: oy - s*0.78},
+    ],
+    ox, oy, s
+  };
+}
+
+// Particles
+class Particle {
+  constructor(type) {
+    this.type = type;
+    this.reset();
+  }
+  reset() {
+    const hp = getHorsePoints(t);
+    if (this.type === 'nutrient') {
+      this.x = hp.ox + (Math.random() - 0.5) * hp.s * 1.2;
+      this.y = hp.oy + (Math.random() - 0.5) * hp.s * 0.8;
+      this.vx = (Math.random() - 0.5) * 0.3;
+      this.vy = (Math.random() - 0.5) * 0.3;
+      this.size = Math.random() * 2 + 0.5;
+      this.life = Math.random() * 200 + 100;
+      this.maxLife = this.life;
+      this.color = Math.random() > 0.5 ? '#C6A55C' : '#4ECDC4';
+    } else {
+      // Ambient particles
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.vx = (Math.random() - 0.5) * 0.15;
+      this.vy = (Math.random() - 0.5) * 0.15;
+      this.size = Math.random() * 1.5 + 0.3;
+      this.life = Math.random() * 300 + 200;
+      this.maxLife = this.life;
+      this.color = '#ffffff';
+    }
+  }
+  update() {
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life--;
+    if (this.life <= 0) this.reset();
+  }
+  draw() {
+    const alpha = (this.life / this.maxLife) * 0.4;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = this.color + Math.floor(alpha * 255).toString(16).padStart(2, '0');
+    ctx.fill();
+  }
+}
+
+const nutrients = Array.from({length: 60}, () => new Particle('nutrient'));
+const ambient = Array.from({length: 40}, () => new Particle('ambient'));
+
+// Blood flow particles along spine
+class BloodParticle {
+  constructor() { this.reset(); }
+  reset() {
+    this.progress = Math.random();
+    this.speed = 0.001 + Math.random() * 0.002;
+    this.offset = (Math.random() - 0.5) * 8;
+    this.size = Math.random() * 2 + 1;
+  }
+  update() {
+    this.progress += this.speed;
+    if (this.progress > 1) this.reset();
+  }
+  draw(points) {
+    const idx = this.progress * (points.length - 1);
+    const i = Math.floor(idx);
+    const f = idx - i;
+    if (i >= points.length - 1) return;
+    const x = points[i].x + (points[i+1].x - points[i].x) * f + this.offset;
+    const y = points[i].y + (points[i+1].y - points[i].y) * f + this.offset;
+    const alpha = Math.sin(this.progress * Math.PI) * 0.8;
+    ctx.beginPath();
+    ctx.arc(x, y, this.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(220, 60, 60, ${alpha})`;
+    ctx.fill();
+  }
+}
+
+const bloodParticles = Array.from({length: 30}, () => new BloodParticle());
+
+function drawCurve(points, color, width, dash) {
+  if (points.length < 2) return;
+  ctx.beginPath();
+  ctx.moveTo(points[0].x, points[0].y);
+  for (let i = 1; i < points.length - 1; i++) {
+    const xc = (points[i].x + points[i+1].x) / 2;
+    const yc = (points[i].y + points[i+1].y) / 2;
+    ctx.quadraticCurveTo(points[i].x, points[i].y, xc, yc);
+  }
+  ctx.quadraticCurveTo(points[points.length-2].x, points[points.length-2].y, points[points.length-1].x, points[points.length-1].y);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = width;
+  if (dash) ctx.setLineDash(dash);
+  else ctx.setLineDash([]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}
+
+function drawJoint(x, y, phase) {
+  const pulse = Math.sin(phase) * 0.3 + 0.7;
+  const r = 12 * pulse;
+  
+  // Outer glow
+  const grad = ctx.createRadialGradient(x, y, 0, x, y, r * 2.5);
+  grad.addColorStop(0, `rgba(198, 165, 92, ${0.3 * pulse})`);
+  grad.addColorStop(1, 'rgba(198, 165, 92, 0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.arc(x, y, r * 2.5, 0, Math.PI * 2);
+  ctx.fill();
+  
+  // Inner ring
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.strokeStyle = `rgba(198, 165, 92, ${0.5 * pulse})`;
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  
+  // Core
+  ctx.beginPath();
+  ctx.arc(x, y, 2, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(198, 165, 92, ${0.8})`;
+  ctx.fill();
+}
+
+function drawMuscleLines(hp, phase) {
+  const alpha = 0.12 + Math.sin(phase * 0.5) * 0.05;
+  // Muscle fiber lines along body
+  for (let i = 0; i < 8; i++) {
+    const t1 = i / 8;
+    const bodyIdx = Math.floor(t1 * (hp.body.length - 4)) + 1;
+    if (bodyIdx < hp.body.length - 1) {
+      const p1 = hp.body[bodyIdx];
+      const p2 = hp.body[bodyIdx + 1];
+      const offset = Math.sin(phase + i) * 5;
+      ctx.beginPath();
+      ctx.moveTo(p1.x, p1.y + offset);
+      ctx.lineTo(p2.x, p2.y + offset);
+      ctx.strokeStyle = `rgba(200, 80, 80, ${alpha})`;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
+  }
+}
+
+function drawVascularSystem(hp, phase) {
+  // Main artery along spine
+  const arteryPoints = hp.spine.map((p, i) => ({
+    x: p.x + Math.sin(phase * 2 + i) * 3,
+    y: p.y + 15 + Math.cos(phase + i * 0.5) * 2
+  }));
+  drawCurve(arteryPoints, 'rgba(180, 40, 40, 0.25)', 2);
+  
+  // Blood particles
+  bloodParticles.forEach(bp => { bp.update(); bp.draw(arteryPoints); });
+  
+  // Branching veins
+  arteryPoints.forEach((p, i) => {
+    if (i % 2 === 0) {
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      ctx.lineTo(p.x + Math.sin(phase + i) * 30, p.y + 25 + Math.cos(phase) * 5);
+      ctx.strokeStyle = 'rgba(180, 40, 40, 0.08)';
+      ctx.lineWidth = 0.8;
+      ctx.stroke();
+    }
+  });
+}
+
+function drawNutrientFlow(hp, phase) {
+  nutrients.forEach(p => { p.update(); p.draw(); });
+  
+  // Nutrient absorption indicators
+  hp.joints.forEach((j, i) => {
+    const pulse = Math.sin(phase * 1.5 + i * 1.2);
+    if (pulse > 0.3) {
+      const r = 20 + pulse * 15;
+      const grad = ctx.createRadialGradient(j.x, j.y, 0, j.x, j.y, r);
+      grad.addColorStop(0, `rgba(78, 205, 196, ${pulse * 0.15})`);
+      grad.addColorStop(1, 'rgba(78, 205, 196, 0)');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.arc(j.x, j.y, r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  });
+}
+
+function draw() {
+  t += 0.012;
+  ctx.clearRect(0, 0, W, H);
+  
+  // Background gradient
+  const bgGrad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * 0.6);
+  bgGrad.addColorStop(0, '#0a0a12');
+  bgGrad.addColorStop(1, '#050507');
+  ctx.fillStyle = bgGrad;
+  ctx.fillRect(0, 0, W, H);
+  
+  const hp = getHorsePoints(t);
+  
+  // Draw ambient particles
+  ambient.forEach(p => { p.update(); p.draw(); });
+  
+  // System-specific underlays
+  if (currentSystem === 'vascular') drawVascularSystem(hp, t);
+  if (currentSystem === 'nutrition') drawNutrientFlow(hp, t);
+  if (currentSystem === 'muscular') drawMuscleLines(hp, t);
+  
+  // Horse body outline
+  const bodyAlpha = currentSystem === 'skeletal' ? 0.35 : 0.15;
+  drawCurve(hp.body, `rgba(198, 165, 92, ${bodyAlpha})`, 1.5);
+  
+  // Close the body
+  ctx.beginPath();
+  ctx.moveTo(hp.body[hp.body.length-1].x, hp.body[hp.body.length-1].y);
+  ctx.lineTo(hp.body[0].x, hp.body[0].y);
+  ctx.strokeStyle = `rgba(198, 165, 92, ${bodyAlpha * 0.5})`;
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  
+  // Legs
+  hp.legs.forEach(leg => {
+    drawCurve(leg, `rgba(198, 165, 92, ${bodyAlpha * 0.8})`, 1.2);
+    // Hoof
+    const hoof = leg[leg.length - 1];
+    ctx.beginPath();
+    ctx.arc(hoof.x, hoof.y, 3, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(198, 165, 92, ${bodyAlpha})`;
+    ctx.fill();
+  });
+  
+  // Tail
+  const tailBase = hp.body[0];
+  for (let i = 0; i < 5; i++) {
+    const tx = tailBase.x - 20 - i * 12 + Math.sin(t + i * 0.5) * 8;
+    const ty = tailBase.y + i * 8 + Math.sin(t * 0.7 + i) * 5;
+    ctx.beginPath();
+    ctx.moveTo(i === 0 ? tailBase.x : tailBase.x - 20 - (i-1)*12, i === 0 ? tailBase.y : tailBase.y + (i-1)*8);
+    ctx.lineTo(tx, ty);
+    ctx.strokeStyle = `rgba(198, 165, 92, ${0.15 - i * 0.02})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+  
+  // Ear
+  const poll = hp.body[6];
+  ctx.beginPath();
+  ctx.moveTo(poll.x - 3, poll.y);
+  ctx.lineTo(poll.x + 2, poll.y - 18);
+  ctx.lineTo(poll.x + 8, poll.y - 2);
+  ctx.strokeStyle = `rgba(198, 165, 92, ${bodyAlpha})`;
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+  
+  // Eye
+  const eye = {x: hp.body[7].x - 2, y: hp.body[7].y + 4};
+  ctx.beginPath();
+  ctx.arc(eye.x, eye.y, 2.5, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(198, 165, 92, 0.6)`;
+  ctx.fill();
+  
+  // Skeletal system
+  if (currentSystem === 'skeletal') {
+    // Spine
+    drawCurve(hp.spine, 'rgba(200, 200, 220, 0.2)', 2);
+    hp.spine.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(200, 200, 220, 0.15)';
+      ctx.fill();
+    });
+    // Ribs (simplified)
+    for (let i = 2; i < 5; i++) {
+      const sp = hp.spine[i];
+      ctx.beginPath();
+      ctx.moveTo(sp.x, sp.y);
+      ctx.quadraticCurveTo(sp.x + 5, sp.y + hp.s * 0.15, sp.x - 10, sp.y + hp.s * 0.3);
+      ctx.strokeStyle = 'rgba(200, 200, 220, 0.08)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+  }
+  
+  // Joints (always visible, emphasized in skeletal mode)
+  hp.joints.forEach((j, i) => {
+    const emphasis = currentSystem === 'skeletal' ? 1.5 : (currentSystem === 'nutrition' ? 1.2 : 0.6);
+    drawJoint(j.x, j.y, t * 1.5 + i * 0.8, emphasis);
+  });
+  
+  // Scan line effect
+  const scanY = (Math.sin(t * 0.3) * 0.5 + 0.5) * H;
+  ctx.beginPath();
+  ctx.moveTo(0, scanY);
+  ctx.lineTo(W, scanY);
+  ctx.strokeStyle = 'rgba(198, 165, 92, 0.03)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  
+  // Corner decorations
+  const cornerSize = 30;
+  ctx.strokeStyle = 'rgba(198, 165, 92, 0.08)';
+  ctx.lineWidth = 0.5;
+  // Top left
+  ctx.beginPath(); ctx.moveTo(20, 20 + cornerSize); ctx.lineTo(20, 20); ctx.lineTo(20 + cornerSize, 20); ctx.stroke();
+  // Top right
+  ctx.beginPath(); ctx.moveTo(W-20-cornerSize, 20); ctx.lineTo(W-20, 20); ctx.lineTo(W-20, 20+cornerSize); ctx.stroke();
+  // Bottom left
+  ctx.beginPath(); ctx.moveTo(20, H-20-cornerSize); ctx.lineTo(20, H-20); ctx.lineTo(20+cornerSize, H-20); ctx.stroke();
+  // Bottom right
+  ctx.beginPath(); ctx.moveTo(W-20-cornerSize, H-20); ctx.lineTo(W-20, H-20); ctx.lineTo(W-20, H-20-cornerSize); ctx.stroke();
+  
+  requestAnimationFrame(draw);
+}
+
+function setSystem(sys) {
+  currentSystem = sys;
+  document.querySelectorAll('.system-label').forEach(el => el.classList.toggle('active', el.textContent === sys.toUpperCase()));
+  
+  // Toggle info panels
+  const panels = {
+    skeletal: ['panel3'],
+    muscular: ['panel2'],
+    vascular: ['panel4'],
+    nutrition: ['panel1', 'panel2', 'panel3', 'panel4']
+  };
+  document.querySelectorAll('.info-panel').forEach(p => p.classList.remove('show'));
+  (panels[sys] || []).forEach(id => document.getElementById(id)?.classList.add('show'));
+}
+
+// Auto cycle systems
+let autoTimer;
+function startAutoCycle() {
+  const systems = ['skeletal', 'muscular', 'vascular', 'nutrition'];
+  let idx = 0;
+  autoTimer = setInterval(() => {
+    idx = (idx + 1) % systems.length;
+    setSystem(systems[idx]);
+  }, 4000);
+}
+
+document.querySelectorAll('.system-label').forEach(el => {
+  el.addEventListener('click', () => { clearInterval(autoTimer); });
+});
+
+draw();
+startAutoCycle();
+</script>
+</body>
+</html>

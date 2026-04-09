@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIDE Products — Detailed Formulation</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Outfit:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050507;--bg2:#0a0a0e;--bg3:#0f0f14;--gold:#C6A55C;--gold-l:#E2CC8A;--cream:#F5F0E6;--text:#d0d0d8;--dim:#888892;--bright:#eeeef2;--blue:#5b9bd5;--red:#e07070;--green:#4ECDC4;--serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:400;}
+::selection{background:var(--gold);color:var(--bg);}
+.container{max-width:1100px;margin:0 auto;padding:0 24px;}
+.label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--gold);margin-bottom:16px;}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s,transform .8s;}.reveal.v{opacity:1;transform:translateY(0);}
+h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--bright);margin-bottom:20px;}
+h3{font-family:var(--serif);font-size:22px;font-weight:600;margin-bottom:12px;}
+
+/* Nav tabs */
+.prod-nav{position:sticky;top:0;z-index:100;background:rgba(5,5,7,.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.04);padding:0 24px;display:flex;align-items:center;gap:0;}
+.prod-nav a{display:block;padding:16px 24px;font-size:12px;letter-spacing:2px;color:var(--dim);text-decoration:none;border-bottom:2px solid transparent;transition:all .3s;}
+.prod-nav a:hover{color:var(--gold);}
+.prod-nav a.active{color:var(--gold);border-bottom-color:var(--gold);}
+.prod-nav .logo{font-family:var(--serif);font-size:18px;letter-spacing:8px;color:var(--bright);margin-right:auto;padding:16px 0;}
+
+/* Product section */
+.prod-section{padding:100px 0;border-bottom:1px solid rgba(255,255,255,.03);}
+
+/* Hero banner per product */
+.prod-hero{padding:60px 0;text-align:center;position:relative;overflow:hidden;}
+.prod-hero h1{font-family:var(--serif);font-size:clamp(48px,8vw,80px);font-weight:400;letter-spacing:.1em;color:var(--bright);}
+.prod-hero .subtitle{font-size:16px;color:var(--dim);margin-top:8px;letter-spacing:2px;}
+.prod-hero .tagline{font-family:var(--serif);font-size:clamp(16px,2.5vw,22px);font-style:italic;color:var(--gold);margin-top:24px;}
+
+/* Competitive advantage boxes */
+.adv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:40px 0;}
+.adv-card{background:var(--bg2);border:1px solid rgba(198,165,92,.08);border-radius:6px;padding:24px;position:relative;overflow:hidden;}
+.adv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.adv-card.win::before{background:var(--green);}
+.adv-card.unique::before{background:var(--gold);}
+.adv-card .adv-badge{font-family:var(--mono);font-size:8px;letter-spacing:2px;margin-bottom:8px;}
+.adv-card.win .adv-badge{color:var(--green);}
+.adv-card.unique .adv-badge{color:var(--gold);}
+.adv-card h4{font-size:16px;font-weight:600;color:var(--bright);margin-bottom:6px;}
+.adv-card p{font-size:13px;line-height:1.7;color:var(--dim);}
+
+/* Comparison table */
+.comp-table{width:100%;border-collapse:collapse;margin:32px 0;font-size:13px;}
+.comp-wrap{overflow-x:auto;margin:32px 0;}
+.comp-table th{background:var(--bg3);padding:12px 14px;text-align:left;font-weight:500;color:var(--bright);border-bottom:1px solid rgba(255,255,255,.06);font-size:11px;letter-spacing:1px;}
+.comp-table td{padding:12px 14px;font-size:13px;border-bottom:1px solid rgba(255,255,255,.03);color:var(--text);}
+.comp-table tr:hover td{background:rgba(198,165,92,.02);}
+.comp-table .stride-col{color:var(--gold-l);font-weight:600;font-size:14px;}
+.comp-table .missing{color:#ff6b6b;font-style:italic;font-weight:500;}
+.comp-table .better{color:#5dde5d;font-weight:600;}
+.comp-table .cat-row td{background:rgba(198,165,92,.03);font-weight:600;color:var(--gold);font-size:11px;letter-spacing:2px;padding:8px 14px;}
+
+/* Ingredient detail table */
+.ing-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:13px;}
+.ing-wrap{overflow-x:auto;margin:24px 0;}
+.ing-table th{background:var(--bg3);padding:12px 14px;text-align:left;font-weight:600;color:var(--gold-l);border-bottom:2px solid rgba(198,165,92,.2);font-size:12px;letter-spacing:2px;}
+.ing-table td{padding:12px 14px;border-bottom:1px solid rgba(255,255,255,.04);}
+.ing-table tr:nth-child(even) td{background:rgba(255,255,255,.02);}
+.ing-table .name{font-weight:700;color:var(--gold-l);font-size:14px;white-space:nowrap;}
+.ing-table .why{font-size:13px;color:var(--text);line-height:1.7;}
+
+/* Marketing message box */
+.msg-box{background:linear-gradient(135deg,rgba(198,165,92,.06),rgba(198,165,92,.02));border:1px solid rgba(198,165,92,.12);border-radius:8px;padding:32px;margin:40px 0;}
+.msg-box .msg-label{font-family:var(--mono);font-size:9px;letter-spacing:3px;color:var(--gold);margin-bottom:12px;}
+.msg-box h3{font-family:var(--serif);font-size:24px;font-weight:400;color:var(--bright);margin-bottom:16px;}
+.msg-box .pitch{font-size:15px;line-height:2;color:var(--bright);}
+.msg-box .pitch strong{color:var(--gold-l);font-weight:500;}
+.msg-box .one-liner{margin-top:20px;padding:20px;background:rgba(198,165,92,.06);border:1px solid rgba(198,165,92,.15);border-radius:4px;font-family:var(--serif);font-size:20px;font-style:italic;color:var(--bright);text-align:center;line-height:1.5;}
+
+/* Spec cards */
+.spec-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:32px 0;}
+.spec-card{background:var(--bg2);padding:24px;text-align:center;}
+.spec-card .val{font-family:var(--serif);font-size:28px;color:var(--gold);font-weight:400;}
+.spec-card .lbl{font-size:10px;color:var(--dim);margin-top:4px;letter-spacing:1px;}
+
+footer{padding:40px 24px;text-align:center;font-size:10px;color:var(--dim);letter-spacing:1px;}
+footer a{color:var(--gold);text-decoration:none;}
+
+@media(max-width:768px){
+  .adv-grid{grid-template-columns:1fr;}
+  .spec-row{grid-template-columns:1fr;}
+  .comp-table{font-size:10px;}
+  .prod-nav{overflow-x:auto;}
+}
+</style>
+</head>
+<body>
+
+<nav class="prod-nav">
+  <div class="logo">STRIDE</div>
+  <a href="#daily" class="active" onclick="document.querySelectorAll('.prod-nav a:not(.logo)').forEach(a=>a.classList.remove('active'));this.classList.add('active');">DAILY</a>
+  <a href="#flex" onclick="document.querySelectorAll('.prod-nav a:not(.logo)').forEach(a=>a.classList.remove('active'));this.classList.add('active');">FLEX</a>
+  <a href="#electro" onclick="document.querySelectorAll('.prod-nav a:not(.logo)').forEach(a=>a.classList.remove('active'));this.classList.add('active');">ELECTRO</a>
+</nav>
+
+<!-- ==================== DAILY ==================== -->
+<section class="prod-section" id="daily">
+<div class="container">
+
+  <div class="prod-hero reveal">
+    <div class="label">STRIDE SERIES 01</div>
+    <h1>DAILY</h1>
+    <div class="subtitle">Complete Vitamin & Mineral — 종합 비타민 · 미네랄</div>
+    <div class="tagline">"매일 한 스쿱으로 완성하는 기초 영양"</div>
+  </div>
+
+  <div class="spec-row reveal">
+    <div class="spec-card"><div class="val">30g</div><div class="lbl">1일 급여량 (500kg)</div></div>
+    <div class="spec-card"><div class="val">4.5kg</div><div class="lbl">약 150일분</div></div>
+    <div class="spec-card"><div class="val">17+</div><div class="lbl">핵심 영양 성분</div></div>
+  </div>
+
+  <!-- Competitive Advantages -->
+  <div class="label reveal">// VS KER PERFORM</div>
+  <h3 class="reveal" style="color:var(--bright);">왜 STRIDE DAILY가 더 나은가</h3>
+
+  <div class="adv-grid">
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ STRIDE WINS</div>
+      <h4>전 성분 함량 공개</h4>
+      <p>KER PERFORM은 "organic minerals" "natural vitamin E"만 표기하고 정확한 mg 수치를 공개하지 않습니다. STRIDE는 모든 성분의 정확한 함량을 공개합니다.</p>
+    </div>
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ STRIDE WINS</div>
+      <h4>비오틴 20mg 고함량</h4>
+      <p>연구에 의하면 발굽 건강 개선에 최소 20mg/일이 필요합니다. 많은 경쟁 제품이 10mg 이하인 반면, STRIDE는 임상 근거 용량을 충족합니다.</p>
+    </div>
+    <div class="adv-card unique reveal">
+      <div class="adv-badge">◆ STRIDE ONLY</div>
+      <h4>셀레늄 + 비타민E 시너지</h4>
+      <p>셀레늄 3mg과 천연 비타민E 1,000IU를 함께 배합하여 항산화 시너지를 극대화. 셀레늄 단독보다 항산화 효과가 현저히 향상됩니다.</p>
+    </div>
+    <div class="adv-card unique reveal">
+      <div class="adv-badge">◆ STRIDE ONLY</div>
+      <h4>약학대 성분 설계</h4>
+      <p>미국 AUHS School of Pharmacy Dr. Schloss가 NRC 2007 기준으로 직접 설계. 영양제 회사가 아닌 약학 연구자가 만든 배합입니다.</p>
+    </div>
+    <div class="adv-card unique reveal">
+      <div class="adv-badge">◆ STRIDE ONLY</div>
+      <h4>🍎 기호성 설계 시스템</h4>
+      <p>당밀 + 건조사과 + 호로파(Fenugreek)로 설계한 3중 기호성 시스템. 말이 좋아하는 단맛과 향미로, 사료에 섞으면 거부 없이 완식. "영양제를 넣으면 사료를 안 먹어요" 문제 해결.</p>
+    </div>
+  </div>
+
+  <!-- Detailed Ingredients -->
+  <div class="label reveal" style="margin-top:60px;">// FULL INGREDIENT TABLE</div>
+  <table class="ing-table reveal">
+    <thead><tr><th>성분</th><th>1일 함량</th><th>형태</th><th>왜 이 성분인가</th></tr></thead>
+    <tbody>
+      <tr><td class="name">비타민A</td><td>16,000 IU</td><td>Retinyl Acetate</td><td class="why">시력, 피부, 면역 — NRC 권장량의 120% 설계</td></tr>
+      <tr><td class="name">비타민C</td><td>3,000 mg</td><td>Ascorbic Acid</td><td class="why">항산화, 콜라겐 합성 — 스트레스 상황에서 체내 합성 부족분 보충</td></tr>
+      <tr><td class="name">비타민E (천연)</td><td>1,000 IU</td><td>d-alpha-tocopherol</td><td class="why">합성(dl) 대비 생체이용률 2배. 근육 보호, 셀레늄과 항산화 시너지</td></tr>
+      <tr><td class="name">비타민B12</td><td>50 mcg</td><td>Cyanocobalamin</td><td class="why">조혈, 에너지 대사 — 방목 부족 마에서 결핍 빈발</td></tr>
+      <tr><td class="name">비오틴</td><td>20 mg</td><td>D-Biotin</td><td class="why">발굽/모질 개선 임상 입증 용량. 20mg 미만은 효과 불충분 (Josseck et al.)</td></tr>
+      <tr><td class="name">나이아신 (B3)</td><td>200 mg</td><td>Nicotinamide</td><td class="why">에너지 대사의 핵심 조효소 NAD+ 전구체</td></tr>
+      <tr><td class="name">판토텐산 (B5)</td><td>100 mg</td><td>Calcium Pantothenate</td><td class="why">CoA 합성 — 지방산 대사, 스트레스 호르몬 생성에 필수</td></tr>
+      <tr><td class="name">아연</td><td>400 mg</td><td>Zinc Proteinate (유기)</td><td class="why">유기 킬레이트: 무기 아연 대비 흡수율 30-50% 향상. 면역, 발굽, 피부</td></tr>
+      <tr><td class="name">구리</td><td>100 mg</td><td>Copper Proteinate (유기)</td><td class="why">결합조직, 멜라닌 합성. 아연과 4:1 비율 유지 (경쟁 흡수 방지)</td></tr>
+      <tr><td class="name">셀레늄</td><td>3 mg</td><td>Selenium Yeast (유기)</td><td class="why">셀레노메티오닌 형태: 근육 내 저장률 우수. NRC 상한선 이내 안전 설계</td></tr>
+      <tr><td class="name">철</td><td>500 mg</td><td>Iron Proteinate (유기)</td><td class="why">조혈, 산소 운반. 유기 형태로 위장 부담 최소화</td></tr>
+      <tr><td class="name">망간</td><td>400 mg</td><td>Manganese Proteinate</td><td class="why">연골 형성(GAG 합성), 뼈 발달에 필수 조효소</td></tr>
+      <tr><td class="name">요오드</td><td>4 mg</td><td>Calcium Iodate</td><td class="why">갑상선 호르몬 T3/T4 합성 — 대사율, 체온 조절</td></tr>
+      <tr><td class="name">마그네슘</td><td>2,000 mg</td><td>MgO + Mg Proteinate</td><td class="why">300+ 효소 반응 관여. 근이완, 신경 안정, 전해질 균형</td></tr>
+      <tr><td class="name">칼슘</td><td>3,000 mg</td><td>Calcium Carbonate</td><td class="why">골격, 근수축. Ca:P = 1.5:1 최적 비율 유지</td></tr>
+      <tr><td class="name">인</td><td>2,000 mg</td><td>Dicalcium Phosphate</td><td class="why">골격, ATP 에너지 대사. 칼슘과 균형 비율 필수</td></tr>
+      <tr><td class="name">이스트 배양물</td><td>5,000 mg</td><td>Postbiotic</td><td class="why">장내 미생물 환경 개선, 후장 발효 최적화, 면역 조절</td></tr>
+      <tr><td class="name">아마씨 (분쇄)</td><td>3,000 mg</td><td>Ground Flaxseed</td><td class="why">오메가-3 ALA 공급, 피모 윤기, 항염 — 천연 프리바이오틱 역할 겸비</td></tr>
+      <tr style="background:rgba(198,165,92,0.04);"><td colspan="4" style="font-weight:600;color:var(--gold);font-size:11px;letter-spacing:2px;padding:8px 12px;">🍎 PALATABILITY SYSTEM — 기호성 설계</td></tr>
+      <tr><td class="name">당밀 분말</td><td>2,500 mg</td><td>Dried Molasses</td><td class="why">말이 가장 선호하는 단맛. 천연 미네랄(철, 칼슘)도 포함. 사료 혼합 시 접착 역할</td></tr>
+      <tr><td class="name">건조 사과 분말</td><td>2,000 mg</td><td>Dried Apple</td><td class="why">달콤한 향과 맛. 말의 #1 간식인 사과를 분말화. 천연 구연산으로 기호성 극대화</td></tr>
+      <tr><td class="name">호로파 분말 (Fenugreek)</td><td>1,000 mg</td><td>Trigonella foenum</td><td class="why">리코리스(감초) 유사 향미 — 연구에서 말 기호성 향상 효과 입증. 유럽 승마계에서 가장 널리 쓰이는 기호성 첨가제</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Marketing Message -->
+  <div class="msg-box reveal">
+    <div class="msg-label">코치님 세일즈 가이드 — DAILY</div>
+    <h3>코치님이 마주/회원에게 하실 말씀</h3>
+    <div class="pitch">
+      <p>"지금 드시는 사료에 비타민/미네랄이 다 들어있다고 생각하시죠? 실은 <strong>건초와 배합사료만으로는 셀레늄, 비오틴, 유기 아연 같은 핵심 미량영양소가 부족</strong>합니다."</p>
+      <p>"STRIDE DAILY는 <strong>미국 약학대 연구진이 NRC 기준으로 직접 설계</strong>한 제품이에요. 모든 미네랄이 유기 킬레이트 형태라 흡수율이 일반 무기 미네랄보다 30-50% 높습니다."</p>
+      <p>"<strong>비오틴 20mg</strong>이 들어있는데, 이게 발굽 건강에 효과가 입증된 최소 용량이에요. 시중 제품 대부분은 10mg 이하라 실질적 효과가 부족합니다."</p>
+      <p>"그리고 <strong>경기도 대표 정유나 선수가 자기 말에 직접 급여하는 제품</strong>이에요. 선수 아버지가 영양제 전문가라서 직접 기획한 겁니다."</p>
+      <p>"가장 중요한 건 <strong>말이 잘 먹는다</strong>는 겁니다. 사과+당밀+호로파로 기호성을 설계해서, 사료에 섞으면 오히려 먼저 먹으러 옵니다. 영양제 넣으면 사료를 안 먹는 문제, STRIDE는 없습니다."</p>
+    </div>
+    <div class="one-liner">"사람 영양제를 만들던 전문가가, 같은 기준으로 만든 종합영양제.<br>그리고 말이 실제로 좋아합니다."</div>
+  </div>
+
+</div>
+</section>
+
+<!-- ==================== FLEX ==================== -->
+<section class="prod-section" id="flex">
+<div class="container">
+
+  <div class="prod-hero reveal">
+    <div class="label">STRIDE SERIES 02</div>
+    <h1>FLEX</h1>
+    <div class="subtitle">Joint & Recovery Support — 관절 · 인대 · 회복</div>
+    <div class="tagline">"48만원짜리 수입품에 없는 성분이 들어있습니다"</div>
+  </div>
+
+  <div class="spec-row reveal">
+    <div class="spec-card"><div class="val">50g</div><div class="lbl">1일 급여량 (500kg)</div></div>
+    <div class="spec-card"><div class="val">4.5kg</div><div class="lbl">약 90일분</div></div>
+    <div class="spec-card"><div class="val">14</div><div class="lbl">관절/회복 특화 성분</div></div>
+  </div>
+
+  <!-- Competitive Advantages -->
+  <div class="label reveal">// VS CORTAFLEX RECOVERY (48만원/4.5kg)</div>
+  <h3 class="reveal" style="color:var(--bright);">왜 STRIDE FLEX가 더 나은가</h3>
+
+  <div class="adv-grid">
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ 결정적 차이</div>
+      <h4>글루코사민 + 콘드로이틴 포함</h4>
+      <p>Cortaflex Recovery에는 관절 3대 성분 중 글루코사민과 콘드로이틴이 없습니다. STRIDE FLEX에는 글루코사민 10,000mg + 콘드로이틴 5,000mg 고함량 포함. MSM은 쓴맛으로 말이 거부하므로, 같은 황(S) 성분 역할을 하는 L-메티오닌 2,000mg으로 대체 — 기호성까지 고려한 설계.</p>
+    </div>
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ STRIDE WINS</div>
+      <h4>보스웰리아 43% 더 많이</h4>
+      <p>Cortaflex: 7,000mg/서빙 vs STRIDE FLEX: 10,000mg/서빙. 항염 효과의 핵심인 보스웰리아를 43% 더 고함량 배합.</p>
+    </div>
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ STRIDE WINS</div>
+      <h4>비타민E 3.75배</h4>
+      <p>Cortaflex: ~800IU vs STRIDE FLEX: 3,000IU. 훈련 후 근육 회복에 필수적인 항산화 비타민E를 3.75배 더 배합.</p>
+    </div>
+    <div class="adv-card unique reveal">
+      <div class="adv-badge">◆ CLEAN LABEL</div>
+      <h4>BHT 무첨가</h4>
+      <p>Cortaflex는 합성 산화방지제 BHT(E321)를 사용합니다. STRIDE는 천연 로즈마리 추출물로 대체. 합성 첨가물 ZERO.</p>
+    </div>
+    <div class="adv-card unique reveal">
+      <div class="adv-badge">◆ STRIDE ONLY</div>
+      <h4>피페린(BioPerine®) 흡수 촉진</h4>
+      <p>커큐민의 생체이용률은 단독 섭취 시 매우 낮습니다. 흑후추 추출물 피페린이 커큐민 흡수를 2,000% 향상시킵니다 (Shoba et al., 1998).</p>
+    </div>
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ 가격 경쟁력</div>
+      <h4>더 많은 성분, 더 낮은 가격</h4>
+      <p>Cortaflex: 48만원 / STRIDE FLEX: 35~45만원 (예정). 성분은 더 많고, 함량은 더 높고, 가격은 더 합리적.</p>
+    </div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="label reveal" style="margin-top:60px;">// HEAD-TO-HEAD COMPARISON</div>
+  <div class="comp-wrap"><table class="comp-table reveal">
+    <thead><tr><th>성분</th><th>Cortaflex Recovery</th><th>STRIDE FLEX</th><th>차이</th></tr></thead>
+    <tbody>
+      <tr class="cat-row"><td colspan="4">관절 핵심 성분</td></tr>
+      <tr><td>보스웰리아</td><td>7,000 mg</td><td class="stride-col">10,000 mg</td><td class="better">+43%</td></tr>
+      <tr><td>글루코사민 HCl</td><td class="missing">없음</td><td class="stride-col">10,000 mg</td><td class="better">STRIDE ONLY</td></tr>
+      <tr><td>콘드로이틴 황산</td><td class="missing">없음</td><td class="stride-col">5,000 mg</td><td class="better">STRIDE ONLY</td></tr>
+      <tr><td>L-메티오닌 (황 공급)</td><td class="missing">없음</td><td class="stride-col">2,000 mg</td><td class="better">MSM 대체 (기호성↑)</td></tr>
+      <tr><td>히알루론산</td><td>포함 (함량 미공개)</td><td class="stride-col">100 mg</td><td>함량 공개</td></tr>
+      <tr><td>해양 콜라겐</td><td>포함 (함량 미공개)</td><td class="stride-col">3,000 mg</td><td>함량 공개</td></tr>
+      <tr class="cat-row"><td colspan="4">항산화 / 항염</td></tr>
+      <tr><td>비타민E (천연)</td><td>~800 IU</td><td class="stride-col">3,000 IU</td><td class="better">×3.75</td></tr>
+      <tr><td>비타민C</td><td>2,000 mg</td><td class="stride-col">3,000 mg</td><td class="better">+50%</td></tr>
+      <tr><td>커큐민 (강황)</td><td>포함 (함량 미공개)</td><td class="stride-col">2,000 mg (95%)</td><td>함량+표준화 공개</td></tr>
+      <tr><td>포도씨 추출물</td><td>600 mg/kg</td><td class="stride-col">600 mg</td><td class="better">×16.7 (per serving)</td></tr>
+      <tr class="cat-row"><td colspan="4">회복 / 기타</td></tr>
+      <tr><td>L-글루타민</td><td>L-글루탐산 110mg</td><td class="stride-col">L-글루타민 2,000mg</td><td class="better">다른 아미노산+고함량</td></tr>
+      <tr><td>로즈마리 추출물</td><td>100 mg/서빙</td><td class="stride-col">2,000 mg</td><td class="better">×20</td></tr>
+      <tr><td>흑후추 추출물</td><td>포함 (전체 후추)</td><td class="stride-col">피페린 95% 표준화</td><td class="better">표준화 추출</td></tr>
+      <tr class="cat-row"><td colspan="4">안전성</td></tr>
+      <tr><td>합성 산화방지제</td><td>BHT (E321) 100mg</td><td class="stride-col better">없음 (천연 로즈마리)</td><td class="better">CLEAN LABEL</td></tr>
+      <tr><td>도핑 테스트</td><td>NOPS / BETA</td><td class="stride-col">한국마사회 기준</td><td>동등</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Marketing Message -->
+  <div class="msg-box reveal">
+    <div class="msg-label">코치님 세일즈 가이드 — FLEX</div>
+    <h3>코치님이 마주/회원에게 하실 말씀</h3>
+    <div class="pitch">
+      <p>"지금 관절에 Cortaflex 쓰고 계시죠? 48만원짜리인데, 성분표 뒤를 보시면 <strong>글루코사민이랑 콘드로이틴이 빠져있어요</strong>. 관절 보호 핵심 성분이 없는 겁니다."</p>
+      <p>"STRIDE FLEX는 <strong>보스웰리아 10,000mg + 글루코사민 10,000mg + 콘드로이틴 5,000mg</strong>이 다 들어있습니다. 보스웰리아도 Cortaflex보다 43% 더 많아요."</p>
+      <p>"그리고 <strong>비타민E가 3,000IU</strong>인데, Cortaflex는 800IU밖에 안 돼요. 훈련 후 근육 회복에 비타민E가 핵심인데, 3.75배 차이가 납니다."</p>
+      <p>"중요한 건 <strong>말이 실제로 잘 먹는다</strong>는 겁니다. MSM 같은 쓴 성분 대신 L-메티오닌으로 대체하고, 사과+당밀+호로파 기호성 시스템으로 설계해서 사료에 섞으면 말이 먼저 먹으러 옵니다."</p>
+    </div>
+    <div class="one-liner">"48만원짜리 수입품에 없는 글루코사민과 콘드로이틴.<br>그리고 말이 사료를 거부하지 않는 유일한 관절 영양제."</div>
+  </div>
+
+  <!-- Detailed Ingredients -->
+  <div class="label reveal" style="margin-top:40px;">// FULL INGREDIENT TABLE</div>
+  <table class="ing-table reveal">
+    <thead><tr><th>성분</th><th>1일 함량</th><th>형태</th><th>왜 이 성분인가</th></tr></thead>
+    <tbody>
+      <tr><td class="name">보스웰리아</td><td>10,000 mg</td><td>65% Boswellic acids</td><td class="why">5-LOX 억제 → 관절 염증/통증 완화. Cortaflex 핵심 성분을 43% 초과 배합</td></tr>
+      <tr><td class="name">글루코사민 HCl</td><td>10,000 mg</td><td>HCl salt (98%+)</td><td class="why">연골 기질(GAG) 합성 촉진. 관절액 점도 유지. Cortaflex에 부재한 핵심 성분</td></tr>
+      <tr><td class="name">콘드로이틴 황산</td><td>5,000 mg</td><td>Bovine/Shark source</td><td class="why">연골 기질 직접 공급. 글루코사민과 시너지로 연골 재생 촉진. 무미무취로 기호성 우수</td></tr>
+      <tr><td class="name">L-메티오닌</td><td>2,000 mg</td><td>L-form amino acid</td><td class="why">황(S) 함유 아미노산 — MSM의 황 공급 역할을 대체하면서 쓴맛 ZERO. 케라틴(발굽) 합성에도 기여</td></tr>
+      <tr><td class="name">히알루론산</td><td>100 mg</td><td>경구용 HA</td><td class="why">관절액 점성 유지, 연골 보호. 경구 투여 시에도 관절 내 HA 농도 상승 확인</td></tr>
+      <tr><td class="name">비타민C</td><td>3,000 mg</td><td>Ascorbic Acid</td><td class="why">콜라겐 합성의 필수 조효소. 인대/건 회복 촉진</td></tr>
+      <tr><td class="name">비타민E (천연)</td><td>3,000 IU</td><td>d-alpha-tocopherol</td><td class="why">운동 유발 산화 스트레스 대응. 근육 손상 회복 가속. 고함량 설계</td></tr>
+      <tr><td class="name">커큐민</td><td>2,000 mg</td><td>95% Curcuminoids</td><td class="why">NF-κB 경로 억제 → 광범위 항염. 표준화 추출물로 유효 성분 보장</td></tr>
+      <tr><td class="name">해양 콜라겐</td><td>3,000 mg</td><td>가수분해 peptides</td><td class="why">Type I/III 콜라겐 → 인대, 건, 피부 구조 단백질 직접 공급</td></tr>
+      <tr><td class="name">L-글루타민</td><td>2,000 mg</td><td>L-form amino acid</td><td class="why">가장 풍부한 아미노산. 근육 회복, 장벽 기능 유지, 면역 세포 연료</td></tr>
+      <tr><td class="name">포도씨 추출물</td><td>600 mg</td><td>OPC 95%</td><td class="why">프로안토시아니딘: 비타민C의 20배 항산화. 모세혈관 강화</td></tr>
+      <tr><td class="name">로즈마리 추출물</td><td>2,000 mg</td><td>Carnosic acid 표준화</td><td class="why">천연 항산화제 + 천연 보존제 이중 역할. BHT 대체</td></tr>
+      <tr><td class="name">흑후추 추출물</td><td>20 mg</td><td>Piperine 95%</td><td class="why">커큐민 생체이용률 2,000% 향상 (Shoba et al.). 소량으로 극적 효과</td></tr>
+      <tr><td class="name">구리 (유기)</td><td>50 mg</td><td>Copper Proteinate</td><td class="why">라이실 옥시다제 활성화 → 콜라겐/엘라스틴 가교결합. 결합조직 강도</td></tr>
+      <tr><td class="name">아연 (유기)</td><td>200 mg</td><td>Zinc Proteinate</td><td class="why">MMPs(기질 금속 단백분해효소) 조절 → 연골 분해 억제</td></tr>
+      <tr style="background:rgba(198,165,92,0.04);"><td colspan="4" style="font-weight:600;color:var(--gold);font-size:11px;letter-spacing:2px;padding:8px 12px;">🍎 PALATABILITY SYSTEM — 기호성 설계</td></tr>
+      <tr><td class="name">당밀 분말</td><td>3,000 mg</td><td>Dried Molasses</td><td class="why">커큐민의 쓴맛을 마스킹. 말이 사료 거부 없이 완식하도록 설계</td></tr>
+      <tr><td class="name">건조 사과 분말</td><td>2,500 mg</td><td>Dried Apple</td><td class="why">달콤한 사과 향으로 전체 파우더의 향미 프로필 결정. 말 간식 향과 동일</td></tr>
+      <tr><td class="name">호로파 분말</td><td>1,500 mg</td><td>Fenugreek Seed</td><td class="why">유럽 승마계 기호성 향상제 #1. 리코리스 향미가 쓴 성분을 효과적으로 마스킹</td></tr>
+    </tbody>
+  </table>
+
+</div>
+</section>
+
+<!-- ==================== ELECTRO ==================== -->
+<section class="prod-section" id="electro">
+<div class="container">
+
+  <div class="prod-hero reveal">
+    <div class="label">STRIDE SERIES 03</div>
+    <h1>ELECTRO</h1>
+    <div class="subtitle">Electrolyte & Hydration — 전해질 · 수분 보충</div>
+    <div class="tagline">"말의 땀 성분을 분석해서 만든 과학적 전해질"</div>
+  </div>
+
+  <div class="spec-row reveal">
+    <div class="spec-card"><div class="val">50g</div><div class="lbl">1일 급여량 (500kg)</div></div>
+    <div class="spec-card"><div class="val">3kg</div><div class="lbl">약 60일분</div></div>
+    <div class="spec-card"><div class="val">3:1:5</div><div class="lbl">Na:K:Cl 땀 매칭 비율</div></div>
+  </div>
+
+  <!-- Competitive Advantages -->
+  <div class="label reveal">// VS KER ENDURA-MAX</div>
+  <h3 class="reveal" style="color:var(--bright);">왜 STRIDE ELECTRO가 다른가</h3>
+
+  <div class="adv-grid">
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ 과학적 설계</div>
+      <h4>말의 땀 조성 매칭</h4>
+      <p>말의 땀은 Na:K:Cl ≈ 3:1:5 비율. 대부분의 전해질 제품이 이 비율을 맞추지 못합니다. STRIDE ELECTRO는 이 비율을 정밀하게 매칭합니다.</p>
+    </div>
+    <div class="adv-card unique reveal">
+      <div class="adv-badge">◆ STRIDE ONLY</div>
+      <h4>포도당 공수송 흡수 시스템</h4>
+      <p>소장의 SGLT1 수송체를 활용: 포도당과 나트륨이 함께 있을 때 전해질 흡수 속도가 극적으로 향상됩니다 (경구수분보충요법 원리).</p>
+    </div>
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ STRIDE WINS</div>
+      <h4>비타민E + C 항산화</h4>
+      <p>고강도 운동은 산화 스트레스를 유발합니다. 전해질만으로는 부족합니다. 천연 비타민E 500IU + C 1,000mg으로 운동 유발 손상을 예방합니다.</p>
+    </div>
+    <div class="adv-card win reveal">
+      <div class="adv-badge">✦ STRIDE WINS</div>
+      <h4>칼슘 포함 (지구력 마)</h4>
+      <p>장시간 운동 시 칼슘도 땀으로 소실됩니다. 칼슘 글루코네이트 2,500mg 포함으로 근수축 기능 유지. 많은 전해질 제품에서 빠져있는 성분.</p>
+    </div>
+  </div>
+
+  <!-- Detailed Ingredients -->
+  <div class="label reveal" style="margin-top:60px;">// FULL INGREDIENT TABLE</div>
+  <table class="ing-table reveal">
+    <thead><tr><th>성분</th><th>1일 함량</th><th>형태</th><th>왜 이 성분인가</th></tr></thead>
+    <tbody>
+      <tr><td class="name">나트륨</td><td>10,500 mg</td><td>NaCl</td><td class="why">세포외액 주요 양이온. 땀 손실의 #1 전해질. 삼투압 조절</td></tr>
+      <tr><td class="name">칼륨</td><td>6,000 mg</td><td>KCl</td><td class="why">세포내액 주요 양이온. 근수축, 신경 전달. 땀 손실 #2</td></tr>
+      <tr><td class="name">클로라이드</td><td>16,000 mg</td><td>NaCl + KCl 유래</td><td class="why">땀의 가장 많은 전해질. 위산(HCl) 생성, 소화 기능에도 필수</td></tr>
+      <tr><td class="name">칼슘</td><td>2,500 mg</td><td>Ca Gluconate</td><td class="why">근수축 조절. 장시간 운동 시 저칼슘혈증(synchronous diaphragmatic flutter) 예방</td></tr>
+      <tr><td class="name">마그네슘</td><td>2,000 mg</td><td>MgO</td><td class="why">근이완, 300+ 효소 반응. 경련(tying-up) 예방</td></tr>
+      <tr><td class="name">포도당</td><td>5,000 mg</td><td>Dextrose</td><td class="why">SGLT1 공수송: Na+glucose 동시 흡수 시 전해질 흡수 속도 극적 향상</td></tr>
+      <tr><td class="name">비타민E (천연)</td><td>500 IU</td><td>d-alpha-tocopherol</td><td class="why">운동 유발 활성산소 방어. 근육 세포막 보호</td></tr>
+      <tr><td class="name">비타민C</td><td>1,000 mg</td><td>Ascorbic Acid</td><td class="why">수용성 항산화. 비타민E 재생(항산화 사이클). 회복 촉진</td></tr>
+      <tr><td class="name">시트르산</td><td>1,500 mg</td><td>Citric Acid</td><td class="why">기호성 향상(사과맛 베이스), pH 완충, 구연산 회로(TCA cycle) 기질</td></tr>
+      <tr style="background:rgba(198,165,92,0.04);"><td colspan="4" style="font-weight:600;color:var(--gold);font-size:11px;letter-spacing:2px;padding:8px 12px;">🍎 PALATABILITY SYSTEM — 기호성 설계</td></tr>
+      <tr><td class="name">당밀 분말</td><td>2,000 mg</td><td>Dried Molasses</td><td class="why">전해질(소금맛)의 짠맛을 달콤하게 밸런싱. 자발적 음수량 증가 효과</td></tr>
+      <tr><td class="name">건조 사과 분말</td><td>2,000 mg</td><td>Dried Apple</td><td class="why">물에 타면 사과맛 음료 느낌. 말이 물을 더 많이 마시도록 유도 (수분 보충 시너지)</td></tr>
+      <tr><td class="name">호로파 분말</td><td>1,000 mg</td><td>Fenugreek Seed</td><td class="why">감초 유사 향미. 전해질 파우더의 짠맛/쓴맛을 효과적으로 마스킹</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Marketing Message -->
+  <div class="msg-box reveal">
+    <div class="msg-label">코치님 세일즈 가이드 — ELECTRO</div>
+    <h3>코치님이 마주/회원에게 하실 말씀</h3>
+    <div class="pitch">
+      <p>"더운 날 훈련하면 말이 땀을 엄청 흘리잖아요. 그 땀에 나트륨, 칼륨, 클로라이드가 빠지는데, <strong>그냥 소금물 주면 안 돼요</strong>. 비율이 중요합니다."</p>
+      <p>"STRIDE ELECTRO는 <strong>말의 실제 땀 성분 비율(Na:K:Cl = 3:1:5)을 과학적으로 매칭</strong>해서 만들었어요. 약학대 연구진이 직접 설계한 거예요."</p>
+      <p>"특별한 건 <strong>포도당이 소량 들어있는데, 이게 전해질 흡수 속도를 극적으로 높여줍니다</strong>. WHO 경구수분보충요법이랑 같은 원리예요."</p>
+      <p>"물에 타면 <strong>사과맛이 나서 말이 물을 더 잘 마십니다</strong>. 수분 보충이 목적인데, 말이 안 마시면 의미 없잖아요. 기호성까지 설계한 전해질은 STRIDE뿐입니다."</p>
+    </div>
+    <div class="one-liner">"소금이 아니라 과학입니다.<br>말이 스스로 찾아 마시는 전해질."</div>
+  </div>
+
+</div>
+</section>
+
+<footer>
+  STRIDE EQUINE NUTRITION — <a href="/">홈페이지로 돌아가기</a><br>
+  © 2026 Terabiotech Korea × AUHS School of Pharmacy
+</footer>
+
+<script>
+const obs = new IntersectionObserver(e => { e.forEach(el => { if(el.isIntersecting) el.target.classList.add('v'); }); }, { threshold: 0.05 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+</body>
+</html>

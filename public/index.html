@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIDE — Equine Nutrition by Science</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Outfit:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #050507;
+  --bg2: #0a0a0e;
+  --bg3: #0f0f14;
+  --gold: #C6A55C;
+  --gold-l: #E2CC8A;
+  --gold-d: #8B7340;
+  --cream: #F5F0E6;
+  --text: #b0b0b8;
+  --dim: #55555e;
+  --bright: #eeeef2;
+  --green: #4ECDC4;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Outfit', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:hidden;font-weight:400;}
+::selection{background:var(--gold);color:var(--bg);}
+
+.reveal{opacity:0;transform:translateY(50px);transition:opacity 1s cubic-bezier(.23,1,.32,1),transform 1s cubic-bezier(.23,1,.32,1);}
+.reveal.v{opacity:1;transform:translateY(0);}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}.d5{transition-delay:.5s}.d6{transition-delay:.6s}
+
+.container{max-width:1200px;margin:0 auto;padding:0 32px;}
+.label{font-family:var(--mono);font-size:10px;letter-spacing:5px;color:var(--gold);text-transform:uppercase;margin-bottom:20px;}
+
+/* Language toggle */
+.lang-bar{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:center;padding:8px;background:rgba(5,5,7,0.95);border-bottom:1px solid rgba(198,165,92,0.08);gap:4px;}
+.lang-btn{font-family:var(--mono);font-size:10px;letter-spacing:2px;padding:5px 14px;background:transparent;color:var(--dim);border:1px solid transparent;cursor:pointer;transition:all .3s;border-radius:2px;}
+.lang-btn.active{color:var(--gold);border-color:rgba(198,165,92,0.3);}
+.lang-btn:hover{color:var(--gold-l);}
+
+/* Nav */
+nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;background:rgba(5,5,7,0.8);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.03);}
+.nav-logo{font-family:var(--serif);font-size:20px;font-weight:300;letter-spacing:10px;color:var(--bright);text-decoration:none;}
+.nav-right{display:flex;gap:28px;align-items:center;}
+.nav-right a{font-size:11px;letter-spacing:2px;color:var(--dim);text-decoration:none;transition:color .3s;font-weight:400;}
+.nav-right a:hover{color:var(--gold);}
+
+/* Hero */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(198,165,92,0.04),transparent 70%),radial-gradient(ellipse 60% 50% at 20% 60%,rgba(78,205,196,0.02),transparent);}
+
+/* Molecular floating elements */
+.molecule{position:absolute;border-radius:50%;border:1px solid rgba(198,165,92,0.06);animation:float 20s infinite ease-in-out;}
+.m1{width:300px;height:300px;top:10%;right:-5%;animation-delay:0s;}
+.m2{width:200px;height:200px;bottom:20%;left:-3%;animation-delay:-7s;}
+.m3{width:150px;height:150px;top:30%;left:10%;border-color:rgba(78,205,196,0.04);animation-delay:-12s;}
+.m4{width:80px;height:80px;top:60%;right:15%;border-color:rgba(198,165,92,0.08);animation-delay:-4s;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-30px) rotate(180deg)}}
+
+/* Hexagonal grid pattern */
+.hex-grid{position:absolute;inset:0;opacity:0.015;background-image:url("data:image/svg+xml,%3Csvg width='60' height='52' viewBox='0 0 60 52' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0l30 15v22L30 52 0 37V15z' fill='none' stroke='%23C6A55C' stroke-width='0.5'/%3E%3C/svg%3E");background-size:60px 52px;}
+
+.hero-content{position:relative;z-index:1;text-align:center;}
+.hero-over{font-family:var(--mono);font-size:11px;letter-spacing:8px;color:var(--gold-d);margin-bottom:40px;opacity:0;animation:fadeIn 1.2s .4s forwards;}
+.hero h1{font-family:var(--serif);font-size:clamp(72px,14vw,160px);font-weight:300;letter-spacing:.15em;color:var(--bright);line-height:.9;opacity:0;animation:fadeIn 1.2s .6s forwards;}
+.hero-tagline{font-family:var(--serif);font-size:clamp(15px,2.5vw,22px);font-weight:300;font-style:italic;color:var(--dim);margin-top:28px;letter-spacing:2px;opacity:0;animation:fadeIn 1.2s .8s forwards;}
+.hero-scroll{margin-top:60px;opacity:0;animation:fadeIn 1.2s 1.2s forwards;}
+.hero-scroll span{display:block;width:1px;height:60px;background:linear-gradient(to bottom,var(--gold-d),transparent);margin:0 auto;}
+.sys-btn{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--dim);cursor:pointer;padding:5px 12px;border:1px solid transparent;transition:all .3s;border-radius:2px;}
+.sys-btn.active{color:var(--gold);border-color:rgba(198,165,92,.3);}
+.sys-btn:hover{color:var(--gold-l);}
+.hero-scroll-text{font-family:var(--mono);font-size:8px;letter-spacing:4px;color:var(--dim);margin-top:12px;writing-mode:vertical-rl;}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* Section: Philosophy */
+.philosophy{padding:180px 0;position:relative;}
+.philosophy::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(198,165,92,0.15),transparent);}
+.phil-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
+.phil-left .big-quote{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;line-height:1.4;color:var(--bright);}
+.phil-left .big-quote em{color:var(--gold);font-style:normal;}
+.phil-right{padding-top:20px;}
+.phil-right p{font-size:16px;line-height:2.2;color:var(--text);margin-bottom:20px;font-weight:300;}
+.phil-right .hl{color:var(--gold-l);font-weight:400;}
+.phil-sig{margin-top:40px;padding-top:24px;border-top:1px solid rgba(198,165,92,0.12);}
+.phil-sig .n{font-weight:600;color:var(--bright);font-size:14px;}
+.phil-sig .t{font-size:11px;color:var(--dim);margin-top:3px;}
+
+/* Science section */
+.science{padding:160px 0;background:var(--bg2);position:relative;}
+.science::before,.science::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(198,165,92,0.12),transparent);}
+.science::before{top:0;}.science::after{bottom:0;}
+.sci-header{text-align:center;max-width:750px;margin:0 auto 100px;}
+.sci-header h2{font-family:var(--serif);font-size:clamp(30px,5vw,52px);font-weight:300;color:var(--bright);margin-bottom:20px;line-height:1.2;}
+.sci-header p{font-size:14px;line-height:1.8;color:var(--dim);}
+
+/* Formula strip */
+.formula-strip{display:flex;gap:1px;margin-bottom:80px;}
+.formula-step{flex:1;background:var(--bg3);padding:48px 24px;text-align:center;position:relative;overflow:hidden;transition:background .5s;}
+.formula-step:hover{background:rgba(198,165,92,0.03);}
+.formula-step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .6s;transform-origin:left;}
+.formula-step:hover::before{transform:scaleX(1);}
+.fs-num{font-family:var(--mono);font-size:48px;font-weight:300;color:rgba(198,165,92,0.08);margin-bottom:16px;line-height:1;}
+.fs-title{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--gold);margin-bottom:12px;letter-spacing:1px;}
+.fs-desc{font-size:13px;line-height:1.8;color:var(--dim);}
+
+/* Advisor */
+.advisor-card{display:grid;grid-template-columns:200px 1fr;gap:48px;background:var(--bg3);border:1px solid rgba(198,165,92,0.06);border-radius:4px;padding:48px;align-items:center;}
+.adv-photo{width:200px;height:200px;border-radius:4px;background:linear-gradient(135deg,var(--bg),#1a2a40);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.adv-photo::before{content:'';position:absolute;inset:0;border:1px solid rgba(198,165,92,0.1);border-radius:4px;}
+.adv-initials{font-family:var(--serif);font-size:56px;font-weight:300;color:rgba(198,165,92,0.25);}
+.adv-info h3{font-family:var(--serif);font-size:26px;color:var(--bright);font-weight:400;}
+.adv-info .role{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);margin:8px 0 16px;}
+.adv-info p{font-size:14px;line-height:1.9;color:var(--dim);}
+.adv-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
+.adv-tags span{font-family:var(--mono);font-size:9px;padding:4px 12px;border:1px solid rgba(198,165,92,0.12);color:var(--gold-d);letter-spacing:1px;border-radius:2px;}
+
+/* Team */
+.team-sec{padding:160px 0;}
+.team-header{text-align:center;margin-bottom:80px;}
+.team-header h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--bright);}
+.team-header .sub{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--dim);margin-top:8px;}
+.team-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
+.team-card{background:var(--bg2);padding:48px 28px;text-align:center;transition:all .5s;position:relative;}
+.team-card:hover{background:var(--bg3);}
+.tc-icon{font-size:32px;margin-bottom:14px;filter:grayscale(0.3);}
+.tc-role{font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
+.tc-name{font-size:16px;font-weight:600;color:var(--bright);margin-bottom:10px;}
+.tc-desc{font-size:13px;color:var(--dim);line-height:1.8;}
+.tc-quote{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--text);margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.03);}
+
+/* Products */
+.products-sec{padding:160px 0;background:var(--bg2);}
+.prod-header{text-align:center;margin-bottom:80px;}
+.prod-header h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--bright);}
+
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.prod-card{background:var(--bg);border:1px solid rgba(255,255,255,0.04);border-radius:6px;padding:0;overflow:hidden;transition:border-color .5s,transform .5s;}
+.prod-card:hover{border-color:rgba(198,165,92,0.2);transform:translateY(-6px);}
+.prod-visual{height:180px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.prod-card:nth-child(1) .prod-visual{background:linear-gradient(135deg,#0a1628,#122240);}
+.prod-card:nth-child(2) .prod-visual{background:linear-gradient(135deg,#1a0a0a,#2a1215);}
+.prod-card:nth-child(3) .prod-visual{background:linear-gradient(135deg,#0a1a18,#0f2a24);}
+.prod-visual svg{opacity:0.15;}
+.prod-tag{position:absolute;top:16px;left:16px;font-family:var(--mono);font-size:8px;letter-spacing:2px;padding:4px 10px;border-radius:2px;background:rgba(0,0,0,0.4);backdrop-filter:blur(10px);}
+.prod-card:nth-child(1) .prod-tag{color:#5b9bd5;}
+.prod-card:nth-child(2) .prod-tag{color:#e07070;}
+.prod-card:nth-child(3) .prod-tag{color:var(--green);}
+.prod-body{padding:32px 28px;}
+.prod-name{font-family:var(--serif);font-size:28px;font-weight:600;color:var(--bright);}
+.prod-sub{font-size:13px;color:var(--dim);margin:4px 0 20px;}
+.prod-feat{list-style:none;}
+.prod-feat li{font-size:11px;color:var(--text);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.03);display:flex;gap:8px;align-items:baseline;}
+.prod-feat li::before{content:'◆';font-size:5px;color:var(--gold-d);}
+.prod-spec{margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.04);display:flex;justify-content:space-between;}
+.prod-spec div{text-align:center;}
+.prod-spec .val{font-family:var(--mono);font-size:14px;color:var(--bright);}
+.prod-spec .lbl{font-size:9px;color:var(--dim);margin-top:2px;}
+
+/* Proof */
+.proof-sec{padding:160px 0;text-align:center;}
+.proof-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:60px 0 80px;}
+.proof-n{background:var(--bg2);padding:48px 20px;}
+.proof-n .num{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-weight:300;color:var(--gold);}
+.proof-n .txt{font-size:11px;color:var(--dim);margin-top:8px;letter-spacing:1px;}
+.proof-quote{max-width:650px;margin:0 auto;}
+.proof-quote blockquote{font-family:var(--serif);font-size:clamp(18px,3vw,26px);font-weight:300;font-style:italic;color:var(--bright);line-height:1.7;}
+.proof-quote .attr{margin-top:24px;font-size:13px;color:var(--gold);}
+
+/* CTA */
+.cta-sec{padding:140px 0;background:var(--bg2);text-align:center;position:relative;}
+.cta-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(198,165,92,0.15),transparent);}
+.cta-sec h2{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:300;color:var(--bright);margin-bottom:16px;}
+.cta-sec p{font-size:14px;color:var(--dim);margin-bottom:40px;}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn{display:inline-block;padding:14px 40px;font-family:var(--sans);font-size:11px;letter-spacing:3px;text-decoration:none;text-transform:uppercase;transition:all .4s;cursor:pointer;border:none;font-weight:400;}
+.btn-g{background:var(--gold);color:var(--bg);}
+.btn-g:hover{background:var(--gold-l);}
+.btn-o{background:transparent;color:var(--gold);border:1px solid rgba(198,165,92,0.2);}
+.btn-o:hover{border-color:var(--gold);background:rgba(198,165,92,0.04);}
+
+footer{padding:60px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.03);}
+.f-logo{font-family:var(--serif);font-size:24px;font-weight:300;letter-spacing:12px;color:rgba(255,255,255,0.1);margin-bottom:16px;}
+.f-text{font-size:10px;color:var(--dim);line-height:2.2;letter-spacing:1px;}
+.f-text a{color:var(--gold-d);text-decoration:none;}
+
+@media(max-width:768px){
+  .phil-grid,.advisor-card{grid-template-columns:1fr;gap:40px;}
+  .formula-strip{flex-wrap:wrap;}.formula-step{min-width:48%;}
+  .team-row,.prod-grid{grid-template-columns:1fr;}
+  .proof-nums{grid-template-columns:1fr 1fr;}
+  .nav-right{display:none;}
+  .adv-photo{width:120px;height:120px;margin:0 auto;}
+  .advisor-card{text-align:center;padding:32px 24px;}
+}
+
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+</style>
+</head>
+<body>
+
+<!-- Language translations object -->
+<script>
+const T = {
+  ko: {
+    nav: { story: "스토리", science: "연구", team: "팀", products: "제품", contact: "문의" },
+    hero: { over: "EQUINE NUTRITION BY SCIENCE", tag: "Every stride begins with the right nutrition." },
+    phil: {
+      label: "// THE ORIGIN",
+      quote: '딸이 아끼는 말에게<br><em>진짜 좋은 것</em>을<br>먹이고 싶었습니다.',
+      p1: '10년간 사람을 위한 프리미엄 영양제를 만들어온 저는, 딸 유나가 승마 선수로 성장하면서 자연스럽게 말의 영양에도 관심을 갖게 되었습니다.',
+      p2: '시중의 수입 제품들을 살펴볼수록 의문이 커졌습니다. <span class="hl">성분 함량은 적정한가? 유기 미네랄을 쓰고 있는가? 과학적 근거는 충분한가?</span>',
+      p3: '사람 영양제에서는 당연히 따지는 기준들이, 말 영양제에서는 통하지 않고 있었습니다. 그래서 직접 만들기로 했습니다. 미국 AUHS 약학대 연구진, 딸의 코치, 말 전문 수의사와 함께.',
+      sig: 'CEO, Terabiotech Korea — BonScience · wevita · STRIDE'
+    },
+    sci: {
+      label: "// THE SCIENCE",
+      h: 'Formulated by<br>Pharmaceutical Scientists.',
+      p: 'STRIDE의 모든 성분은 NRC 기준과 최신 말 영양학 연구를 바탕으로, 약학 연구자가 직접 설계합니다.',
+      s1t: 'Literature Review', s1d: 'NRC 2007 기준 + 최신 논문 기반 영양소 요구량 분석',
+      s2t: 'Formulation Design', s2d: 'AUHS 약학대 연구진과 공동 성분 배합 설계',
+      s3t: 'Quality Testing', s3d: 'HACCP 인증 시설 제조 + 성분 함량 검증',
+      s4t: 'Doping-Free', s4d: '한국마사회 기준 금지약물 미검출 인증',
+      advBio: 'AUHS 약학대 Pharmaceutical Science 학과장 겸 Associate Dean of Research. DuPont Central Research 10년, University of Kansas 약학대 교수 9년, NIH Postdoctoral Fellow (University of Wisconsin-Madison).'
+    },
+    team: {
+      label: "// THE TEAM",
+      h: '각자의 전문 영역에서,<br>하나의 질문에 답합니다.',
+      sub: '"이 말에게 무엇이 최선인가?"',
+      c1: { role: 'FOUNDER', name: 'Justin Chung', desc: '건강기능식품 전문가 10년+<br>BonScience · wevita 브랜드', q: '"사람 영양제의 기준으로 말 영양제를 만듭니다"' },
+      c2: { role: 'SCIENCE', name: 'Dr. John V. Schloss', desc: 'AUHS 약학대 학과장<br>Associate Dean of Research', q: '"과학이 뒷받침하지 않는 영양제는 의미가 없습니다"' },
+      c3: { role: 'ATHLETE', name: '정유나 선수', desc: '경기도 대표 승마선수 (중등부)<br>다수 금·은·동메달 수상', q: '"제 말이 직접 먹고 달라진 걸 느꼈어요"' },
+      c4: { role: 'COACH', name: '승마 코치', desc: '현장 검증 & 승마장 네트워크<br>승마 업계 전문가', q: '"현장에서 진짜 효과를 확인했습니다"' },
+      c5: { role: 'VETERINARY', name: '말 전문 수의사', desc: '안전성 검증 & 급여 가이드<br>수의사 추천 인증', q: '"과학적으로 안전한 성분만 사용합니다"' },
+      c6: { role: 'ACADEMY', name: 'AUHS Pharmacy', desc: 'Signal Hill, California<br>PharmD · BSPS 프로그램', q: '"학술적 근거 위에 세워진 브랜드"' },
+    },
+    prod: {
+      label: "// THE PRODUCTS",
+      h: 'Three formulas.<br>One standard: the best.',
+      d: { tag: 'EVERYDAY', name: 'DAILY', sub: '종합 비타민 & 미네랄', f: ['천연 비타민E + 유기 킬레이트 미네랄', '비오틴 20mg 고함량 설계', '이스트 배양물 포스트바이오틱', 'NRC 2007 기준 최적 설계'], w: '4.5kg', days: '~150일' },
+      f: { tag: 'RECOVERY', name: 'FLEX', sub: '관절 · 인대 · 회복', f: ['보스웰리아 + MSM + 글루코사민', '히알루론산 + 해양콜라겐', '커큐민 95% + 비타민E 3,000IU', '훈련·시합마 집중 케어'], w: '4.5kg', days: '~90일' },
+      e: { tag: 'ELECTROLYTE', name: 'ELECTRO', sub: '전해질 · 수분 보충', f: ['말의 땀 조성 Na:K:Cl 매칭', '칼슘 글루코네이트 지구력 서포트', '포도당 공수송 흡수 촉진', '천연 비타민E + C 항산화'], w: '3kg', days: '~60일' },
+    },
+    proof: {
+      label: "// THE PROOF",
+      h: 'Numbers speak.',
+      n1: '5', t1: '전문가 공동 개발',
+      n2: '17+', t2: '핵심 영양 성분',
+      n3: '0', t3: '금지약물 검출',
+      n4: '100%', t4: '유기 킬레이트 미네랄',
+      q: '"이 영양제는 아빠가 저를 위해,<br>제 말을 위해 만든 거예요.<br>그래서 더 믿을 수 있어요."',
+      qa: '— 정유나, 경기도 대표 승마선수'
+    },
+    cta: { h: '당신의 말에게도<br>최선을 선택하세요.', p: '승마장 B2B 문의, 샘플 요청, 제품 문의', b1: '문의하기', b2: '제품 보기' },
+  },
+  en: {
+    nav: { story: "STORY", science: "SCIENCE", team: "TEAM", products: "PRODUCTS", contact: "CONTACT" },
+    hero: { over: "EQUINE NUTRITION BY SCIENCE", tag: "Every stride begins with the right nutrition." },
+    phil: {
+      label: "// THE ORIGIN",
+      quote: 'I wanted to give<br>my daughter\'s horse<br><em>the very best.</em>',
+      p1: 'After a decade formulating premium human supplements, my perspective shifted when my daughter Yuna became a competitive equestrian athlete.',
+      p2: 'The more I examined imported equine products, the more questions arose. <span class="hl">Are the dosages optimal? Are they using organic minerals? Where is the scientific evidence?</span>',
+      p3: 'Standards we take for granted in human nutrition were simply absent in equine supplements. So I assembled a team — pharmaceutical scientists from AUHS, Yuna\'s coach, and an equine veterinarian — to create something worthy.',
+      sig: 'CEO, Terabiotech Korea — BonScience · wevita · STRIDE'
+    },
+    sci: {
+      label: "// THE SCIENCE",
+      h: 'Formulated by<br>Pharmaceutical Scientists.',
+      p: 'Every ingredient in STRIDE is designed by pharmaceutical researchers based on NRC standards and the latest equine nutrition research.',
+      s1t: 'Literature Review', s1d: 'NRC 2007 standards + latest research-based nutrient analysis',
+      s2t: 'Formulation Design', s2d: 'Co-designed with AUHS School of Pharmacy research team',
+      s3t: 'Quality Testing', s3d: 'HACCP certified facility + content verification',
+      s4t: 'Doping-Free', s4d: 'Korea Racing Authority prohibited substance testing',
+      advBio: 'Chair of Pharmaceutical Science & Associate Dean of Research at AUHS School of Pharmacy. 10 years at DuPont Central Research, 9 years as Professor at University of Kansas School of Pharmacy, NIH Postdoctoral Fellow (University of Wisconsin-Madison).'
+    },
+    team: {
+      label: "// THE TEAM",
+      h: 'Five experts.<br>One question.',
+      sub: '"What is the best for this horse?"',
+      c1: { role: 'FOUNDER', name: 'Justin Chung', desc: 'Health supplement expert 10yr+<br>BonScience · wevita brands', q: '"We apply human-grade standards to equine nutrition."' },
+      c2: { role: 'SCIENCE', name: 'Dr. John V. Schloss', desc: 'Chair, Pharmaceutical Science<br>AUHS School of Pharmacy', q: '"A supplement without science behind it is meaningless."' },
+      c3: { role: 'ATHLETE', name: 'Yuna Chung', desc: 'Provincial team equestrian<br>Multiple gold/silver medalist', q: '"My horse eats this. I trust it because my dad made it."' },
+      c4: { role: 'COACH', name: 'Head Coach', desc: 'Field verification & network<br>Industry expert', q: '"I\'ve seen the real difference in the field."' },
+      c5: { role: 'VETERINARY', name: 'Equine Veterinarian', desc: 'Safety verification<br>Veterinarian endorsed', q: '"Only scientifically validated ingredients."' },
+      c6: { role: 'ACADEMY', name: 'AUHS Pharmacy', desc: 'Signal Hill, California<br>PharmD · BSPS Programs', q: '"A brand built on academic evidence."' },
+    },
+    prod: {
+      label: "// THE PRODUCTS",
+      h: 'Three formulas.<br>One standard: the best.',
+      d: { tag: 'EVERYDAY', name: 'DAILY', sub: 'Complete Vitamin & Mineral', f: ['Natural vitamin E + organic chelate minerals', 'High-dose Biotin 20mg', 'Yeast metabolite postbiotic', 'NRC 2007 optimized design'], w: '4.5kg', days: '~150 days' },
+      f: { tag: 'RECOVERY', name: 'FLEX', sub: 'Joint · Ligament · Recovery', f: ['Boswellia + MSM + Glucosamine', 'Hyaluronic acid + marine collagen', 'Curcumin 95% + Vitamin E 3,000IU', 'Training & competition horse care'], w: '4.5kg', days: '~90 days' },
+      e: { tag: 'ELECTROLYTE', name: 'ELECTRO', sub: 'Electrolyte & Hydration', f: ['Equine sweat-matched Na:K:Cl ratio', 'Calcium gluconate endurance support', 'Dextrose co-transport absorption', 'Natural vitamin E + C antioxidant'], w: '3kg', days: '~60 days' },
+    },
+    proof: {
+      label: "// THE PROOF",
+      h: 'Numbers speak.',
+      n1: '5', t1: 'Expert collaborators',
+      n2: '17+', t2: 'Key nutrients',
+      n3: '0', t3: 'Prohibited substances',
+      n4: '100%', t4: 'Organic chelate minerals',
+      q: '"This supplement was made by my dad,<br>for me, for my horse.<br>That\'s why I trust it."',
+      qa: '— Yuna Chung, Provincial Team Equestrian'
+    },
+    cta: { h: 'Give your horse<br>the best stride.', p: 'B2B inquiries, sample requests, product questions', b1: 'Contact Us', b2: 'View Products' },
+  },
+  de: {
+    nav: { story: "GESCHICHTE", science: "WISSENSCHAFT", team: "TEAM", products: "PRODUKTE", contact: "KONTAKT" },
+    hero: { over: "PFERDEERNÄHRUNG DURCH WISSENSCHAFT", tag: "Jeder Schritt beginnt mit der richtigen Ernährung." },
+    phil: {
+      label: "// DER URSPRUNG",
+      quote: 'Ich wollte dem Pferd<br>meiner Tochter<br><em>das Allerbeste</em> geben.',
+      p1: 'Nach einem Jahrzehnt der Entwicklung von Premium-Nahrungsergänzungsmitteln für Menschen änderte sich meine Perspektive, als meine Tochter Yuna eine erfolgreiche Reitsportlerin wurde.',
+      p2: 'Je mehr ich importierte Pferdeprodukte untersuchte, desto mehr Fragen stellten sich. <span class="hl">Sind die Dosierungen optimal? Werden organische Mineralien verwendet? Wo ist der wissenschaftliche Nachweis?</span>',
+      p3: 'Standards, die wir in der menschlichen Ernährung für selbstverständlich halten, fehlten bei Pferdeergänzungen. Also stellte ich ein Team zusammen — Pharmaziewissenschaftler der AUHS, Yunas Trainer und einen Pferdetierarzt.',
+      sig: 'CEO, Terabiotech Korea — BonScience · wevita · STRIDE'
+    },
+    sci: {
+      label: "// DIE WISSENSCHAFT",
+      h: 'Formuliert von<br>Pharmaziewissenschaftlern.',
+      p: 'Jede Zutat in STRIDE wird von pharmazeutischen Forschern auf Basis der NRC-Standards und der neuesten Pferdeernährungsforschung entwickelt.',
+      s1t: 'Literaturanalyse', s1d: 'NRC 2007 Standards + aktuelle Forschung',
+      s2t: 'Formulierungsdesign', s2d: 'Gemeinsam mit AUHS School of Pharmacy entwickelt',
+      s3t: 'Qualitätsprüfung', s3d: 'HACCP-zertifizierte Anlage + Gehaltsverifizierung',
+      s4t: 'Dopingfrei', s4d: 'Korea Racing Authority — keine verbotenen Substanzen',
+      advBio: 'Lehrstuhlinhaber Pharmazeutische Wissenschaften & Associate Dean of Research an der AUHS School of Pharmacy. 10 Jahre DuPont Central Research, 9 Jahre Professor an der University of Kansas.'
+    },
+    team: {
+      label: "// DAS TEAM", h: 'Fünf Experten.<br>Eine Frage.', sub: '"Was ist das Beste für dieses Pferd?"',
+      c1: { role: 'GRÜNDER', name: 'Justin Chung', desc: 'Nahrungsergänzungsexperte 10J+<br>BonScience · wevita', q: '"Wir setzen Human-Grade-Standards für Pferde um."' },
+      c2: { role: 'WISSENSCHAFT', name: 'Dr. John V. Schloss', desc: 'Lehrstuhl, Pharmazeutische Wissenschaften<br>AUHS', q: '"Ein Supplement ohne Wissenschaft ist bedeutungslos."' },
+      c3: { role: 'ATHLETIN', name: 'Yuna Chung', desc: 'Landesteam-Reiterin<br>Mehrfache Medaillengewinnerin', q: '"Mein Pferd frisst das. Ich vertraue es."' },
+      c4: { role: 'TRAINER', name: 'Cheftrainer', desc: 'Feldverifikation & Netzwerk', q: '"Ich habe den echten Unterschied gesehen."' },
+      c5: { role: 'TIERARZT', name: 'Pferdetierarzt', desc: 'Sicherheitsverifizierung', q: '"Nur wissenschaftlich validierte Inhaltsstoffe."' },
+      c6: { role: 'AKADEMIE', name: 'AUHS Pharmacy', desc: 'Signal Hill, Kalifornien', q: '"Eine Marke auf akademischer Grundlage."' },
+    },
+    prod: {
+      label: "// DIE PRODUKTE", h: 'Drei Formeln.<br>Ein Standard: das Beste.',
+      d: { tag: 'TÄGLICH', name: 'DAILY', sub: 'Komplett-Vitamin & Mineral', f: ['Natürliches Vitamin E + organische Chelatmineralien', 'Hochdosiertes Biotin 20mg', 'Hefekultur-Postbiotikum', 'NRC 2007 optimiertes Design'], w: '4.5kg', days: '~150 Tage' },
+      f: { tag: 'ERHOLUNG', name: 'FLEX', sub: 'Gelenk · Band · Erholung', f: ['Boswellia + MSM + Glucosamin', 'Hyaluronsäure + Marines Kollagen', 'Curcumin 95% + Vitamin E 3.000IE', 'Training & Wettkampfpflege'], w: '4.5kg', days: '~90 Tage' },
+      e: { tag: 'ELEKTROLYT', name: 'ELECTRO', sub: 'Elektrolyt & Hydratation', f: ['Schweißangepasstes Na:K:Cl-Verhältnis', 'Calciumgluconat Ausdauerunterstützung', 'Dextrose Co-Transport Absorption', 'Natürliches Vitamin E + C'], w: '3kg', days: '~60 Tage' },
+    },
+    proof: { label: "// DER BEWEIS", h: 'Zahlen sprechen.', n1: '5', t1: 'Expertenmitarbeiter', n2: '17+', t2: 'Schlüsselnährstoffe', n3: '0', t3: 'Verbotene Substanzen', n4: '100%', t4: 'Organische Chelatmineralien', q: '"Dieses Supplement wurde von meinem Vater gemacht,<br>für mich, für mein Pferd."', qa: '— Yuna Chung, Landesteam-Reiterin' },
+    cta: { h: 'Geben Sie Ihrem Pferd<br>den besten Schritt.', p: 'B2B-Anfragen, Musteranforderungen, Produktfragen', b1: 'Kontakt', b2: 'Produkte ansehen' },
+  },
+  fr: {
+    nav: { story: "HISTOIRE", science: "SCIENCE", team: "ÉQUIPE", products: "PRODUITS", contact: "CONTACT" },
+    hero: { over: "NUTRITION ÉQUINE PAR LA SCIENCE", tag: "Chaque foulée commence par la bonne nutrition." },
+    phil: {
+      label: "// L'ORIGINE",
+      quote: 'Je voulais donner<br>au cheval de ma fille<br><em>le meilleur.</em>',
+      p1: 'Après une décennie à formuler des compléments premium pour l\'homme, ma perspective a changé quand ma fille Yuna est devenue cavalière de compétition.',
+      p2: 'Plus j\'examinais les produits équins importés, plus les questions se multipliaient. <span class="hl">Les dosages sont-ils optimaux ? Utilisent-ils des minéraux organiques ? Où sont les preuves scientifiques ?</span>',
+      p3: 'Les standards que nous considérons comme acquis en nutrition humaine étaient simplement absents. J\'ai donc réuni une équipe — des scientifiques de l\'AUHS, le coach de Yuna et un vétérinaire équin.',
+      sig: 'PDG, Terabiotech Korea — BonScience · wevita · STRIDE'
+    },
+    sci: {
+      label: "// LA SCIENCE", h: 'Formulé par des<br>scientifiques pharmaceutiques.', p: 'Chaque ingrédient de STRIDE est conçu par des chercheurs pharmaceutiques selon les normes NRC.',
+      s1t: 'Revue de littérature', s1d: 'Normes NRC 2007 + recherche actuelle',
+      s2t: 'Conception', s2d: 'Co-conçu avec l\'équipe AUHS School of Pharmacy',
+      s3t: 'Tests qualité', s3d: 'Installation certifiée HACCP + vérification',
+      s4t: 'Sans dopage', s4d: 'Autorité des courses de Corée — aucune substance interdite',
+      advBio: 'Directeur des Sciences Pharmaceutiques & Associate Dean of Research à l\'AUHS School of Pharmacy. 10 ans chez DuPont Central Research, 9 ans Professeur à l\'University of Kansas.'
+    },
+    team: {
+      label: "// L'ÉQUIPE", h: 'Cinq experts.<br>Une question.', sub: '"Quel est le meilleur pour ce cheval ?"',
+      c1: { role: 'FONDATEUR', name: 'Justin Chung', desc: 'Expert en compléments 10 ans+<br>BonScience · wevita', q: '"Nous appliquons les standards humains à la nutrition équine."' },
+      c2: { role: 'SCIENCE', name: 'Dr. John V. Schloss', desc: 'Directeur, Sciences Pharmaceutiques<br>AUHS', q: '"Un complément sans science est insignifiant."' },
+      c3: { role: 'ATHLÈTE', name: 'Yuna Chung', desc: 'Cavalière équipe provinciale<br>Multiple médaillée', q: '"Mon cheval mange ça. Je fais confiance à mon père."' },
+      c4: { role: 'ENTRAÎNEUR', name: 'Coach', desc: 'Vérification terrain & réseau', q: '"J\'ai vu la vraie différence sur le terrain."' },
+      c5: { role: 'VÉTÉRINAIRE', name: 'Vétérinaire équin', desc: 'Vérification de sécurité', q: '"Seuls des ingrédients validés scientifiquement."' },
+      c6: { role: 'ACADÉMIE', name: 'AUHS Pharmacy', desc: 'Signal Hill, Californie', q: '"Une marque fondée sur des preuves académiques."' },
+    },
+    prod: {
+      label: "// LES PRODUITS", h: 'Trois formules.<br>Un standard : le meilleur.',
+      d: { tag: 'QUOTIDIEN', name: 'DAILY', sub: 'Vitamines & Minéraux complets', f: ['Vitamine E naturelle + minéraux chélatés', 'Biotine haute dose 20mg', 'Postbiotique de culture de levure', 'Conception optimisée NRC 2007'], w: '4.5kg', days: '~150 jours' },
+      f: { tag: 'RÉCUPÉRATION', name: 'FLEX', sub: 'Articulation · Ligament · Récupération', f: ['Boswellia + MSM + Glucosamine', 'Acide hyaluronique + collagène marin', 'Curcumine 95% + Vitamine E 3000UI', 'Soins intensifs entraînement'], w: '4.5kg', days: '~90 jours' },
+      e: { tag: 'ÉLECTROLYTE', name: 'ELECTRO', sub: 'Électrolyte & Hydratation', f: ['Ratio Na:K:Cl adapté à la sueur', 'Gluconate de calcium endurance', 'Absorption co-transport dextrose', 'Vitamine E + C naturelles'], w: '3kg', days: '~60 jours' },
+    },
+    proof: { label: "// LA PREUVE", h: 'Les chiffres parlent.', n1: '5', t1: 'Experts collaborateurs', n2: '17+', t2: 'Nutriments clés', n3: '0', t3: 'Substances interdites', n4: '100%', t4: 'Minéraux chélatés organiques', q: '"Ce complément a été fait par mon père,<br>pour moi, pour mon cheval."', qa: '— Yuna Chung, Cavalière équipe provinciale' },
+    cta: { h: 'Offrez à votre cheval<br>la meilleure foulée.', p: 'Demandes B2B, échantillons, questions produits', b1: 'Nous contacter', b2: 'Voir les produits' },
+  }
+};
+
+let currentLang = 'ko';
+function setLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  const t = T[lang];
+  // Nav
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const keys = el.dataset.t.split('.');
+    let val = t;
+    keys.forEach(k => { if(val) val = val[k]; });
+    if(val) el.innerHTML = val;
+  });
+}
+</script>
+
+<!-- Lang bar -->
+<div class="lang-bar">
+  <button class="lang-btn active" data-lang="ko" onclick="setLang('ko')">한국어</button>
+  <button class="lang-btn" data-lang="en" onclick="setLang('en')">ENGLISH</button>
+  <button class="lang-btn" data-lang="de" onclick="setLang('de')">DEUTSCH</button>
+  <button class="lang-btn" data-lang="fr" onclick="setLang('fr')">FRANÇAIS</button>
+</div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">STRIDE</a>
+  <div class="nav-right">
+    <a href="#story" data-t="nav.story">스토리</a>
+    <a href="#lab" data-t="nav.science">연구</a>
+    <a href="#team" data-t="nav.team">팀</a>
+    <a href="#products" data-t="nav.products">제품</a>
+    <a href="#contact" data-t="nav.contact">문의</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <canvas id="heroCanvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;"></canvas>
+  <div class="hero-bg"></div>
+  <div class="hex-grid"></div>
+  <div class="hero-content">
+    <div class="hero-over" data-t="hero.over">EQUINE NUTRITION BY SCIENCE</div>
+    <h1>STRIDE</h1>
+    <div class="hero-tagline" data-t="hero.tag">Every stride begins with the right nutrition.</div>
+    <div style="margin-top:32px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+      <span class="sys-btn active" onclick="setSys('skeletal',this)">SKELETAL</span>
+      <span class="sys-btn" onclick="setSys('muscular',this)">MUSCULAR</span>
+      <span class="sys-btn" onclick="setSys('vascular',this)">VASCULAR</span>
+      <span class="sys-btn" onclick="setSys('nutrition',this)">NUTRITION</span>
+    </div>
+    <div class="hero-scroll"><span></span></div>
+  </div>
+</section>
+
+<!-- Philosophy / Origin -->
+<section class="philosophy" id="story">
+  <div class="container">
+    <div class="label reveal" data-t="phil.label">// THE ORIGIN</div>
+    <div class="phil-grid">
+      <div class="reveal d1">
+        <div class="phil-left"><div class="big-quote" data-t="phil.quote">딸이 아끼는 말에게<br><em>진짜 좋은 것</em>을<br>먹이고 싶었습니다.</div></div>
+      </div>
+      <div class="phil-right reveal d2">
+        <p data-t="phil.p1">10년간 사람을 위한 프리미엄 영양제를 만들어온 저는, 딸 유나가 승마 선수로 성장하면서 자연스럽게 말의 영양에도 관심을 갖게 되었습니다.</p>
+        <p data-t="phil.p2">시중의 수입 제품들을 살펴볼수록 의문이 커졌습니다. <span class="hl">성분 함량은 적정한가? 유기 미네랄을 쓰고 있는가? 과학적 근거는 충분한가?</span></p>
+        <p data-t="phil.p3">사람 영양제에서는 당연히 따지는 기준들이, 말 영양제에서는 통하지 않고 있었습니다. 그래서 직접 만들기로 했습니다. 미국 AUHS 약학대 연구진, 딸의 코치, 말 전문 수의사와 함께.</p>
+        <div class="phil-sig">
+          <div class="n">Justin Chung</div>
+          <div class="t" data-t="phil.sig">CEO, Terabiotech Korea — BonScience · wevita · STRIDE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Science -->
+<section class="science" id="lab">
+  <div class="container">
+    <div class="sci-header reveal">
+      <div class="label" data-t="sci.label">// THE SCIENCE</div>
+      <h2 data-t="sci.h">Formulated by<br>Pharmaceutical Scientists.</h2>
+      <p data-t="sci.p">STRIDE의 모든 성분은 NRC 기준과 최신 말 영양학 연구를 바탕으로, 약학 연구자가 직접 설계합니다.</p>
+    </div>
+    <div class="formula-strip">
+      <div class="formula-step reveal"><div class="fs-num">01</div><div class="fs-title" data-t="sci.s1t">Literature Review</div><div class="fs-desc" data-t="sci.s1d">NRC 2007 기준 + 최신 논문 기반 영양소 요구량 분석</div></div>
+      <div class="formula-step reveal d1"><div class="fs-num">02</div><div class="fs-title" data-t="sci.s2t">Formulation Design</div><div class="fs-desc" data-t="sci.s2d">AUHS 약학대 연구진과 공동 성분 배합 설계</div></div>
+      <div class="formula-step reveal d2"><div class="fs-num">03</div><div class="fs-title" data-t="sci.s3t">Quality Testing</div><div class="fs-desc" data-t="sci.s3d">HACCP 인증 시설 제조 + 성분 함량 검증</div></div>
+      <div class="formula-step reveal d3"><div class="fs-num">04</div><div class="fs-title" data-t="sci.s4t">Doping-Free</div><div class="fs-desc" data-t="sci.s4d">한국마사회 기준 금지약물 미검출 인증</div></div>
+    </div>
+    <div class="advisor-card reveal">
+      <div class="adv-photo"><div class="adv-initials">JS</div></div>
+      <div class="adv-info">
+        <h3>Dr. John V. Schloss, PhD</h3>
+        <div class="role">SCIENTIFIC ADVISOR — AUHS SCHOOL OF PHARMACY</div>
+        <p data-t="sci.advBio">AUHS 약학대 Pharmaceutical Science 학과장 겸 Associate Dean of Research. DuPont Central Research 10년, University of Kansas 약학대 교수 9년, NIH Postdoctoral Fellow (University of Wisconsin-Madison).</p>
+        <div class="adv-tags"><span>AUHS</span><span>NIH Fellow</span><span>DuPont Research</span><span>Univ. of Kansas</span><span>Oak Ridge Natl. Lab</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team -->
+<section class="team-sec" id="team">
+  <div class="container">
+    <div class="team-header reveal">
+      <div class="label" data-t="team.label">// THE TEAM</div>
+      <h2 data-t="team.h">각자의 전문 영역에서,<br>하나의 질문에 답합니다.</h2>
+      <div class="sub" data-t="team.sub">"이 말에게 무엇이 최선인가?"</div>
+    </div>
+    <div class="team-row">
+      <div class="team-card reveal"><div class="tc-icon">👨‍💼</div><div class="tc-role" data-t="team.c1.role">FOUNDER</div><div class="tc-name" data-t="team.c1.name">Justin Chung</div><div class="tc-desc" data-t="team.c1.desc">건강기능식품 전문가 10년+<br>BonScience · wevita 브랜드</div><div class="tc-quote" data-t="team.c1.q">"사람 영양제의 기준으로 말 영양제를 만듭니다"</div></div>
+      <div class="team-card reveal d1"><div class="tc-icon">🔬</div><div class="tc-role" data-t="team.c2.role">SCIENCE</div><div class="tc-name" data-t="team.c2.name">Dr. John V. Schloss</div><div class="tc-desc" data-t="team.c2.desc">AUHS 약학대 학과장<br>Associate Dean of Research</div><div class="tc-quote" data-t="team.c2.q">"과학이 뒷받침하지 않는 영양제는 의미가 없습니다"</div></div>
+      <div class="team-card reveal d2"><div class="tc-icon">🏇</div><div class="tc-role" data-t="team.c3.role">ATHLETE</div><div class="tc-name" data-t="team.c3.name">정유나 선수</div><div class="tc-desc" data-t="team.c3.desc">경기도 대표 승마선수 (중등부)<br>다수 금·은·동메달 수상</div><div class="tc-quote" data-t="team.c3.q">"제 말이 직접 먹고 달라진 걸 느꼈어요"</div></div>
+    </div>
+    <div class="team-row" style="margin-top:1px;">
+      <div class="team-card reveal d3"><div class="tc-icon">🏅</div><div class="tc-role" data-t="team.c4.role">COACH</div><div class="tc-name" data-t="team.c4.name">승마 코치</div><div class="tc-desc" data-t="team.c4.desc">현장 검증 & 승마장 네트워크<br>승마 업계 전문가</div><div class="tc-quote" data-t="team.c4.q">"현장에서 진짜 효과를 확인했습니다"</div></div>
+      <div class="team-card reveal d4"><div class="tc-icon">🩺</div><div class="tc-role" data-t="team.c5.role">VETERINARY</div><div class="tc-name" data-t="team.c5.name">말 전문 수의사</div><div class="tc-desc" data-t="team.c5.desc">안전성 검증 & 급여 가이드<br>수의사 추천 인증</div><div class="tc-quote" data-t="team.c5.q">"과학적으로 안전한 성분만 사용합니다"</div></div>
+      <div class="team-card reveal d5"><div class="tc-icon">🎓</div><div class="tc-role" data-t="team.c6.role">ACADEMY</div><div class="tc-name" data-t="team.c6.name">AUHS Pharmacy</div><div class="tc-desc" data-t="team.c6.desc">Signal Hill, California<br>PharmD · BSPS 프로그램</div><div class="tc-quote" data-t="team.c6.q">"학술적 근거 위에 세워진 브랜드"</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- Products -->
+<section class="products-sec" id="products">
+  <div class="container">
+    <div class="prod-header reveal">
+      <div class="label">// THE PRODUCTS</div>
+      <h2>Six formulas. One philosophy:<br>science your horse can taste.</h2>
+      <p style="color:var(--dim);font-size:14px;margin-top:8px;">모든 제품에 🍎 기호성 설계 시스템 적용 — 당밀 + 사과 + 호로파(Fenugreek)</p>
+    </div>
+    <div id="prodGrid" class="prod-grid" style="grid-template-columns:repeat(3,1fr);"></div>
+    <!-- Detail panel -->
+    <div id="prodDetail" style="display:none;margin-top:40px;background:var(--bg);border:1px solid rgba(198,165,92,.1);border-radius:8px;padding:40px;"></div>
+  </div>
+</section>
+
+<!-- Proof -->
+<section class="proof-sec">
+  <div class="container">
+    <div class="reveal">
+      <div class="label" data-t="proof.label" style="text-align:center">// THE PROOF</div>
+      <h2 style="font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--bright);text-align:center;" data-t="proof.h">Numbers speak.</h2>
+    </div>
+    <div class="proof-nums">
+      <div class="proof-n reveal"><div class="num" data-t="proof.n1">5</div><div class="txt" data-t="proof.t1">전문가 공동 개발</div></div>
+      <div class="proof-n reveal d1"><div class="num" data-t="proof.n2">17+</div><div class="txt" data-t="proof.t2">핵심 영양 성분</div></div>
+      <div class="proof-n reveal d2"><div class="num" data-t="proof.n3">0</div><div class="txt" data-t="proof.t3">금지약물 검출</div></div>
+      <div class="proof-n reveal d3"><div class="num" data-t="proof.n4">100%</div><div class="txt" data-t="proof.t4">유기 킬레이트 미네랄</div></div>
+    </div>
+    <div class="proof-quote reveal">
+      <blockquote data-t="proof.q">"이 영양제는 아빠가 저를 위해,<br>제 말을 위해 만든 거예요.<br>그래서 더 믿을 수 있어요."</blockquote>
+      <div class="attr" data-t="proof.qa">— 정유나, 경기도 대표 승마선수</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="contact">
+  <div class="container reveal">
+    <div class="label">// GET IN TOUCH</div>
+    <h2 data-t="cta.h">당신의 말에게도<br>최선을 선택하세요.</h2>
+    <p data-t="cta.p">승마장 B2B 문의, 샘플 요청, 제품 문의</p>
+    <div class="cta-btns">
+      <a href="/cdn-cgi/l/email-protection#741e0107001d1a3400110615161d1b0011171c5a171b19" class="btn btn-g" data-t="cta.b1">문의하기</a>
+      <a href="#products" class="btn btn-o" data-t="cta.b2">제품 보기</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="f-logo">STRIDE</div>
+  <div class="f-text">
+    Equine Nutrition by Science<br>
+    <a href="https://www.terabiotech.com">Terabiotech Korea</a> × <a href="https://www.auhs.edu/school-of-pharmacy">AUHS School of Pharmacy</a><br>
+    Born from Love, Built by Science.<br>
+    © 2026 STRIDE. All rights reserved.
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('v'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Populate product features dynamically
+function populateFeats() {
+  const t = T[currentLang];
+  ['d','f','e'].forEach((k,i) => {
+    const id = ['daily','flex','electro'][i];
+    const ul = document.getElementById(id+'-feat');
+    if(ul && t.prod[k]) {
+      ul.innerHTML = '';
+      t.prod[k].f.forEach(f => { const li = document.createElement('li'); li.textContent = f; ul.appendChild(li); });    }
+  });
+}
+const origSetLang = setLang;
+setLang = function(lang) { origSetLang(lang); populateFeats(); };
+populateFeats();
+
+// 6-Product Data & Rendering
+const PRODUCTS = [
+  { id:'daily', name:'DAILY', sub:'종합 비타민 & 미네랄', tag:'EVERYDAY', color:'#5b9bd5', weight:'4.5kg', days:'~150일', dose:'30g',
+    icon:'○', features:['천연 비타민E + 유기 킬레이트 미네랄','비오틴 20mg (발굽 임상 입증 용량)','셀레늄 + 비타민E 항산화 시너지','이스트 배양물 포스트바이오틱 + 아마씨'],
+    oneliner:'"사람 영양제의 기준으로 만든 종합영양제"',
+    ingredients:[
+      ['비타민A','16,000 IU','시력, 피부, 면역'],['비타민C','3,000 mg','항산화, 콜라겐 합성'],['비타민E (천연)','1,000 IU','항산화, 근육보호 (합성 대비 2배 흡수)'],['비오틴','20 mg','발굽/모질 개선 임상 입증 용량'],['나이아신 B3','200 mg','에너지 대사 NAD+ 전구체'],['아연 (유기)','400 mg','면역, 발굽 (흡수율 30-50%↑)'],['구리 (유기)','100 mg','결합조직, 아연과 4:1 비율'],['셀레늄 (유기)','3 mg','항산화 시너지 (비타민E와)'],['철 (유기)','500 mg','조혈, 산소 운반'],['마그네슘','2,000 mg','근이완, 300+ 효소 반응'],['칼슘','3,000 mg','골격 (Ca:P=1.5:1)'],['인','2,000 mg','골격, ATP 에너지 대사'],['이스트 배양물','5,000 mg','장 건강, 면역 조절'],['🍎 당밀+사과+호로파','5,500 mg','기호성 시스템']
+    ],
+    pitch:'모든 미네랄이 유기 킬레이트 형태. KER PERFORM은 함량을 공개하지 않지만, STRIDE는 모든 성분 mg 단위까지 투명하게 공개합니다.'
+  },
+  { id:'flex', name:'FLEX', sub:'관절 · 인대 · 회복', tag:'RECOVERY', color:'#e07070', weight:'4.5kg', days:'~90일', dose:'50g',
+    icon:'◇', features:['보스웰리아 10,000mg (Cortaflex 대비 +43%)','글루코사민 10,000mg + 콘드로이틴 5,000mg','커큐민 95% + 피페린 흡수 2,000%↑','BHT 무첨가 Clean Label'],
+    oneliner:'"48만원짜리 수입품에 없는 글루코사민이 들어있습니다"',
+    ingredients:[
+      ['보스웰리아','10,000 mg','항염 (Cortaflex 대비 +43%)'],['글루코사민 HCl','10,000 mg','연골 재생 (Cortaflex에 없음!)'],['콘드로이틴 황산','5,000 mg','연골 기질 직접 공급'],['L-메티오닌','2,000 mg','황 공급 (MSM 대체, 쓴맛 없음)'],['히알루론산','100 mg','관절액 점성 유지'],['비타민E (천연)','3,000 IU','항산화 (Cortaflex 대비 ×3.75)'],['비타민C','3,000 mg','콜라겐 합성 필수'],['커큐민 95%','2,000 mg','NF-κB 억제 광범위 항염'],['해양 콜라겐','3,000 mg','인대/건 구조 단백질'],['L-글루타민','2,000 mg','근육 회복, 장 건강'],['포도씨 추출물','600 mg','프로안토시아니딘 항산화'],['피페린 95%','20 mg','커큐민 흡수 2,000%↑'],['🍎 당밀+사과+호로파','7,000 mg','기호성 시스템 (강화)']
+    ],
+    pitch:'Cortaflex Recovery(48만원)에 글루코사민과 MSM이 없다는 사실, 아시나요? STRIDE FLEX는 관절 핵심 성분을 빠짐없이 포함합니다. 그리고 합성 보존제 BHT 대신 천연 로즈마리를 사용합니다.'
+  },
+  { id:'electro', name:'ELECTRO', sub:'전해질 · 수분 보충', tag:'HYDRATION', color:'#4ECDC4', weight:'3kg', days:'~60일', dose:'50g',
+    icon:'⬡', features:['말의 땀 조성 Na:K:Cl = 3:1:5 매칭','포도당 SGLT1 공수송 흡수 촉진','칼슘 글루코네이트 (지구력 서포트)','사과맛 — 물에 타면 말이 더 잘 마심'],
+    oneliner:'"소금이 아니라 과학입니다"',
+    ingredients:[
+      ['나트륨','10,500 mg','세포외액 #1 전해질'],['칼륨','6,000 mg','근수축, 신경 (땀 손실 #2)'],['클로라이드','16,000 mg','땀의 최대 성분'],['칼슘','2,500 mg','지구력 마 근수축 유지'],['마그네슘','2,000 mg','근이완, 경련 예방'],['포도당','5,000 mg','Na-Glu 공수송 흡수 촉진'],['비타민E','500 IU','운동 유발 산화 방어'],['비타민C','1,000 mg','항산화 사이클'],['🍎 당밀+사과+호로파','5,000 mg','사과맛 기호성 (음수량↑)']
+    ],
+    pitch:'대부분의 전해질 제품은 그냥 소금+칼륨입니다. STRIDE ELECTRO는 말의 실제 땀 Na:K:Cl 비율을 과학적으로 매칭하고, 포도당 공수송 원리로 흡수 속도를 극대화합니다.'
+  },
+  { id:'hoof', name:'HOOF', sub:'발굽 · 모질 · 피모', tag:'HOOF & COAT', color:'#D4A574', weight:'3kg', days:'~100일', dose:'30g',
+    icon:'△', features:['비오틴 30mg 초고함량 (업계 최고 수준)','L-메티오닌 + 아연 — 케라틴 합성 트리오','오메가-3 아마씨 + 레시틴 지방산','발굽 변화까지 8~12주 — 꾸준한 급여가 핵심'],
+    oneliner:'"장제사가 가장 먼저 추천하는 영양제"',
+    ingredients:[
+      ['비오틴','30 mg','발굽 임상 입증 20mg 이상 (50% 여유)'],['L-메티오닌','3,000 mg','케라틴 섬유 가교결합 필수 아미노산'],['아연 (유기)','500 mg','단백질 대사 — 발굽/모질 핵심'],['구리 (유기)','125 mg','케라틴 강도, 멜라닌 합성'],['요오드','5 mg','갑상선 → 모질/발굽 성장률 조절'],['오메가-3 아마씨','5,000 mg','피모 윤기, 수분 장벽 형성'],['레시틴','2,000 mg','지방산 흡수 촉진, 세포막 건강'],['이스트 배양물','3,000 mg','후장 소화→B비타민 자체 합성 촉진'],['비타민E','500 IU','피부 항산화 보호'],['🍎 당밀+사과+호로파','5,000 mg','기호성 시스템']
+    ],
+    pitch:'발굽이 약해서 편자가 잘 안 붙는 말, 모질이 건조하고 윤기 없는 말에게. 비오틴 30mg + 메티오닌 + 아연의 "케라틴 트리오"가 발굽과 모질을 동시에 개선합니다. 효과는 8~12주 후부터 나타납니다.'
+  },
+  { id:'calm', name:'CALM', sub:'진정 · 집중 · 스트레스', tag:'CALMING', color:'#9B8EC4', weight:'2kg', days:'~60일', dose:'30g',
+    icon:'◎', features:['마그네슘 5,000mg — 신경 안정 핵심','L-트립토판 → 세로토닌 전구체','티아민(B1) 고함량 — 신경 기능 정상화','도핑 프리 설계 (시합 당일 급여 가능)'],
+    oneliner:'"시합 전 긴장하는 말을 위한 과학적 솔루션"',
+    ingredients:[
+      ['마그네슘','5,000 mg','GABA 수용체 활성화 → 신경 안정'],['L-트립토판','3,000 mg','세로토닌 전구체 → 침착함 유도'],['티아민 (B1)','500 mg','신경 전달 물질 합성 (결핍 시 과민)'],['L-테아닌','1,000 mg','알파파 유도 — 진정 without 졸림'],['카모마일 추출물','2,000 mg','전통적 진정 허브, 위장 보호 겸비'],['비타민B6','100 mg','트립토판→세로토닌 변환 촉진'],['비타민E','500 IU','신경세포막 보호'],['🍎 당밀+사과+호로파','4,500 mg','기호성 시스템']
+    ],
+    pitch:'시합장에서 흥분하거나, 운송 시 스트레스 받는 말에게. 마그네슘+트립토판+티아민의 조합이 약물 없이 자연스러운 진정 효과를 만듭니다. 도핑 프리라 시합 당일도 급여 가능합니다.'
+  },
+  { id:'gut', name:'GUT', sub:'위장 · 소화 · 궤양 예방', tag:'DIGESTIVE', color:'#7BC67E', weight:'3kg', days:'~60일', dose:'50g',
+    icon:'◉', features:['위산 중화 + 위벽 코팅 이중 보호','프로바이오틱 + 프리바이오틱 장내 환경','글루타민 — 장벽 복구 핵심 아미노산','경주마/시합마 60~90%가 위궤양 보유'],
+    oneliner:'"위궤양은 보이지 않는 적. 예방이 최선입니다"',
+    ingredients:[
+      ['탄산칼슘 (위산 중화)','8,000 mg','위산 pH 완충 → 위벽 보호'],['알로에 베라 추출물','3,000 mg','위 점막 코팅, 항염, 조직 재생'],['L-글루타민','5,000 mg','장 상피세포 #1 에너지원, 장벽 복구'],['프로바이오틱 블렌드','10B CFU','Lactobacillus + Saccharomyces 균주'],['MOS 프리바이오틱','3,000 mg','유익균 먹이 + 유해균 결합 배출'],['실리움 껍질','3,000 mg','모래/이물질 배출, 장 운동 정상화'],['밀크씨슬 추출물','1,000 mg','간 보호 (실리마린 80%)'],['비타민B 복합','200 mg','소화 효소 활성, 에너지 대사'],['🍎 당밀+사과+호로파','5,000 mg','기호성 시스템']
+    ],
+    pitch:'경주마의 60~90%가 위궤양을 갖고 있습니다. 밥을 잘 안 먹거나, 안장 올릴 때 예민하거나, 체중이 안 느는 말은 위장 문제일 수 있습니다. STRIDE GUT은 위산 중화 + 위벽 코팅 + 장내 환경 개선을 동시에 해결합니다.'
+  }
+];
+
+function renderProducts(){
+  const grid = document.getElementById('prodGrid');
+  grid.innerHTML = PRODUCTS.map((p,i) => `
+    <div class="prod-card reveal ${i>0?'d'+(i%3):''}" onclick="showDetail('${p.id}')" style="cursor:pointer">
+      <div class="prod-visual" style="background:linear-gradient(135deg,${p.color}08,${p.color}15);height:140px;display:flex;align-items:center;justify-content:center;position:relative;">
+        <div style="font-size:48px;color:${p.color};opacity:.2;">${p.icon}</div>
+        <div style="position:absolute;top:12px;left:12px;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:${p.color};padding:4px 10px;font-weight:500;background:rgba(0,0,0,.3);border-radius:2px;">${p.tag}</div>
+      </div>
+      <div style="padding:24px 20px;">
+        <div style="font-family:var(--serif);font-size:24px;font-weight:600;color:var(--bright);">${p.name}</div>
+        <div style="font-size:14px;color:var(--text);margin:4px 0 16px;">${p.sub}</div>
+        <ul style="list-style:none;">
+          ${p.features.slice(0,3).map(f=>`<li style="font-size:13px;color:var(--bright);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);display:flex;gap:6px;align-items:baseline;"><span style="color:${p.color};font-size:5px;">◆</span>${f}</li>`).join('')}
+        </ul>
+        <div style="display:flex;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.04);">
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:13px;color:var(--bright);">${p.weight}</div><div style="font-size:10px;color:var(--text);">WEIGHT</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:13px;color:var(--bright);">${p.days}</div><div style="font-size:10px;color:var(--text);">SUPPLY</div></div>
+          <div style="text-align:center;"><div style="font-family:var(--mono);font-size:13px;color:var(--bright);">${p.dose}</div><div style="font-size:10px;color:var(--text);">PER DAY</div></div>
+        </div>
+        <div style="text-align:center;margin-top:12px;font-family:var(--mono);font-size:11px;letter-spacing:2px;color:${p.color};font-weight:600;">TAP FOR DETAILS →</div>
+      </div>
+    </div>
+  `).join('');
+  document.querySelectorAll('.prod-card.reveal').forEach(el=>obs.observe(el));
+}
+
+function showDetail(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p)return;
+  const d = document.getElementById('prodDetail');
+  d.style.display='block';
+  d.style.borderColor=p.color+'30';
+  d.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:start;flex-wrap:wrap;gap:12px;">
+      <div>
+        <div style="font-family:var(--mono);font-size:11px;letter-spacing:3px;color:${p.color};font-weight:500;">${p.tag}</div>
+        <div style="font-family:var(--serif);font-size:clamp(28px,5vw,40px);font-weight:600;color:var(--bright);margin:4px 0;">STRIDE ${p.name}</div>
+        <div style="font-size:15px;color:var(--text);">${p.sub}</div>
+      </div>
+      <button onclick="document.getElementById('prodDetail').style.display='none'" style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:var(--bright);padding:10px 20px;cursor:pointer;font-size:12px;letter-spacing:2px;border-radius:4px;">✕ 닫기</button>
+    </div>
+    <div style="font-family:var(--serif);font-size:clamp(16px,2.5vw,20px);font-style:italic;color:${p.color};margin:20px 0;padding:20px;background:rgba(0,0,0,.3);border-left:3px solid ${p.color};border-radius:0 6px 6px 0;line-height:1.6;">${p.oneliner}</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin:24px 0;border-radius:6px;overflow:hidden;">
+      <div style="background:rgba(255,255,255,.03);padding:20px;text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:${p.color};font-weight:600;">${p.weight}</div><div style="font-size:11px;color:var(--text);margin-top:4px;">NET WEIGHT</div></div>
+      <div style="background:rgba(255,255,255,.03);padding:20px;text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:${p.color};font-weight:600;">${p.days}</div><div style="font-size:11px;color:var(--text);margin-top:4px;">SUPPLY</div></div>
+      <div style="background:rgba(255,255,255,.03);padding:20px;text-align:center;"><div style="font-family:var(--serif);font-size:28px;color:${p.color};font-weight:600;">${p.dose}/일</div><div style="font-size:11px;color:var(--text);margin-top:4px;">SERVING</div></div>
+    </div>
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--gold);margin:32px 0 12px;">FULL INGREDIENTS (1일 ${p.dose} / 500kg 기준)</div>
+    <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:14px;min-width:500px;">
+      <thead><tr style="border-bottom:2px solid ${p.color}30;"><th style="text-align:left;padding:10px 12px;color:var(--gold-l);font-size:12px;font-weight:600;width:28%;">성분</th><th style="text-align:right;padding:10px 12px;color:var(--gold-l);font-size:12px;width:14%;">함량</th><th style="text-align:left;padding:10px 12px;color:var(--gold-l);font-size:12px;width:58%;">기능</th></tr></thead>
+      <tbody>${p.ingredients.map((r,i)=>`<tr style="border-bottom:1px solid rgba(255,255,255,.04);${i%2?'background:rgba(255,255,255,.02);':''}"><td style="padding:10px 12px;color:var(--bright);font-weight:600;font-size:14px;">${r[0]}</td><td style="padding:10px 12px;text-align:right;color:${p.color};font-family:var(--mono);font-size:13px;font-weight:600;white-space:nowrap;">${r[1]}</td><td style="padding:10px 12px;color:var(--text);font-size:13px;line-height:1.6;">${r[2]}</td></tr>`).join('')}</tbody>
+    </table></div>
+    <div style="font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--gold);margin:40px 0 12px;">COACH SALES GUIDE — 코치님 세일즈 가이드</div>
+    <div style="background:linear-gradient(135deg,${p.color}06,${p.color}03);border:1px solid ${p.color}20;border-radius:8px;padding:28px;">
+      <p style="font-size:16px;line-height:2.2;color:var(--bright);">${p.pitch}</p>
+    </div>
+    <div style="margin-top:20px;padding:16px 20px;background:rgba(198,165,92,.06);border:1px solid rgba(198,165,92,.12);border-radius:6px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+      <span style="font-size:24px;">🍎</span>
+      <div><div style="font-size:13px;color:var(--gold-l);font-weight:600;">기호성 설계 시스템 적용</div><div style="font-size:12px;color:var(--text);margin-top:2px;">당밀 + 건조사과 + 호로파(Fenugreek) — 말이 사료를 거부하지 않고 먼저 먹으러 옵니다</div></div>
+    </div>
+  `;
+  d.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+renderProducts();
+
+// Horse Canvas Animation
+(function(){
+const cv = document.getElementById('heroCanvas');
+if(!cv) return;
+const ctx = cv.getContext('2d');
+let W,H,cx,cy,t=0,curSys='skeletal';
+const dpr = window.devicePixelRatio||1;
+
+function resize(){W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);cx=W/2;cy=H/2;}
+resize(); window.addEventListener('resize',resize);
+
+window.setSys = function(sys,el){
+  curSys=sys;
+  document.querySelectorAll('.sys-btn').forEach(b=>b.classList.remove('active'));
+  if(el)el.classList.add('active');
+  clearInterval(autoT);
+};
+
+function getHP(ph){
+  const s=Math.min(W,H)*0.22,ox=cx,oy=cy+30;
+  const g=Math.sin(ph*2)*6,b=Math.sin(ph*.5)*2;
+  return{
+    body:[{x:ox-s*.6,y:oy-s*.1+g},{x:ox-s*.45,y:oy-s*.3+b},{x:ox-s*.2,y:oy-s*.38+b},{x:ox+s*.05,y:oy-s*.42+b},{x:ox+s*.25,y:oy-s*.5},{x:ox+s*.4,y:oy-s*.7},{x:ox+s*.5,y:oy-s*.8},{x:ox+s*.58,y:oy-s*.78},{x:ox+s*.62,y:oy-s*.72},{x:ox+s*.6,y:oy-s*.65},{x:ox+s*.55,y:oy-s*.68},{x:ox+s*.42,y:oy-s*.58},{x:ox+s*.3,y:oy-s*.4},{x:ox+s*.25,y:oy-s*.15},{x:ox+s*.15,y:oy+s*.05},{x:ox-s*.15,y:oy+s*.08-b},{x:ox-s*.4,y:oy+s*.05},{x:ox-s*.55,y:oy-s*.05+g}],
+    legs:[[{x:ox+s*.2,y:oy+s*.05},{x:ox+s*.22+Math.sin(ph)*10,y:oy+s*.3},{x:ox+s*.18+Math.sin(ph)*15,y:oy+s*.48}],[{x:ox+s*.15,y:oy+s*.05},{x:ox+s*.12-Math.sin(ph)*8,y:oy+s*.3},{x:ox+s*.15-Math.sin(ph)*12,y:oy+s*.48}],[{x:ox-s*.4,y:oy+s*.05},{x:ox-s*.38-Math.sin(ph+1)*10,y:oy+s*.3},{x:ox-s*.42-Math.sin(ph+1)*15,y:oy+s*.48}],[{x:ox-s*.45,y:oy+s*.05},{x:ox-s*.48+Math.sin(ph+1)*8,y:oy+s*.3},{x:ox-s*.45+Math.sin(ph+1)*12,y:oy+s*.48}]],
+    joints:[{x:ox+s*.22,y:oy+s*.3},{x:ox-s*.38,y:oy+s*.3},{x:ox+s*.05,y:oy-s*.42},{x:ox-s*.2,y:oy-s*.38},{x:ox+s*.3,y:oy-s*.4}],
+    spine:[{x:ox-s*.5,y:oy-s*.2},{x:ox-s*.3,y:oy-s*.35},{x:ox-s*.1,y:oy-s*.4},{x:ox+s*.1,y:oy-s*.42},{x:ox+s*.25,y:oy-s*.45},{x:ox+s*.4,y:oy-s*.65},{x:ox+s*.5,y:oy-s*.78}],
+    ox,oy,s
+  };
+}
+
+// Particles
+const parts=[];for(let i=0;i<50;i++)parts.push({x:0,y:0,vx:0,vy:0,sz:0,life:0,ml:0,col:'',reset:function(){const h=getHP(t);this.x=h.ox+(Math.random()-.5)*h.s*1.2;this.y=h.oy+(Math.random()-.5)*h.s*.8;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.sz=Math.random()*2+.5;this.life=this.ml=Math.random()*200+100;this.col=Math.random()>.5?'#C6A55C':'#4ECDC4';}});
+parts.forEach(p=>p.reset());
+
+const bloods=[];for(let i=0;i<20;i++)bloods.push({prog:Math.random(),spd:.001+Math.random()*.002,off:(Math.random()-.5)*6,sz:Math.random()*2+1});
+
+function drawCurve(pts,col,w){
+  if(pts.length<2)return;ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
+  for(let i=1;i<pts.length-1;i++){const xc=(pts[i].x+pts[i+1].x)/2,yc=(pts[i].y+pts[i+1].y)/2;ctx.quadraticCurveTo(pts[i].x,pts[i].y,xc,yc);}
+  ctx.quadraticCurveTo(pts[pts.length-2].x,pts[pts.length-2].y,pts[pts.length-1].x,pts[pts.length-1].y);
+  ctx.strokeStyle=col;ctx.lineWidth=w;ctx.stroke();
+}
+
+function drawJoint(x,y,ph){
+  const p=Math.sin(ph)*.3+.7,r=10*p;
+  const g=ctx.createRadialGradient(x,y,0,x,y,r*2.5);
+  g.addColorStop(0,`rgba(198,165,92,${.25*p})`);g.addColorStop(1,'rgba(198,165,92,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,r*2.5,0,Math.PI*2);ctx.fill();
+  ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.strokeStyle=`rgba(198,165,92,${.4*p})`;ctx.lineWidth=.8;ctx.stroke();
+  ctx.beginPath();ctx.arc(x,y,2,0,Math.PI*2);ctx.fillStyle='rgba(198,165,92,.7)';ctx.fill();
+}
+
+function draw(){
+  t+=.01;ctx.clearRect(0,0,W,H);
+  const hp=getHP(t);
+  const ba=curSys==='skeletal'?.3:.12;
+
+  // Body
+  drawCurve(hp.body,`rgba(198,165,92,${ba})`,1.5);
+  ctx.beginPath();ctx.moveTo(hp.body[hp.body.length-1].x,hp.body[hp.body.length-1].y);ctx.lineTo(hp.body[0].x,hp.body[0].y);ctx.strokeStyle=`rgba(198,165,92,${ba*.5})`;ctx.lineWidth=1;ctx.stroke();
+  hp.legs.forEach(l=>{drawCurve(l,`rgba(198,165,92,${ba*.8})`,1);const h=l[l.length-1];ctx.beginPath();ctx.arc(h.x,h.y,2.5,0,Math.PI*2);ctx.fillStyle=`rgba(198,165,92,${ba})`;ctx.fill();});
+  
+  // Ear + eye
+  const poll=hp.body[6];ctx.beginPath();ctx.moveTo(poll.x-3,poll.y);ctx.lineTo(poll.x+2,poll.y-15);ctx.lineTo(poll.x+7,poll.y-2);ctx.strokeStyle=`rgba(198,165,92,${ba})`;ctx.lineWidth=1;ctx.stroke();
+  ctx.beginPath();ctx.arc(hp.body[7].x-2,hp.body[7].y+3,2,0,Math.PI*2);ctx.fillStyle='rgba(198,165,92,.5)';ctx.fill();
+  
+  // Tail
+  const tb=hp.body[0];for(let i=0;i<4;i++){ctx.beginPath();ctx.moveTo(i===0?tb.x:tb.x-15-((i-1)*10),i===0?tb.y:tb.y+(i-1)*6);ctx.lineTo(tb.x-15-i*10+Math.sin(t+i*.5)*6,tb.y+i*6+Math.sin(t*.7+i)*4);ctx.strokeStyle=`rgba(198,165,92,${.12-i*.02})`;ctx.lineWidth=.8;ctx.stroke();}
+
+  // Skeletal
+  if(curSys==='skeletal'){drawCurve(hp.spine,'rgba(200,200,220,.18)',1.5);hp.spine.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);ctx.fillStyle='rgba(200,200,220,.12)';ctx.fill();});for(let i=2;i<5;i++){const sp=hp.spine[i];ctx.beginPath();ctx.moveTo(sp.x,sp.y);ctx.quadraticCurveTo(sp.x+5,sp.y+hp.s*.12,sp.x-8,sp.y+hp.s*.25);ctx.strokeStyle='rgba(200,200,220,.06)';ctx.lineWidth=.8;ctx.stroke();}}
+  
+  // Muscular
+  if(curSys==='muscular'){const a=.1+Math.sin(t*.5)*.04;for(let i=0;i<6;i++){const t1=i/6,bi=Math.floor(t1*(hp.body.length-4))+1;if(bi<hp.body.length-1){const p1=hp.body[bi],p2=hp.body[bi+1],off=Math.sin(t+i)*4;ctx.beginPath();ctx.moveTo(p1.x,p1.y+off);ctx.lineTo(p2.x,p2.y+off);ctx.strokeStyle=`rgba(200,80,80,${a})`;ctx.lineWidth=1.5;ctx.stroke();}}}
+  
+  // Vascular
+  if(curSys==='vascular'){const ap=hp.spine.map((p,i)=>({x:p.x+Math.sin(t*2+i)*2,y:p.y+12+Math.cos(t+i*.5)*1.5}));drawCurve(ap,'rgba(180,40,40,.2)',1.5);bloods.forEach(b=>{b.prog+=b.spd;if(b.prog>1){b.prog=0;}const idx=b.prog*(ap.length-1),i=Math.floor(idx),f=idx-i;if(i>=ap.length-1)return;const x=ap[i].x+(ap[i+1].x-ap[i].x)*f+b.off,y=ap[i].y+(ap[i+1].y-ap[i].y)*f+b.off;ctx.beginPath();ctx.arc(x,y,b.sz,0,Math.PI*2);ctx.fillStyle=`rgba(220,60,60,${Math.sin(b.prog*Math.PI)*.6})`;ctx.fill();});}
+  
+  // Nutrition
+  if(curSys==='nutrition'){parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.life--;if(p.life<=0)p.reset();const a=(p.life/p.ml)*.35;ctx.beginPath();ctx.arc(p.x,p.y,p.sz,0,Math.PI*2);ctx.fillStyle=p.col+Math.floor(a*255).toString(16).padStart(2,'0');ctx.fill();});hp.joints.forEach((j,i)=>{const p=Math.sin(t*1.5+i*1.2);if(p>.3){const r=18+p*12;const g=ctx.createRadialGradient(j.x,j.y,0,j.x,j.y,r);g.addColorStop(0,`rgba(78,205,196,${p*.12})`);g.addColorStop(1,'rgba(78,205,196,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(j.x,j.y,r,0,Math.PI*2);ctx.fill();}});}
+  
+  // Joints always
+  hp.joints.forEach((j,i)=>drawJoint(j.x,j.y,t*1.5+i*.8));
+  
+  // Scan line
+  const sy=(Math.sin(t*.3)*.5+.5)*H;ctx.beginPath();ctx.moveTo(0,sy);ctx.lineTo(W,sy);ctx.strokeStyle='rgba(198,165,92,.02)';ctx.lineWidth=1;ctx.stroke();
+  
+  requestAnimationFrame(draw);
+}
+draw();
+
+// Auto cycle
+const sysList=['skeletal','muscular','vascular','nutrition'];let si=0;
+var autoT=setInterval(()=>{si=(si+1)%4;curSys=sysList[si];document.querySelectorAll('.sys-btn').forEach((b,i)=>b.classList.toggle('active',i===si));},4000);
+})();
+</script>
+</body>
+</html>

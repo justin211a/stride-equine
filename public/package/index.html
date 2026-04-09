@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIDE — Package Design Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060608;--bg2:#0c0c10;--bright:#eeeef2;--text:#c0c0c8;--dim:#777;--gold:#C6A55C;--serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-weight:400;}
+.container{max-width:1100px;margin:0 auto;padding:0 24px;}
+
+.header{text-align:center;padding:60px 0 40px;border-bottom:1px solid rgba(198,165,92,.1);}
+.header h1{font-family:var(--serif);font-size:42px;font-weight:300;color:var(--bright);letter-spacing:8px;}
+.header p{font-size:14px;color:var(--dim);margin-top:12px;}
+
+.section-title{font-family:var(--mono);font-size:11px;letter-spacing:5px;color:var(--gold);margin:60px 0 24px;text-align:center;}
+
+/* Packaging concept cards */
+.concept{margin:60px 0;padding:40px;background:var(--bg2);border:1px solid rgba(198,165,92,.06);border-radius:12px;}
+.concept h2{font-family:var(--serif);font-size:28px;font-weight:400;color:var(--bright);margin-bottom:8px;}
+.concept .desc{font-size:14px;color:var(--dim);line-height:1.8;margin-bottom:32px;}
+
+/* Product lineup display */
+.lineup{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin:32px 0;}
+.bucket{text-align:center;cursor:pointer;transition:transform .3s;}
+.bucket:hover{transform:translateY(-8px);}
+.bucket svg{width:100%;max-width:140px;height:auto;}
+.bucket .name{font-size:13px;font-weight:600;color:var(--bright);margin-top:12px;}
+.bucket .sub{font-size:10px;color:var(--dim);margin-top:2px;}
+
+/* Design detail sections */
+.design-detail{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:32px;align-items:start;}
+.design-visual{display:flex;justify-content:center;align-items:center;padding:40px;background:rgba(0,0,0,.3);border-radius:8px;min-height:300px;}
+.design-info h3{font-family:var(--serif);font-size:20px;color:var(--gold);margin-bottom:12px;}
+.design-info p{font-size:13px;line-height:1.9;color:var(--text);margin-bottom:12px;}
+.design-info .tag{display:inline-block;font-size:10px;padding:4px 10px;border:1px solid rgba(198,165,92,.2);color:var(--gold);border-radius:3px;margin:2px 4px 2px 0;letter-spacing:1px;}
+.cost-note{margin-top:16px;padding:12px;background:rgba(78,205,196,.06);border:1px solid rgba(78,205,196,.12);border-radius:4px;font-size:12px;color:#4ECDC4;}
+
+@media(max-width:768px){
+  .lineup{grid-template-columns:repeat(3,1fr);}
+  .design-detail{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>STRIDE</h1>
+  <p>Package Design Concepts — 패키지 디자인 컨셉</p>
+  <p style="font-size:12px;color:var(--gold);margin-top:8px;">코치님 미팅 & 디자이너 브리핑용</p>
+</div>
+
+<div class="container">
+
+<!-- Concept A -->
+<div class="section-title">CONCEPT A</div>
+<div class="concept">
+  <h2>The Lab Bucket — 연구소 버킷</h2>
+  <div class="desc">일반적인 말 사료 버킷의 둥근 형태 대신, <strong>8각형(옥타곤) 버킷</strong>을 사용. 약학 연구소의 시약 용기에서 영감. 매트 블랙 바디 + 골드 라벨. 누가 봐도 "이건 다른 제품이다"라는 첫인상.</div>
+  
+  <div class="lineup">
+    <div class="bucket">
+      <svg viewBox="0 0 120 160">
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1a1a22"/><stop offset="100%" stop-color="#0e0e14"/></linearGradient></defs>
+        <!-- Octagonal bucket -->
+        <path d="M25,30 L95,30 L110,45 L110,135 L95,150 L25,150 L10,135 L10,45 Z" fill="url(#g1)" stroke="#333" stroke-width="1"/>
+        <!-- Lid -->
+        <path d="M20,28 L100,28 L112,40 L112,45 L8,45 L8,40 Z" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <!-- Label area -->
+        <rect x="20" y="55" width="80" height="70" rx="2" fill="none" stroke="#C6A55C" stroke-width="0.5" opacity="0.4"/>
+        <!-- Brand -->
+        <text x="60" y="75" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#C6A55C" letter-spacing="3" font-weight="300">STRIDE</text>
+        <!-- Product name -->
+        <text x="60" y="95" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="14" fill="#5b9bd5" font-weight="700">DAILY</text>
+        <text x="60" y="108" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="5" fill="#888" letter-spacing="2">VITAMIN & MINERAL</text>
+        <!-- Weight -->
+        <text x="60" y="142" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">4.5 kg</text>
+      </svg>
+      <div class="name">DAILY</div>
+      <div class="sub" style="color:#5b9bd5;">종합영양</div>
+    </div>
+    <div class="bucket">
+      <svg viewBox="0 0 120 160">
+        <path d="M25,30 L95,30 L110,45 L110,135 L95,150 L25,150 L10,135 L10,45 Z" fill="url(#g1)" stroke="#333" stroke-width="1"/>
+        <path d="M20,28 L100,28 L112,40 L112,45 L8,45 L8,40 Z" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <rect x="20" y="55" width="80" height="70" rx="2" fill="none" stroke="#C6A55C" stroke-width="0.5" opacity="0.4"/>
+        <text x="60" y="75" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#C6A55C" letter-spacing="3" font-weight="300">STRIDE</text>
+        <text x="60" y="95" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="14" fill="#e07070" font-weight="700">FLEX</text>
+        <text x="60" y="108" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="5" fill="#888" letter-spacing="2">JOINT & RECOVERY</text>
+        <text x="60" y="142" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">4.5 kg</text>
+      </svg>
+      <div class="name">FLEX</div>
+      <div class="sub" style="color:#e07070;">관절/회복</div>
+    </div>
+    <div class="bucket">
+      <svg viewBox="0 0 120 160">
+        <path d="M25,30 L95,30 L110,45 L110,135 L95,150 L25,150 L10,135 L10,45 Z" fill="url(#g1)" stroke="#333" stroke-width="1"/>
+        <path d="M20,28 L100,28 L112,40 L112,45 L8,45 L8,40 Z" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <rect x="20" y="55" width="80" height="70" rx="2" fill="none" stroke="#C6A55C" stroke-width="0.5" opacity="0.4"/>
+        <text x="60" y="75" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#C6A55C" letter-spacing="3" font-weight="300">STRIDE</text>
+        <text x="60" y="95" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="14" fill="#4ECDC4" font-weight="700">ELECTRO</text>
+        <text x="60" y="108" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="5" fill="#888" letter-spacing="2">ELECTROLYTE</text>
+        <text x="60" y="142" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">3 kg</text>
+      </svg>
+      <div class="name">ELECTRO</div>
+      <div class="sub" style="color:#4ECDC4;">전해질</div>
+    </div>
+    <div class="bucket">
+      <svg viewBox="0 0 120 160">
+        <path d="M25,30 L95,30 L110,45 L110,135 L95,150 L25,150 L10,135 L10,45 Z" fill="url(#g1)" stroke="#333" stroke-width="1"/>
+        <path d="M20,28 L100,28 L112,40 L112,45 L8,45 L8,40 Z" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <rect x="20" y="55" width="80" height="70" rx="2" fill="none" stroke="#C6A55C" stroke-width="0.5" opacity="0.4"/>
+        <text x="60" y="75" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#C6A55C" letter-spacing="3" font-weight="300">STRIDE</text>
+        <text x="60" y="95" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="14" fill="#D4A574" font-weight="700">HOOF</text>
+        <text x="60" y="108" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="5" fill="#888" letter-spacing="2">HOOF & COAT</text>
+        <text x="60" y="142" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">3 kg</text>
+      </svg>
+      <div class="name">HOOF</div>
+      <div class="sub" style="color:#D4A574;">발굽/모질</div>
+    </div>
+    <div class="bucket">
+      <svg viewBox="0 0 120 160">
+        <path d="M25,30 L95,30 L110,45 L110,135 L95,150 L25,150 L10,135 L10,45 Z" fill="url(#g1)" stroke="#333" stroke-width="1"/>
+        <path d="M20,28 L100,28 L112,40 L112,45 L8,45 L8,40 Z" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <rect x="20" y="55" width="80" height="70" rx="2" fill="none" stroke="#C6A55C" stroke-width="0.5" opacity="0.4"/>
+        <text x="60" y="75" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#C6A55C" letter-spacing="3" font-weight="300">STRIDE</text>
+        <text x="60" y="95" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="14" fill="#9B8EC4" font-weight="700">CALM</text>
+        <text x="60" y="108" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="5" fill="#888" letter-spacing="2">CALMING</text>
+        <text x="60" y="142" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">2 kg</text>
+      </svg>
+      <div class="name">CALM</div>
+      <div class="sub" style="color:#9B8EC4;">진정</div>
+    </div>
+    <div class="bucket">
+      <svg viewBox="0 0 120 160">
+        <path d="M25,30 L95,30 L110,45 L110,135 L95,150 L25,150 L10,135 L10,45 Z" fill="url(#g1)" stroke="#333" stroke-width="1"/>
+        <path d="M20,28 L100,28 L112,40 L112,45 L8,45 L8,40 Z" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <rect x="20" y="55" width="80" height="70" rx="2" fill="none" stroke="#C6A55C" stroke-width="0.5" opacity="0.4"/>
+        <text x="60" y="75" text-anchor="middle" font-family="Georgia,serif" font-size="10" fill="#C6A55C" letter-spacing="3" font-weight="300">STRIDE</text>
+        <text x="60" y="95" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="14" fill="#7BC67E" font-weight="700">GUT</text>
+        <text x="60" y="108" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="5" fill="#888" letter-spacing="2">DIGESTIVE</text>
+        <text x="60" y="142" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">3 kg</text>
+      </svg>
+      <div class="name">GUT</div>
+      <div class="sub" style="color:#7BC67E;">위장/소화</div>
+    </div>
+  </div>
+
+  <div class="design-detail">
+    <div class="design-info">
+      <h3>디자인 포인트</h3>
+      <p><strong>매트 블랙 바디</strong> — 승마장의 흰색/녹색 일반 버킷 사이에서 즉시 눈에 띔. 프리미엄 감성.</p>
+      <p><strong>8각형 옥타곤 형태</strong> — 일반 원통 버킷과 완전히 다른 실루엣. 선반에 놓으면 "이건 뭐지?" 반응 유발.</p>
+      <p><strong>골드 라인 + 컬러 코딩</strong> — STRIDE 브랜드 통일성(골드) + 제품별 구분(컬러). 6종이 나란히 있으면 컬렉션 느낌.</p>
+      <p><strong>미니멀 라벨</strong> — 성분 정보는 뒷면/QR코드. 전면은 브랜드+제품명만. Seed.com 철학과 동일.</p>
+      <div style="margin-top:16px;">
+        <span class="tag">매트 블랙</span><span class="tag">8각형</span><span class="tag">골드 라인</span><span class="tag">컬러 코딩</span><span class="tag">미니멀 전면</span>
+      </div>
+      <div class="cost-note">💰 비용: 8각형 금형은 초기 금형비 100~200만원 추가. 단, 한 번 만들면 재사용. 일반 원통 대비 단가 20~30% 높음. 프리미엄 가격 정당화에 기여.</div>
+    </div>
+    <div class="design-info">
+      <h3>왜 이 디자인인가</h3>
+      <p>현재 시장의 말 영양제 패키지를 보면:</p>
+      <p>• <strong>KER</strong> — 흰색 원통, 기본 라벨 (무난하지만 특별하지 않음)</p>
+      <p>• <strong>Cortaflex</strong> — 흰색 사각, 풀컬러 라벨 (정보는 많지만 고급감 부족)</p>
+      <p>• <strong>국내 보조사료</strong> — 투명/흰색 봉투, 가격 경쟁 (저가 이미지)</p>
+      <p style="margin-top:12px;">STRIDE는 이 모든 것과 <strong>다르게 보여야</strong> 합니다. 말 타는 분들은 부유층이고, <strong>"비싸 보이는 제품 = 좋은 제품"</strong>이라는 인식이 강합니다.</p>
+      <p>매트 블랙 + 8각형은 "이건 일반 사료가 아니라, 연구소에서 나온 것"이라는 메시지를 전달합니다.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Concept B -->
+<div class="section-title">CONCEPT B</div>
+<div class="concept">
+  <h2>The Standard+ — 표준 버킷 업그레이드</h2>
+  <div class="desc">기존 <strong>원형 버킷(표준 금형)</strong>을 사용하되, <strong>프리미엄 슈링크 필름 + 엠보싱 라벨</strong>로 차별화. 금형비 없이 즉시 생산 가능. 비용 최소화하면서 프리미엄 느낌 확보.</div>
+  
+  <div class="design-detail">
+    <div style="display:flex;justify-content:center;align-items:center;padding:40px;background:rgba(0,0,0,.3);border-radius:8px;">
+      <svg viewBox="0 0 200 220" width="200">
+        <!-- Round bucket -->
+        <ellipse cx="100" cy="40" rx="70" ry="15" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <rect x="30" y="40" width="140" height="140" rx="4" fill="#111118" stroke="#333" stroke-width="0.5"/>
+        <ellipse cx="100" cy="180" rx="70" ry="12" fill="#0e0e14" stroke="#333" stroke-width="0.5"/>
+        <!-- Full wrap label -->
+        <rect x="32" y="50" width="136" height="120" rx="3" fill="none"/>
+        <linearGradient id="wrap" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1B3A5C"/><stop offset="50%" stop-color="#0f1f30"/><stop offset="100%" stop-color="#1B3A5C"/></linearGradient>
+        <rect x="32" y="50" width="136" height="120" rx="3" fill="url(#wrap)" opacity="0.8"/>
+        <!-- Gold band top -->
+        <rect x="32" y="50" width="136" height="3" fill="#C6A55C"/>
+        <!-- Brand -->
+        <text x="100" y="80" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#C6A55C" letter-spacing="4" font-weight="300">STRIDE</text>
+        <!-- Product -->
+        <text x="100" y="110" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="20" fill="#fff" font-weight="700">DAILY</text>
+        <text x="100" y="125" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="7" fill="#999" letter-spacing="3">VITAMIN & MINERAL</text>
+        <!-- AUHS badge -->
+        <rect x="55" y="135" width="90" height="18" rx="9" fill="none" stroke="#C6A55C" stroke-width="0.5" opacity="0.5"/>
+        <text x="100" y="147" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="5" fill="#C6A55C" letter-spacing="1">AUHS SCHOOL OF PHARMACY</text>
+        <!-- Gold band bottom -->
+        <rect x="32" y="167" width="136" height="3" fill="#C6A55C"/>
+        <!-- Weight -->
+        <text x="100" y="195" text-anchor="middle" font-family="monospace" font-size="8" fill="#555">4.5 kg · ~150일분</text>
+      </svg>
+    </div>
+    <div class="design-info">
+      <h3>디자인 포인트</h3>
+      <p><strong>표준 원형 버킷</strong> — 금형비 ZERO. OEM 업체 기존 용기 사용. 즉시 생산 가능.</p>
+      <p><strong>풀 슈링크 필름 래핑</strong> — 버킷 전체를 감싸는 인쇄 필름. 네이비+골드 배색으로 고급감. 단가 개당 2,000~4,000원 추가.</p>
+      <p><strong>골드 밴드 (상하)</strong> — 뚜껑과 바닥 경계에 골드 라인. 제약회사 포장 느낌.</p>
+      <p><strong>AUHS 배지</strong> — "AUHS School of Pharmacy" 크레딧을 전면에 배치. 학술적 신뢰 즉시 전달.</p>
+      <p><strong>"Doping-Free Certified" 마크</strong> — 뒷면에 도핑 프리 인증 배치.</p>
+      <div style="margin-top:16px;">
+        <span class="tag">표준 버킷</span><span class="tag">슈링크 필름</span><span class="tag">네이비+골드</span><span class="tag">AUHS 배지</span><span class="tag">금형비 없음</span>
+      </div>
+      <div class="cost-note">💰 비용: 금형비 0원. 슈링크 필름 인쇄 개당 2,000~4,000원. 1차 생산에 가장 현실적인 옵션. 추후 판매 안정화 후 Concept A로 업그레이드 가능.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Concept C -->
+<div class="section-title">CONCEPT C</div>
+<div class="concept">
+  <h2>The Jar — 사각 광구 자(JAR)</h2>
+  <div class="desc">기존 말 영양제 시장에 없는 <strong>사각형 광구병(Wide-mouth Jar)</strong> 사용. 인체 프로틴 파우더 용기와 유사한 형태. "이건 사료가 아니라 영양제다"라는 메시지. 스쿱이 쉽게 들어가는 넓은 입구.</div>
+  
+  <div class="design-detail">
+    <div style="display:flex;justify-content:center;align-items:center;padding:40px;background:rgba(0,0,0,.3);border-radius:8px;">
+      <svg viewBox="0 0 180 220" width="180">
+        <!-- Square jar -->
+        <rect x="25" y="30" width="130" height="165" rx="8" fill="#0e0e14" stroke="#333" stroke-width="1"/>
+        <!-- Lid -->
+        <rect x="20" y="20" width="140" height="20" rx="4" fill="#1a1a22" stroke="#444" stroke-width="0.5"/>
+        <!-- Label -->
+        <rect x="35" y="50" width="110" height="125" rx="4" fill="none" stroke="#C6A55C" stroke-width="0.3"/>
+        <!-- Molecular pattern bg -->
+        <circle cx="55" cy="70" r="15" fill="none" stroke="#C6A55C" stroke-width="0.2" opacity="0.15"/>
+        <circle cx="130" cy="160" r="20" fill="none" stroke="#C6A55C" stroke-width="0.2" opacity="0.1"/>
+        <circle cx="80" cy="140" r="10" fill="none" stroke="#C6A55C" stroke-width="0.2" opacity="0.1"/>
+        <!-- Brand -->
+        <text x="90" y="85" text-anchor="middle" font-family="Georgia,serif" font-size="14" fill="#C6A55C" letter-spacing="5" font-weight="300">STRIDE</text>
+        <!-- Divider -->
+        <line x1="55" y1="92" x2="125" y2="92" stroke="#C6A55C" stroke-width="0.5" opacity="0.3"/>
+        <!-- Product -->
+        <text x="90" y="118" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="22" fill="#e07070" font-weight="700">FLEX</text>
+        <text x="90" y="133" text-anchor="middle" font-family="Helvetica,sans-serif" font-size="6" fill="#888" letter-spacing="2">JOINT & RECOVERY</text>
+        <!-- Bottom info -->
+        <text x="90" y="158" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="#C6A55C" font-style="italic">Equine Nutrition by Science</text>
+        <!-- Weight -->
+        <text x="90" y="175" text-anchor="middle" font-family="monospace" font-size="7" fill="#555">4.5 kg · 50g/day · ~90일분</text>
+      </svg>
+    </div>
+    <div class="design-info">
+      <h3>디자인 포인트</h3>
+      <p><strong>사각형 = 선반 효율</strong> — 원형 버킷 대비 공간 절약. 승마장 보관실에서 깔끔하게 정리.</p>
+      <p><strong>분자 구조 패턴</strong> — 라벨 배경에 반투명 분자 구조 패턴. 과학/연구소 느낌 강화.</p>
+      <p><strong>광구(Wide-mouth)</strong> — 스쿱 사용 편의성. 일반 버킷보다 파우더 꺼내기 쉬움.</p>
+      <p><strong>인체 영양제 느낌</strong> — "이건 사료 첨가제가 아니라, 프리미엄 영양 보충제다"</p>
+      <div style="margin-top:16px;">
+        <span class="tag">사각형</span><span class="tag">광구병</span><span class="tag">분자 패턴</span><span class="tag">공간 효율</span>
+      </div>
+      <div class="cost-note">💰 비용: 사각 광구 용기는 기성품 가능 (알리바바 등). 금형비 없이 구매 가능한 사이즈 확인 필요. 단가는 원형 버킷과 유사하거나 10~20% 높음.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Recommendation -->
+<div class="section-title">RECOMMENDATION</div>
+<div class="concept" style="border-color:rgba(198,165,92,.2);">
+  <h2 style="color:var(--gold);">추천: Concept B → A 단계적 업그레이드</h2>
+  <div class="desc">
+    <p><strong>1차 런칭 (DAILY + FLEX):</strong> Concept B (표준 버킷 + 슈링크 필름)로 시작. 금형비 부담 없이 빠르게 시장 진입.</p>
+    <p><strong>2차 리뉴얼 (매출 안정화 후):</strong> Concept A (8각형 옥타곤) 또는 Concept C (사각 자)로 업그레이드. 이때 "리뉴얼" 마케팅도 가능.</p>
+    <p style="margin-top:16px;"><strong>핵심:</strong> 초기에는 <strong>내용물(성분)과 스토리로 승부</strong>하고, 패키지는 "충분히 고급스럽되 과도한 비용을 쓰지 않는" 수준. 매출이 나오면 프리미엄 패키지로 업그레이드.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;">
+    <div style="padding:20px;background:rgba(78,205,196,.04);border:1px solid rgba(78,205,196,.1);border-radius:6px;">
+      <div style="font-size:12px;color:#4ECDC4;font-weight:600;margin-bottom:8px;">1차 런칭 비용 (Concept B)</div>
+      <div style="font-size:14px;color:var(--bright);">버킷 용기: ~2,000원/개 × 200개 = 40만원</div>
+      <div style="font-size:14px;color:var(--bright);">슈링크 필름: ~3,000원/개 × 200개 = 60만원</div>
+      <div style="font-size:14px;color:var(--bright);">스쿱: ~300원/개 × 200개 = 6만원</div>
+      <div style="font-size:16px;color:#4ECDC4;font-weight:700;margin-top:8px;">합계: 약 106만원 (200개 기준)</div>
+    </div>
+    <div style="padding:20px;background:rgba(198,165,92,.04);border:1px solid rgba(198,165,92,.1);border-radius:6px;">
+      <div style="font-size:12px;color:var(--gold);font-weight:600;margin-bottom:8px;">2차 업그레이드 비용 (Concept A)</div>
+      <div style="font-size:14px;color:var(--bright);">8각형 금형: 100~200만원 (1회)</div>
+      <div style="font-size:14px;color:var(--bright);">용기 단가: ~3,500원/개</div>
+      <div style="font-size:14px;color:var(--bright);">라벨 인쇄: ~1,500원/개</div>
+      <div style="font-size:16px;color:var(--gold);font-weight:700;margin-top:8px;">금형+200개 = 약 200~300만원</div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div style="text-align:center;padding:40px;font-size:11px;color:#444;letter-spacing:2px;border-top:1px solid rgba(255,255,255,.03);margin-top:40px;">
+  STRIDE EQUINE NUTRITION — PACKAGE DESIGN CONCEPTS — CONFIDENTIAL<br>
+  TERABIOTECH KOREA × AUHS SCHOOL OF PHARMACY — 2026
+</div>
+
+</body>
+</html>
