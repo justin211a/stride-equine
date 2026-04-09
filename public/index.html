@@ -14,8 +14,8 @@
   --gold-l: #E2CC8A;
   --gold-d: #8B7340;
   --cream: #F5F0E6;
-  --text: #b0b0b8;
-  --dim: #55555e;
+  --text: #d8d8e0;
+  --dim: #9999a5;
   --bright: #eeeef2;
   --green: #4ECDC4;
   --serif: 'Cormorant Garamond', Georgia, serif;
@@ -42,9 +42,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);overflow-x:h
 
 /* Nav */
 nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;background:rgba(5,5,7,0.8);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.03);}
-.nav-logo{font-family:var(--serif);font-size:20px;font-weight:300;letter-spacing:10px;color:var(--bright);text-decoration:none;}
+.nav-logo{font-family:var(--serif);font-size:20px;font-weight:400;letter-spacing:10px;color:var(--bright);text-decoration:none;}
 .nav-right{display:flex;gap:28px;align-items:center;}
-.nav-right a{font-size:11px;letter-spacing:2px;color:var(--dim);text-decoration:none;transition:color .3s;font-weight:400;}
+.nav-right a{font-size:12px;letter-spacing:2px;color:#aaa;text-decoration:none;transition:color .3s;font-weight:400;}
 .nav-right a:hover{color:var(--gold);}
 
 /* Hero */
@@ -64,8 +64,8 @@ nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;backgro
 
 .hero-content{position:relative;z-index:1;text-align:center;}
 .hero-over{font-family:var(--mono);font-size:11px;letter-spacing:8px;color:var(--gold-d);margin-bottom:40px;opacity:0;animation:fadeIn 1.2s .4s forwards;}
-.hero h1{font-family:var(--serif);font-size:clamp(72px,14vw,160px);font-weight:300;letter-spacing:.15em;color:var(--bright);line-height:.9;opacity:0;animation:fadeIn 1.2s .6s forwards;}
-.hero-tagline{font-family:var(--serif);font-size:clamp(15px,2.5vw,22px);font-weight:300;font-style:italic;color:var(--dim);margin-top:28px;letter-spacing:2px;opacity:0;animation:fadeIn 1.2s .8s forwards;}
+.hero h1{font-family:var(--serif);font-size:clamp(72px,14vw,160px);font-weight:400;letter-spacing:.15em;color:var(--bright);line-height:.9;opacity:0;animation:fadeIn 1.2s .6s forwards;}
+.hero-tagline{font-family:var(--serif);font-size:clamp(15px,2.5vw,22px);font-weight:400;font-style:italic;color:var(--dim);margin-top:28px;letter-spacing:2px;opacity:0;animation:fadeIn 1.2s .8s forwards;}
 .hero-scroll{margin-top:60px;opacity:0;animation:fadeIn 1.2s 1.2s forwards;}
 .hero-scroll span{display:block;width:1px;height:60px;background:linear-gradient(to bottom,var(--gold-d),transparent);margin:0 auto;}
 .sys-btn{font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--dim);cursor:pointer;padding:5px 12px;border:1px solid transparent;transition:all .3s;border-radius:2px;}
@@ -79,10 +79,10 @@ nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;backgro
 .philosophy{padding:180px 0;position:relative;}
 .philosophy::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(198,165,92,0.15),transparent);}
 .phil-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;}
-.phil-left .big-quote{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;line-height:1.4;color:var(--bright);}
+.phil-left .big-quote{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:400;line-height:1.4;color:var(--bright);}
 .phil-left .big-quote em{color:var(--gold);font-style:normal;}
 .phil-right{padding-top:20px;}
-.phil-right p{font-size:16px;line-height:2.2;color:var(--text);margin-bottom:20px;font-weight:300;}
+.phil-right p{font-size:17px;line-height:2.2;color:var(--text);margin-bottom:20px;font-weight:400;}
 .phil-right .hl{color:var(--gold-l);font-weight:400;}
 .phil-sig{margin-top:40px;padding-top:24px;border-top:1px solid rgba(198,165,92,0.12);}
 .phil-sig .n{font-weight:600;color:var(--bright);font-size:14px;}
@@ -93,7 +93,7 @@ nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;backgro
 .science::before,.science::after{content:'';position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(198,165,92,0.12),transparent);}
 .science::before{top:0;}.science::after{bottom:0;}
 .sci-header{text-align:center;max-width:750px;margin:0 auto 100px;}
-.sci-header h2{font-family:var(--serif);font-size:clamp(30px,5vw,52px);font-weight:300;color:var(--bright);margin-bottom:20px;line-height:1.2;}
+.sci-header h2{font-family:var(--serif);font-size:clamp(30px,5vw,52px);font-weight:400;color:var(--bright);margin-bottom:20px;line-height:1.2;}
 .sci-header p{font-size:14px;line-height:1.8;color:var(--dim);}
 
 /* Formula strip */
@@ -102,25 +102,25 @@ nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;backgro
 .formula-step:hover{background:rgba(198,165,92,0.03);}
 .formula-step::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .6s;transform-origin:left;}
 .formula-step:hover::before{transform:scaleX(1);}
-.fs-num{font-family:var(--mono);font-size:48px;font-weight:300;color:rgba(198,165,92,0.08);margin-bottom:16px;line-height:1;}
+.fs-num{font-family:var(--mono);font-size:48px;font-weight:400;color:rgba(198,165,92,0.08);margin-bottom:16px;line-height:1;}
 .fs-title{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--gold);margin-bottom:12px;letter-spacing:1px;}
-.fs-desc{font-size:13px;line-height:1.8;color:var(--dim);}
+.fs-desc{font-size:14px;line-height:1.8;color:var(--dim);}
 
 /* Advisor */
 .advisor-card{display:grid;grid-template-columns:200px 1fr;gap:48px;background:var(--bg3);border:1px solid rgba(198,165,92,0.06);border-radius:4px;padding:48px;align-items:center;}
 .adv-photo{width:200px;height:200px;border-radius:4px;background:linear-gradient(135deg,var(--bg),#1a2a40);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
 .adv-photo::before{content:'';position:absolute;inset:0;border:1px solid rgba(198,165,92,0.1);border-radius:4px;}
-.adv-initials{font-family:var(--serif);font-size:56px;font-weight:300;color:rgba(198,165,92,0.25);}
+.adv-initials{font-family:var(--serif);font-size:56px;font-weight:400;color:rgba(198,165,92,0.25);}
 .adv-info h3{font-family:var(--serif);font-size:26px;color:var(--bright);font-weight:400;}
 .adv-info .role{font-family:var(--mono);font-size:10px;letter-spacing:3px;color:var(--gold);margin:8px 0 16px;}
-.adv-info p{font-size:14px;line-height:1.9;color:var(--dim);}
+.adv-info p{font-size:15px;line-height:1.9;color:var(--dim);}
 .adv-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px;}
 .adv-tags span{font-family:var(--mono);font-size:9px;padding:4px 12px;border:1px solid rgba(198,165,92,0.12);color:var(--gold-d);letter-spacing:1px;border-radius:2px;}
 
 /* Team */
 .team-sec{padding:160px 0;}
 .team-header{text-align:center;margin-bottom:80px;}
-.team-header h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--bright);}
+.team-header h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--bright);}
 .team-header .sub{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--dim);margin-top:8px;}
 .team-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
 .team-card{background:var(--bg2);padding:48px 28px;text-align:center;transition:all .5s;position:relative;}
@@ -128,13 +128,13 @@ nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;backgro
 .tc-icon{font-size:32px;margin-bottom:14px;filter:grayscale(0.3);}
 .tc-role{font-family:var(--mono);font-size:8px;letter-spacing:3px;color:var(--gold);margin-bottom:6px;}
 .tc-name{font-size:16px;font-weight:600;color:var(--bright);margin-bottom:10px;}
-.tc-desc{font-size:13px;color:var(--dim);line-height:1.8;}
+.tc-desc{font-size:14px;color:var(--dim);line-height:1.8;}
 .tc-quote{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--text);margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.03);}
 
 /* Products */
 .products-sec{padding:160px 0;background:var(--bg2);}
 .prod-header{text-align:center;margin-bottom:80px;}
-.prod-header h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--bright);}
+.prod-header h2{font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--bright);}
 
 .prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
 .prod-card{background:var(--bg);border:1px solid rgba(255,255,255,0.04);border-radius:6px;padding:0;overflow:hidden;transition:border-color .5s,transform .5s;}
@@ -163,16 +163,16 @@ nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;backgro
 .proof-sec{padding:160px 0;text-align:center;}
 .proof-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin:60px 0 80px;}
 .proof-n{background:var(--bg2);padding:48px 20px;}
-.proof-n .num{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-weight:300;color:var(--gold);}
+.proof-n .num{font-family:var(--serif);font-size:clamp(36px,5vw,56px);font-weight:400;color:var(--gold);}
 .proof-n .txt{font-size:11px;color:var(--dim);margin-top:8px;letter-spacing:1px;}
 .proof-quote{max-width:650px;margin:0 auto;}
-.proof-quote blockquote{font-family:var(--serif);font-size:clamp(18px,3vw,26px);font-weight:300;font-style:italic;color:var(--bright);line-height:1.7;}
+.proof-quote blockquote{font-family:var(--serif);font-size:clamp(18px,3vw,26px);font-weight:400;font-style:italic;color:var(--bright);line-height:1.7;}
 .proof-quote .attr{margin-top:24px;font-size:13px;color:var(--gold);}
 
 /* CTA */
 .cta-sec{padding:140px 0;background:var(--bg2);text-align:center;position:relative;}
 .cta-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(198,165,92,0.15),transparent);}
-.cta-sec h2{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:300;color:var(--bright);margin-bottom:16px;}
+.cta-sec h2{font-family:var(--serif);font-size:clamp(26px,4vw,40px);font-weight:400;color:var(--bright);margin-bottom:16px;}
 .cta-sec p{font-size:14px;color:var(--dim);margin-bottom:40px;}
 .cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
 .btn{display:inline-block;padding:14px 40px;font-family:var(--sans);font-size:11px;letter-spacing:3px;text-decoration:none;text-transform:uppercase;transition:all .4s;cursor:pointer;border:none;font-weight:400;}
@@ -182,7 +182,7 @@ nav{position:fixed;top:30px;left:0;right:0;z-index:100;padding:16px 32px;backgro
 .btn-o:hover{border-color:var(--gold);background:rgba(198,165,92,0.04);}
 
 footer{padding:60px 32px;text-align:center;border-top:1px solid rgba(255,255,255,0.03);}
-.f-logo{font-family:var(--serif);font-size:24px;font-weight:300;letter-spacing:12px;color:rgba(255,255,255,0.1);margin-bottom:16px;}
+.f-logo{font-family:var(--serif);font-size:24px;font-weight:400;letter-spacing:12px;color:rgba(255,255,255,0.1);margin-bottom:16px;}
 .f-text{font-size:10px;color:var(--dim);line-height:2.2;letter-spacing:1px;}
 .f-text a{color:var(--gold-d);text-decoration:none;}
 
@@ -451,8 +451,8 @@ function setLang(lang) {
         <div style="background:var(--bg);border:1px solid rgba(91,155,213,.1);border-radius:10px;padding:32px 20px;text-align:center;transition:all .4s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(91,155,213,.3)';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(91,155,213,.1)';this.style.transform='translateY(0)'">
           <div style="font-size:36px;margin-bottom:12px;">🧬</div>
           <div style="font-family:var(--serif);font-size:18px;color:var(--bright);font-weight:600;">Products</div>
-          <div style="font-size:12px;color:#5b9bd5;margin:4px 0 8px;letter-spacing:1px;">6종 라인업 · 경쟁사 비교</div>
-          <div style="font-size:11px;color:var(--dim);line-height:1.6;">전 성분 함량 공개 · 코치 세일즈 가이드 · Cortaflex 비교표</div>
+          <div style="font-size:13px;color:#7bb5e5;font-weight:500;margin:4px 0 8px;letter-spacing:1px;">6종 라인업 · 경쟁사 비교</div>
+          <div style="font-size:11px;color:#b0b0b8;line-height:1.6;">전 성분 함량 공개 · 코치 세일즈 가이드 · Cortaflex 비교표</div>
         </div>
       </a>
 
@@ -460,8 +460,8 @@ function setLang(lang) {
         <div style="background:var(--bg);border:1px solid rgba(198,165,92,.1);border-radius:10px;padding:32px 20px;text-align:center;transition:all .4s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(198,165,92,.3)';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(198,165,92,.1)';this.style.transform='translateY(0)'">
           <div style="font-size:36px;margin-bottom:12px;">🔬</div>
           <div style="font-family:var(--serif);font-size:18px;color:var(--bright);font-weight:600;">Science</div>
-          <div style="font-size:12px;color:var(--gold);margin:4px 0 8px;letter-spacing:1px;">인터랙티브 말 해부학</div>
-          <div style="font-size:11px;color:var(--dim);line-height:1.6;">골격 · 근육 · 혈관 · 영양 흡수 시각화</div>
+          <div style="font-size:13px;color:var(--gold-l);font-weight:500;margin:4px 0 8px;letter-spacing:1px;">인터랙티브 말 해부학</div>
+          <div style="font-size:11px;color:#b0b0b8;line-height:1.6;">골격 · 근육 · 혈관 · 영양 흡수 시각화</div>
         </div>
       </a>
 
@@ -469,8 +469,8 @@ function setLang(lang) {
         <div style="background:var(--bg);border:1px solid rgba(78,205,196,.1);border-radius:10px;padding:32px 20px;text-align:center;transition:all .4s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(78,205,196,.3)';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(78,205,196,.1)';this.style.transform='translateY(0)'">
           <div style="font-size:36px;margin-bottom:12px;">🤝</div>
           <div style="font-family:var(--serif);font-size:18px;color:var(--bright);font-weight:600;">Coach Program</div>
-          <div style="font-size:12px;color:var(--green);margin:4px 0 8px;letter-spacing:1px;">코치 파트너 프로그램</div>
-          <div style="font-size:11px;color:var(--dim);line-height:1.6;">커미션 구조 · 스폰서십 · 팝업 라운지</div>
+          <div style="font-size:13px;color:#6ee0d8;font-weight:500;margin:4px 0 8px;letter-spacing:1px;">코치 파트너 프로그램</div>
+          <div style="font-size:11px;color:#b0b0b8;line-height:1.6;">커미션 구조 · 스폰서십 · 팝업 라운지</div>
         </div>
       </a>
 
@@ -478,8 +478,8 @@ function setLang(lang) {
         <div style="background:var(--bg);border:1px solid rgba(224,112,112,.1);border-radius:10px;padding:32px 20px;text-align:center;transition:all .4s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(224,112,112,.3)';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(224,112,112,.1)';this.style.transform='translateY(0)'">
           <div style="font-size:36px;margin-bottom:12px;">📦</div>
           <div style="font-family:var(--serif);font-size:18px;color:var(--bright);font-weight:600;">Partnership</div>
-          <div style="font-size:12px;color:#e07070;margin:4px 0 8px;letter-spacing:1px;">OEM · 제조 · 개발 프로세스</div>
-          <div style="font-size:11px;color:var(--dim);line-height:1.6;">6종 성분표 · 체크리스트 · 기호성 설계</div>
+          <div style="font-size:13px;color:#e89090;font-weight:500;margin:4px 0 8px;letter-spacing:1px;">OEM · 제조 · 개발 프로세스</div>
+          <div style="font-size:11px;color:#b0b0b8;line-height:1.6;">6종 성분표 · 체크리스트 · 기호성 설계</div>
         </div>
       </a>
 
@@ -487,8 +487,8 @@ function setLang(lang) {
         <div style="background:var(--bg);border:1px solid rgba(155,142,196,.1);border-radius:10px;padding:32px 20px;text-align:center;transition:all .4s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(155,142,196,.3)';this.style.transform='translateY(-6px)'" onmouseout="this.style.borderColor='rgba(155,142,196,.1)';this.style.transform='translateY(0)'">
           <div style="font-size:36px;margin-bottom:12px;">🎨</div>
           <div style="font-family:var(--serif);font-size:18px;color:var(--bright);font-weight:600;">Design</div>
-          <div style="font-size:12px;color:#9B8EC4;margin:4px 0 8px;letter-spacing:1px;">패키지 디자인 컨셉</div>
-          <div style="font-size:11px;color:var(--dim);line-height:1.6;">3가지 컨셉 · 비용 비교 · 6종 목업</div>
+          <div style="font-size:13px;color:#b5a8d8;font-weight:500;margin:4px 0 8px;letter-spacing:1px;">패키지 디자인 컨셉</div>
+          <div style="font-size:11px;color:#b0b0b8;line-height:1.6;">3가지 컨셉 · 비용 비교 · 6종 목업</div>
         </div>
       </a>
 
@@ -583,7 +583,7 @@ function setLang(lang) {
   <div class="container">
     <div class="reveal">
       <div class="label" data-t="proof.label" style="text-align:center">// THE PROOF</div>
-      <h2 style="font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:300;color:var(--bright);text-align:center;" data-t="proof.h">Numbers speak.</h2>
+      <h2 style="font-family:var(--serif);font-size:clamp(28px,4vw,44px);font-weight:400;color:var(--bright);text-align:center;" data-t="proof.h">Numbers speak.</h2>
     </div>
     <div class="proof-nums">
       <div class="proof-n reveal"><div class="num" data-t="proof.n1">5</div><div class="txt" data-t="proof.t1">전문가 공동 개발</div></div>
@@ -707,7 +707,7 @@ function renderProducts(){
         <div style="font-family:var(--serif);font-size:24px;font-weight:600;color:var(--bright);">${p.name}</div>
         <div style="font-size:14px;color:var(--text);margin:4px 0 16px;">${p.sub}</div>
         <ul style="list-style:none;">
-          ${p.features.slice(0,3).map(f=>`<li style="font-size:13px;color:var(--bright);padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);display:flex;gap:6px;align-items:baseline;"><span style="color:${p.color};font-size:5px;">◆</span>${f}</li>`).join('')}
+          ${p.features.slice(0,3).map(f=>`<li style="font-size:13px;color:#eeeef2;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.03);display:flex;gap:6px;align-items:baseline;"><span style="color:${p.color};font-size:5px;">◆</span>${f}</li>`).join('')}
         </ul>
         <div style="display:flex;justify-content:space-between;margin-top:16px;padding-top:12px;border-top:1px solid rgba(255,255,255,.04);">
           <div style="text-align:center;"><div style="font-family:var(--mono);font-size:13px;color:var(--bright);">${p.weight}</div><div style="font-size:10px;color:var(--text);">WEIGHT</div></div>
