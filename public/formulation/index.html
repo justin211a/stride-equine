@@ -3,162 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STRIDE DAILY — 수정 배합비 v2 (30g 기준)</title>
+<title>STRIDE — 전체 배합비 v2 (6종)</title>
 <style>
+:root{--bg:#0a0a0e;--gold:#C6A55C;--gold-l:#E2CC8A;--green:#4ECDC4;--blue:#5b9bd5;--red:#e07070;--text:#d8d8e0;--dim:#9999a5;--bright:#eeeef2;}
 *{margin:0;padding:0;box-sizing:border-box;}
-body{background:#0a0a0e;color:#d8d8e0;font-family:'Outfit','Apple SD Gothic Neo',sans-serif;max-width:900px;margin:0 auto;padding:30px 24px;font-size:14px;line-height:1.8;}
-h1{font-size:28px;color:#eee;font-weight:300;letter-spacing:4px;text-align:center;margin-bottom:4px;}
-h2{font-size:18px;color:#eee;margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(198,165,92,.12);}
-h3{font-size:15px;color:#C6A55C;margin:20px 0 8px;}
-p{margin-bottom:10px;}
-table{width:100%;border-collapse:collapse;margin:10px 0 20px;font-size:13px;}
-th{background:rgba(198,165,92,.06);color:#E2CC8A;padding:8px 10px;text-align:left;font-weight:600;font-size:11px;letter-spacing:1px;}
-td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);}
-.sub{text-align:center;font-size:12px;color:#9999a5;margin-bottom:24px;}
-.warn{background:rgba(224,112,112,.06);border:1px solid rgba(224,112,112,.15);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13px;color:#e89090;}
-.note{background:rgba(198,165,92,.04);border:1px solid rgba(198,165,92,.1);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13px;}
-.ok{background:rgba(78,205,196,.04);border:1px solid rgba(78,205,196,.12);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:13px;color:#6ee0d8;}
-.total{font-weight:700;background:rgba(198,165,92,.06);}
-.cut{color:#e89090;text-decoration:line-through;font-size:11px;}
-.new{color:#4ECDC4;font-weight:600;}
-@media print{body{background:#fff;color:#222;max-width:100%;}th{background:#f0f0f0;color:#333;}td{border-color:#eee;}}
+body{background:var(--bg);color:var(--text);font-family:'Outfit','Apple SD Gothic Neo',sans-serif;max-width:950px;margin:0 auto;padding:20px 24px;font-size:14px;line-height:1.8;}
+h1{font-size:26px;color:var(--bright);font-weight:300;letter-spacing:4px;text-align:center;margin-bottom:4px;}
+h2{font-size:20px;color:var(--bright);margin:48px 0 12px;padding:12px 16px;background:rgba(198,165,92,.06);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;}
+h3{font-size:14px;color:var(--gold);margin:16px 0 6px;}
+table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:13px;}
+th{background:rgba(198,165,92,.06);color:var(--gold-l);padding:7px 10px;text-align:left;font-size:11px;letter-spacing:1px;}
+td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.03);}
+a{color:var(--blue);text-decoration:none;}
+.sub{text-align:center;font-size:12px;color:var(--dim);margin-bottom:20px;}
+.s{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;}
+.s-ok{background:rgba(78,205,196,.12);color:var(--green);}
+.s-fix{background:rgba(198,165,92,.12);color:var(--gold);}
+.card{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:8px;padding:20px;margin:12px 0;}
+.warn{background:rgba(224,112,112,.06);border:1px solid rgba(224,112,112,.15);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--red);margin:8px 0;}
+.note{background:rgba(198,165,92,.04);border:1px solid rgba(198,165,92,.1);border-radius:6px;padding:10px 14px;font-size:12px;margin:8px 0;}
+.total-ok{font-weight:700;background:rgba(78,205,196,.06);color:var(--green);}
+.toc{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0;}
+.toc a{display:block;padding:12px;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.04);border-radius:6px;text-align:center;font-size:13px;color:var(--text);transition:all .3s;}
+.toc a:hover{border-color:rgba(198,165,92,.2);color:var(--gold-l);}
+.toc .nm{font-weight:600;color:var(--bright);font-size:15px;}
+@media(max-width:768px){.toc{grid-template-columns:1fr 1fr;}}
+@media print{body{background:#fff;color:#222;}h2{background:#f5f5f2;}th{background:#f0f0f0;color:#333;}td{border-color:#eee;}}
 </style>
 </head>
 <body>
-<nav style="position:sticky;top:0;z-index:100;background:rgba(5,5,7,.92);backdrop-filter:blur(20px);padding:12px 24px;display:flex;align-items:center;gap:0;border-bottom:1px solid rgba(255,255,255,.04);flex-wrap:wrap;"><a href="/" style="font-family:Cormorant Garamond,serif;font-size:18px;letter-spacing:8px;color:#eeeef2;text-decoration:none;margin-right:auto;">STRIDE</a><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;"><a href="/products/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">제품 상세</a><a href="/visual/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">사이언스</a><a href="/coach/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">코치</a><a href="/oem/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">파트너십</a><a href="/dev/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">개발문서</a></div></nav>
 
-<div style="font-size:10px;letter-spacing:4px;color:#C6A55C;text-align:center;">STRIDE EQUINE NUTRITION</div>
-<h1>DAILY 수정 배합비 v2</h1>
-<div class="sub">1일 급여량 30g 기준 · 500kg 말 기준 · OEM 업체 전달용<br>
-<span style="color:#e89090;">⚠️ 잠정안 — Dr. Schloss 최종 검토 전</span></div>
+<nav style="position:sticky;top:0;z-index:100;background:rgba(5,5,7,.92);backdrop-filter:blur(20px);padding:12px 24px;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.04);flex-wrap:wrap;"><a href="/" style="font-family:serif;font-size:18px;letter-spacing:8px;color:#eee;text-decoration:none;margin-right:auto;">STRIDE</a><div style="display:flex;gap:16px;flex-wrap:wrap;"><a href="/products/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">제품</a><a href="/oem/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">OEM</a><a href="/dev/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">개발문서</a></div></nav>
 
-<h2>문제 원인</h2>
-<p>기존 배합비는 미네랄을 <strong>원소(elemental) 기준</strong>으로 표기했으나, 실제 화합물로 환산하면 미네랄만 ~28g → 30g 서빙 초과.</p>
+<div style="font-size:10px;letter-spacing:4px;color:var(--gold);text-align:center;margin-top:20px;">// OEM 배합 · DR. SCHLOSS 검토용</div>
+<h1>전체 배합비 v2 — 6종</h1>
+<div class="sub">화합물(compound) 기준 · OEM 업체 배합 작업용<br><span style="color:var(--red);">⚠️ 잠정안 — Dr. Schloss 최종 검토 전</span></div>
 
+<div class="card">
+<h3 style="margin-top:0;">6종 검증 현황</h3>
 <table>
-  <tr><th>구분</th><th>기존 (원소 기준)</th><th>화합물 환산</th><th>문제</th></tr>
-  <tr><td>칼슘</td><td>3,000mg</td><td>CaCO3 <strong>7,500mg</strong></td><td rowspan="3" style="color:#e89090;font-weight:600;">이 3개만<br>~19g 차지</td></tr>
-  <tr><td>인</td><td>2,000mg</td><td>DCP <strong>8,700mg</strong></td></tr>
-  <tr><td>마그네슘</td><td>2,000mg</td><td>MgO <strong>3,300mg</strong></td></tr>
+<tr><th>제품</th><th>서빙</th><th>활성성분</th><th>캐리어</th><th>총합</th><th>상태</th></tr>
+<tr><td style="font-weight:600;">DAILY</td><td>30g</td><td>28.0g</td><td>2.0g</td><td>30.0g</td><td><span class="s s-ok">✅</span></td></tr>
+<tr><td style="font-weight:600;">FLEX</td><td>50g</td><td>49.4g</td><td>0.6g</td><td>50.0g</td><td><span class="s s-ok">✅</span></td></tr>
+<tr><td style="font-weight:600;">ELECTRO</td><td>50g</td><td>49.3g</td><td>0.5g</td><td>49.8g</td><td><span class="s s-fix">v2 조정</span></td></tr>
+<tr><td style="font-weight:600;">HOOF</td><td>30g</td><td>22.2g</td><td>7.8g</td><td>30.0g</td><td><span class="s s-ok">✅</span></td></tr>
+<tr><td style="font-weight:600;">CALM</td><td>30g</td><td>19.3g</td><td>10.7g</td><td>30.0g</td><td><span class="s s-ok">✅</span></td></tr>
+<tr><td style="font-weight:600;">GUT</td><td>50g</td><td>28.2g</td><td>21.8g</td><td>50.0g</td><td><span class="s s-ok">✅</span></td></tr>
 </table>
-
-<h2>해결 방향</h2>
-<div class="note">
-  <strong>핵심:</strong> 칼슘/인/마그네슘은 건초·배합사료에 이미 상당량 포함 → 보조사료에서 NRC 100% 충족 불필요.<br>
-  <strong>"부족분만 보충"</strong> 설계로 전환. 미량 미네랄(Zn/Cu/Se/Mn)은 사료에서 부족하므로 유지.
 </div>
 
-<h2>수정 배합비 — DAILY (30g/일)</h2>
-
-<h3>비타민 (약 3.0g)</h3>
-<table>
-  <tr><th>성분</th><th>화합물명</th><th style="width:90px;">화합물 투입량</th><th style="width:90px;">원소 환산</th><th>변경</th></tr>
-  <tr><td>비타민A</td><td>Retinyl Acetate</td><td>5mg</td><td>16,000 IU</td><td>유지</td></tr>
-  <tr><td>비타민C</td><td>Ascorbic Acid</td><td>2,000mg</td><td>2,000mg</td><td><span class="cut">3,000</span> → <span class="new">2,000mg</span></td></tr>
-  <tr><td>비타민E (천연)</td><td>d-alpha-tocopherol</td><td>670mg</td><td>1,000 IU</td><td>유지</td></tr>
-  <tr><td>비타민B12</td><td>Cyanocobalamin</td><td>0.05mg</td><td>50mcg</td><td>유지</td></tr>
-  <tr><td>비오틴</td><td>D-Biotin</td><td>20mg</td><td>20mg</td><td>유지</td></tr>
-  <tr><td>나이아신 (B3)</td><td>Nicotinamide</td><td>200mg</td><td>200mg</td><td>유지</td></tr>
-  <tr><td>판토텐산 (B5)</td><td>Calcium Pantothenate</td><td>100mg</td><td>92mg B5</td><td>유지</td></tr>
-  <tr class="total"><td colspan="2">비타민 소계</td><td>~2,995mg</td><td></td><td></td></tr>
-</table>
-
-<h3>미량 미네랄 — 유기 킬레이트 (약 6.5g)</h3>
-<div class="ok">✅ 이 부분이 STRIDE의 핵심 차별화. 유기 킬레이트는 무기 미네랄 대비 흡수율 30-50% 높음. 사료에서 부족한 미량 미네랄을 보충.</div>
-<table>
-  <tr><th>성분</th><th>화합물명</th><th style="width:90px;">화합물 투입량</th><th style="width:90px;">원소 환산</th><th>변경 및 비고</th></tr>
-  <tr><td>아연</td><td>Zinc Proteinate (~15% Zn)</td><td>1,500mg</td><td>Zn ~225mg</td><td><span class="cut">400mg원소</span> → <span class="new">225mg원소</span><br>NRC 유지량 400mg의 56%. 사료 잔여분 고려 충분</td></tr>
-  <tr><td>구리</td><td>Copper Proteinate (~15% Cu)</td><td>500mg</td><td>Cu ~75mg</td><td><span class="cut">100mg원소</span> → <span class="new">75mg원소</span><br>Zn:Cu 비율 3:1 유지</td></tr>
-  <tr><td>셀레늄</td><td>Selenium Yeast (0.1% Se)</td><td>1,500mg</td><td>Se ~1.5mg</td><td><span class="cut">3mg원소</span> → <span class="new">1.5mg원소</span><br>NRC 상한 5mg. 사료 포함 시 2~3mg 도달. 안전 범위</td></tr>
-  <tr><td>철</td><td>Iron Proteinate (~15% Fe)</td><td>2,000mg</td><td>Fe ~300mg</td><td><span class="cut">500mg원소</span> → <span class="new">300mg원소</span><br>NRC 유지량 400mg. 사료 잔여분 고려 적정</td></tr>
-  <tr><td>망간</td><td>Manganese Proteinate (~15% Mn)</td><td>1,000mg</td><td>Mn ~150mg</td><td><span class="cut">400mg원소</span> → <span class="new">150mg원소</span><br>NRC 유지량 400mg. 건초에 다량 포함</td></tr>
-  <tr><td>요오드</td><td>Calcium Iodate (~65% I)</td><td>6mg</td><td>I ~4mg</td><td>유지 (극소량)</td></tr>
-  <tr class="total"><td colspan="2">미량 미네랄 소계</td><td>~6,506mg</td><td></td><td></td></tr>
-</table>
-
-<h3>대량 미네랄 — 보충분만 (약 5.5g)</h3>
-<div class="warn">
-  ⚠️ <strong>기존 대비 대폭 축소.</strong> 건초·배합사료에서 이미 섭취하는 분량 고려. "보조사료"의 역할에 맞게 보충분만 제공.
-</div>
-<table>
-  <tr><th>성분</th><th>화합물명</th><th style="width:90px;">화합물 투입량</th><th style="width:90px;">원소 환산</th><th>변경 및 비고</th></tr>
-  <tr><td>마그네슘</td><td>MgO (60% Mg) + Mg Proteinate</td><td>2,000mg</td><td>Mg ~1,200mg</td><td><span class="cut">2,000mg원소</span> → <span class="new">1,200mg원소</span><br>NRC 7.5g. 사료에서 5~6g 섭취. 부족분 보충</td></tr>
-  <tr><td>칼슘</td><td>Calcium Carbonate (40% Ca)</td><td>2,000mg</td><td>Ca ~800mg</td><td><span class="cut">3,000mg원소</span> → <span class="new">800mg원소</span><br>건초에서 15~25g 이미 섭취. 보충 필요 최소</td></tr>
-  <tr><td>인</td><td>Dicalcium Phosphate (23% P)</td><td>1,500mg</td><td>P ~345mg</td><td><span class="cut">2,000mg원소</span> → <span class="new">345mg원소</span><br>건초에서 8~15g 이미 섭취. Ca:P 비율 유지</td></tr>
-  <tr class="total"><td colspan="2">대량 미네랄 소계</td><td>~5,500mg</td><td></td><td></td></tr>
-</table>
-
-<h3>기능성 원료 (약 6.0g)</h3>
-<table>
-  <tr><th>성분</th><th>화합물명</th><th style="width:90px;">투입량</th><th>변경</th></tr>
-  <tr><td>이스트 배양물</td><td>Postbiotic (Dried Yeast Culture)</td><td>3,000mg</td><td><span class="cut">5,000</span> → <span class="new">3,000mg</span></td></tr>
-  <tr><td>아마씨 (분쇄)</td><td>Ground Flaxseed</td><td>3,000mg</td><td>유지</td></tr>
-  <tr class="total"><td colspan="2">기능성 소계</td><td>~6,000mg</td><td></td></tr>
-</table>
-
-<h3>기호성 시스템 (약 4.0g)</h3>
-<table>
-  <tr><th>성분</th><th>화합물명</th><th style="width:90px;">투입량</th><th>변경</th></tr>
-  <tr><td>당밀 분말</td><td>Dried Molasses</td><td>2,000mg</td><td><span class="cut">2,500</span> → <span class="new">2,000mg</span></td></tr>
-  <tr><td>건조 사과 분말</td><td>Dried Apple Powder</td><td>1,500mg</td><td><span class="cut">2,000</span> → <span class="new">1,500mg</span></td></tr>
-  <tr><td>호로파 분말</td><td>Fenugreek (Trigonella foenum)</td><td>500mg</td><td><span class="cut">1,000</span> → <span class="new">500mg</span></td></tr>
-  <tr class="total"><td colspan="2">기호성 소계</td><td>~4,000mg</td><td></td></tr>
-</table>
-
-<h3>캐리어/충진제 (약 2.0g)</h3>
-<table>
-  <tr><th>성분</th><th>화합물명</th><th style="width:90px;">투입량</th><th>비고</th></tr>
-  <tr><td>말토덱스트린 or 미강</td><td>Maltodextrin / Rice Bran</td><td>2,000mg</td><td>균일한 혼합을 위한 캐리어. 신규 추가</td></tr>
-  <tr class="total"><td colspan="2">캐리어 소계</td><td>~2,000mg</td><td></td></tr>
-</table>
-
-<h2 style="color:#4ECDC4;">✅ 총합 검증</h2>
-<table>
-  <tr><th>카테고리</th><th>중량</th><th>비율</th></tr>
-  <tr><td>비타민</td><td>~3.0g</td><td>10%</td></tr>
-  <tr><td>미량 미네랄 (유기 킬레이트)</td><td>~6.5g</td><td>22%</td></tr>
-  <tr><td>대량 미네랄 (보충분)</td><td>~5.5g</td><td>18%</td></tr>
-  <tr><td>기능성 원료</td><td>~6.0g</td><td>20%</td></tr>
-  <tr><td>기호성 시스템</td><td>~4.0g</td><td>13%</td></tr>
-  <tr><td>캐리어</td><td>~2.0g</td><td>7%</td></tr>
-  <tr class="total" style="color:#4ECDC4;font-size:16px;"><td>1일 급여량 합계</td><td>~30.0g ✅</td><td>100%</td></tr>
-</table>
-
-<h2>기존 대비 변경 요약</h2>
-<table>
-  <tr><th>성분</th><th>기존 (원소 기준)</th><th>수정 (원소 기준)</th><th>사유</th></tr>
-  <tr><td style="color:#e89090;">칼슘</td><td>3,000mg</td><td style="color:#4ECDC4;font-weight:600;">800mg</td><td>건초에서 15~25g 이미 섭취</td></tr>
-  <tr><td style="color:#e89090;">인</td><td>2,000mg</td><td style="color:#4ECDC4;font-weight:600;">345mg</td><td>건초에서 8~15g 이미 섭취</td></tr>
-  <tr><td style="color:#e89090;">마그네슘</td><td>2,000mg</td><td style="color:#4ECDC4;font-weight:600;">1,200mg</td><td>사료에서 5~6g 섭취, 부족분 보충</td></tr>
-  <tr><td>아연</td><td>400mg</td><td>225mg</td><td>사료 잔여분 고려</td></tr>
-  <tr><td>철</td><td>500mg</td><td>300mg</td><td>사료 잔여분 고려</td></tr>
-  <tr><td>망간</td><td>400mg</td><td>150mg</td><td>건초에 다량 포함</td></tr>
-  <tr><td>셀레늄</td><td>3mg</td><td>1.5mg</td><td>안전 마진 확보</td></tr>
-  <tr><td>비타민C</td><td>3,000mg</td><td>2,000mg</td><td>공간 확보</td></tr>
-  <tr><td>이스트 배양물</td><td>5,000mg</td><td>3,000mg</td><td>공간 확보</td></tr>
-  <tr><td style="color:#4ECDC4;">캐리어 (신규)</td><td>—</td><td style="color:#4ECDC4;">2,000mg</td><td>균일 혼합용</td></tr>
-</table>
-
-<div class="note">
-  <strong>💡 제품 라벨 표기 방식:</strong><br>
-  OEM 업체에는 <strong>화합물 투입량</strong>으로 전달 (배합 작업용).<br>
-  제품 라벨에는 <strong>원소 기준</strong>으로 표기 (소비자용).<br>
-  예: "아연 (Zinc Proteinate로서) ··· 225mg"
+<div class="toc">
+<a href="#daily"><div class="nm">DAILY</div>종합 · 30g</a>
+<a href="#flex"><div class="nm">FLEX</div>관절 · 50g</a>
+<a href="#electro"><div class="nm">ELECTRO</div>전해질 · 50g</a>
+<a href="#hoof"><div class="nm">HOOF</div>발굽 · 30g</a>
+<a href="#calm"><div class="nm">CALM</div>진정 · 30g</a>
+<a href="#gut"><div class="nm">GUT</div>위장 · 50g</a>
 </div>
 
-<div class="ok">
-  <strong>✅ 차별화 유지 포인트:</strong><br>
-  • 미량 미네랄 전량 <strong>유기 킬레이트</strong> 형태 — 경쟁사와 동일 원소량이라도 흡수율 30~50% 높음<br>
-  • <strong>비오틴 20mg</strong> 임상 입증 용량 유지<br>
-  • <strong>천연 비타민E 1,000IU</strong> — 합성(dl) 대비 생체이용률 2배<br>
-  • <strong>3종 기호성 시스템</strong> 유지 (당밀+사과+호로파)<br>
-  • 대량 미네랄을 줄인 것은 오히려 "과잉 투여 방지" → <strong>안전성 포인트</strong>로 전환 가능
+<h2 id="daily">1. DAILY — 종합 비타민/미네랄 (30g) <span class="s s-ok">v2</span></h2>
+<table>
+<tr><th>성분</th><th>화합물</th><th>화합물량</th><th>원소량</th></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--blue);background:rgba(91,155,213,.04);">비타민 (~3.0g)</td></tr>
+<tr><td>비타민A</td><td>Retinyl Acetate</td><td>5mg</td><td>16,000 IU</td></tr>
+<tr><td>비타민C</td><td>Ascorbic Acid</td><td>2,000mg</td><td>2,000mg</td></tr>
+<tr><td>비타민E</td><td>d-alpha-tocopherol</td><td>670mg</td><td>1,000 IU</td></tr>
+<tr><td>비타민B12</td><td>Cyanocobalamin</td><td>0.05mg</td><td>50mcg</td></tr>
+<tr><td>비오틴</td><td>D-Biotin</td><td>20mg</td><td>20mg</td></tr>
+<tr><td>나이아신</td><td>Nicotinamide</td><td>200mg</td><td>200mg</td></tr>
+<tr><td>판토텐산</td><td>Ca Pantothenate</td><td>100mg</td><td>92mg</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--gold);background:rgba(198,165,92,.04);">미량 미네랄 · 유기 킬레이트 (~6.5g)</td></tr>
+<tr><td>아연</td><td>Zinc Proteinate 15%</td><td>1,500mg</td><td>Zn 225mg</td></tr>
+<tr><td>구리</td><td>Copper Proteinate 15%</td><td>500mg</td><td>Cu 75mg</td></tr>
+<tr><td>셀레늄</td><td>Selenium Yeast 0.1%</td><td>1,500mg</td><td>Se 1.5mg</td></tr>
+<tr><td>철</td><td>Iron Proteinate 15%</td><td>2,000mg</td><td>Fe 300mg</td></tr>
+<tr><td>망간</td><td>Mn Proteinate 15%</td><td>1,000mg</td><td>Mn 150mg</td></tr>
+<tr><td>요오드</td><td>Calcium Iodate 65%</td><td>6mg</td><td>I 4mg</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--red);background:rgba(224,112,112,.04);">대량 미네랄 · 보충분만 (~5.5g)</td></tr>
+<tr><td>마그네슘</td><td>MgO+Proteinate</td><td>2,000mg</td><td>Mg 1,200mg</td></tr>
+<tr><td>칼슘</td><td>CaCO3 40%</td><td>2,000mg</td><td>Ca 800mg</td></tr>
+<tr><td>인</td><td>DCP 23%</td><td>1,500mg</td><td>P 345mg</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--green);background:rgba(78,205,196,.04);">기능성 (~6.0g) + 기호성 (~4.0g) + 캐리어 (~2.0g)</td></tr>
+<tr><td>이스트 배양물</td><td>Postbiotic</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>아마씨</td><td>Ground Flaxseed</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>당밀+사과+호로파</td><td>기호성 시스템</td><td>4,000mg</td><td>—</td></tr>
+<tr><td>말토덱스트린</td><td>캐리어</td><td>2,000mg</td><td>—</td></tr>
+<tr class="total-ok"><td colspan="2">DAILY 합계</td><td colspan="2">~30,001mg = 30.0g ✅</td></tr>
+</table>
+
+<h2 id="flex">2. FLEX — 관절/회복 (50g) <span class="s s-ok">v2</span></h2>
+<table>
+<tr><th>성분</th><th>화합물</th><th>화합물량</th><th>원소량</th></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--blue);background:rgba(91,155,213,.04);">관절 핵심 (~27.1g)</td></tr>
+<tr><td>보스웰리아</td><td>65% Boswellic acids</td><td>10,000mg</td><td>—</td></tr>
+<tr><td>글루코사민</td><td>HCl 98%</td><td>10,000mg</td><td>—</td></tr>
+<tr><td>콘드로이틴</td><td>Sulfate</td><td>5,000mg</td><td>—</td></tr>
+<tr><td>L-메티오닌</td><td>L-form (MSM 대체)</td><td>2,000mg</td><td>—</td></tr>
+<tr><td>히알루론산</td><td>경구용 HA</td><td>100mg</td><td>—</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--gold);background:rgba(198,165,92,.04);">항염/회복 (~13.6g)</td></tr>
+<tr><td>커큐민 ★</td><td>95% Curcuminoids</td><td>2,000mg</td><td>—</td></tr>
+<tr><td>비타민C</td><td>Ascorbic Acid</td><td>2,000mg</td><td>—</td></tr>
+<tr><td>비타민E</td><td>d-alpha-tocopherol</td><td>2,010mg</td><td>3,000 IU</td></tr>
+<tr><td>해양 콜라겐</td><td>가수분해 peptides</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>L-글루타민</td><td>L-form</td><td>2,000mg</td><td>—</td></tr>
+<tr><td>포도씨 OPC</td><td>95%</td><td>600mg</td><td>—</td></tr>
+<tr><td>로즈마리</td><td>Carnosic acid</td><td>2,000mg</td><td>—</td></tr>
+<tr><td>흑후추</td><td>Piperine 95%</td><td>20mg</td><td>—</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--green);background:rgba(78,205,196,.04);">미네랄 (~1.7g) + 기호성 (~7.0g) + 캐리어</td></tr>
+<tr><td>아연</td><td>Zinc Proteinate 15%</td><td>1,333mg</td><td>Zn 200mg</td></tr>
+<tr><td>구리</td><td>Copper Proteinate 15%</td><td>333mg</td><td>Cu 50mg</td></tr>
+<tr><td>당밀+사과+호로파</td><td>기호성 시스템 (강화)</td><td>7,000mg</td><td>—</td></tr>
+<tr><td>말토덱스트린</td><td>캐리어</td><td>600mg</td><td>—</td></tr>
+<tr class="total-ok"><td colspan="2">FLEX 합계</td><td colspan="2">~49,996mg = 50.0g ✅</td></tr>
+</table>
+
+<h2 id="electro">3. ELECTRO — 전해질 (50g) <span class="s s-fix">v2 조정</span></h2>
+<div class="warn">v1에서 Na/K가 원소 기준 → NaCl 27g+KCl 11g=38g 초과. v2: 부분 보충 설계로 조정.</div>
+<table>
+<tr><th>성분</th><th>화합물</th><th>화합물량</th><th>원소량</th></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--blue);background:rgba(91,155,213,.04);">전해질 (~30.0g)</td></tr>
+<tr><td>나트륨</td><td>NaCl (39.3% Na)</td><td>20,000mg</td><td>Na 7,860mg</td></tr>
+<tr><td>칼륨</td><td>KCl (52.4% K)</td><td>6,000mg</td><td>K 3,144mg</td></tr>
+<tr><td>칼슘</td><td>Calcium Gluconate</td><td>2,500mg</td><td>Ca ~225mg</td></tr>
+<tr><td>마그네슘</td><td>MgO 60%</td><td>1,500mg</td><td>Mg 900mg</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--gold);background:rgba(198,165,92,.04);">에너지/항산화 (~6.3g) + 기호성 (~5.0g)</td></tr>
+<tr><td>포도당</td><td>Dextrose</td><td>5,000mg</td><td>—</td></tr>
+<tr><td>비타민E</td><td>d-alpha-tocopherol</td><td>335mg</td><td>500 IU</td></tr>
+<tr><td>비타민C</td><td>Ascorbic Acid</td><td>1,000mg</td><td>—</td></tr>
+<tr><td>당밀+사과+호로파</td><td>기호성 시스템</td><td>5,000mg</td><td>—</td></tr>
+<tr><td>말토덱스트린</td><td>캐리어</td><td>500mg</td><td>—</td></tr>
+<tr class="total-ok"><td colspan="2">ELECTRO 합계</td><td colspan="2">~49,835mg = 49.8g ✅</td></tr>
+</table>
+
+<h2 id="hoof">4. HOOF — 발굽/모질 (30g) <span class="s s-ok">✅</span></h2>
+<table>
+<tr><th>성분</th><th>화합물</th><th>화합물량</th><th>원소량</th></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--blue);background:rgba(91,155,213,.04);">발굽 핵심 (~7.4g)</td></tr>
+<tr><td>비오틴 (고함량)</td><td>D-Biotin</td><td>30mg</td><td>30mg</td></tr>
+<tr><td>L-메티오닌</td><td>L-form</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>아연</td><td>Zinc Proteinate 15%</td><td>3,333mg</td><td>Zn 500mg</td></tr>
+<tr><td>구리</td><td>Copper Proteinate 15%</td><td>833mg</td><td>Cu 125mg</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--gold);background:rgba(198,165,92,.04);">모질/보조 (~10.0g) + 기호성 (~5.0g)</td></tr>
+<tr><td>아마씨</td><td>Ground Flaxseed</td><td>5,000mg</td><td>—</td></tr>
+<tr><td>레시틴</td><td>Soy Lecithin</td><td>2,000mg</td><td>—</td></tr>
+<tr><td>이스트 배양물</td><td>Postbiotic</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>당밀+사과+호로파</td><td>기호성 시스템</td><td>5,000mg</td><td>—</td></tr>
+<tr><td>미강</td><td>캐리어</td><td>7,800mg</td><td>—</td></tr>
+<tr class="total-ok"><td colspan="2">HOOF 합계</td><td colspan="2">~29,996mg = 30.0g ✅</td></tr>
+</table>
+
+<h2 id="calm">5. CALM — 진정/스트레스 (30g) <span class="s s-ok">✅</span></h2>
+<table>
+<tr><th>성분</th><th>화합물</th><th>화합물량</th><th>원소량</th></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--blue);background:rgba(91,155,213,.04);">진정 핵심 (~12.8g)</td></tr>
+<tr><td>마그네슘</td><td>MgO+Proteinate</td><td>8,333mg</td><td>Mg 5,000mg</td></tr>
+<tr><td>L-트립토판</td><td>L-form</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>티아민 (B1)</td><td>Thiamine HCl</td><td>500mg</td><td>—</td></tr>
+<tr><td>L-테아닌</td><td>L-form</td><td>1,000mg</td><td>—</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--gold);background:rgba(198,165,92,.04);">허브 + 기호성 (~6.5g)</td></tr>
+<tr><td>카모마일</td><td>표준화 추출물</td><td>2,000mg</td><td>—</td></tr>
+<tr><td>당밀+사과+호로파</td><td>기호성 시스템</td><td>4,500mg</td><td>—</td></tr>
+<tr><td>미강</td><td>캐리어</td><td>10,700mg</td><td>—</td></tr>
+<tr class="total-ok"><td colspan="2">CALM 합계</td><td colspan="2">~30,033mg = 30.0g ✅</td></tr>
+</table>
+<div class="note">💡 캐리어 10.7g 여유 → 추후 발레리안/패션플라워 등 진정 허브 추가 가능.</div>
+
+<h2 id="gut">6. GUT — 위장/소화 (50g) <span class="s s-ok">✅</span></h2>
+<table>
+<tr><th>성분</th><th>화합물</th><th>화합물량</th><th>원소량</th></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--blue);background:rgba(91,155,213,.04);">위장 보호 (~16.0g)</td></tr>
+<tr><td>탄산칼슘</td><td>CaCO₃ (위산 완충)</td><td>8,000mg</td><td>Ca 3,200mg</td></tr>
+<tr><td>알로에 베라</td><td>추출물</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>L-글루타민</td><td>L-form</td><td>5,000mg</td><td>—</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--gold);background:rgba(198,165,92,.04);">장내 환경 (~6.2g)</td></tr>
+<tr><td>프로바이오틱</td><td>Lacto+Saccharomyces</td><td>200mg</td><td>10B CFU</td></tr>
+<tr><td>MOS 프리바이오틱</td><td>Yeast Cell Wall</td><td>3,000mg</td><td>—</td></tr>
+<tr><td>실리움 껍질</td><td>Psyllium Husk</td><td>3,000mg</td><td>—</td></tr>
+<tr><td colspan="4" style="font-weight:600;color:var(--green);background:rgba(78,205,196,.04);">간 보호 + 기호성 (~6.0g)</td></tr>
+<tr><td>밀크씨슬</td><td>Silymarin 80%</td><td>1,000mg</td><td>—</td></tr>
+<tr><td>당밀+사과+호로파</td><td>기호성 시스템</td><td>5,000mg</td><td>—</td></tr>
+<tr><td>미강</td><td>캐리어</td><td>21,800mg</td><td>—</td></tr>
+<tr class="total-ok"><td colspan="2">GUT 합계</td><td colspan="2">~50,000mg = 50.0g ✅</td></tr>
+</table>
+<div class="note">💡 캐리어 21.8g 여유 → 코치님 제안 <strong>개똥쑥(아르테미시닌)</strong> 2,000~3,000mg 추가 공간 충분. Dr. Schloss 검토 후 반영.</div>
+
+<h2>OEM 업체 전달 시 참고</h2>
+<div class="card">
+<table>
+<tr><td style="width:30px;font-weight:700;">1</td><td><strong>"화합물량"</strong> = OEM이 실제 배합하는 양. "원소량" = 라벨 표기용.</td></tr>
+<tr><td style="font-weight:700;">2</td><td><strong>캐리어(말토덱스트린/미강)</strong>는 나머지 공간 충진. OEM 선호 캐리어로 교체 가능.</td></tr>
+<tr><td style="font-weight:700;">3</td><td>유기 킬레이트 실제 함량(%)은 원료 공급사 COA 기준으로 재계산 필요.</td></tr>
+<tr><td style="font-weight:700;">4</td><td>기호성 시스템 비율은 테스트 후 미세 조정 가능.</td></tr>
+</table>
 </div>
 
-<div style="text-align:center;padding:30px 0;font-size:11px;color:#9999a5;border-top:1px solid rgba(255,255,255,.03);margin-top:40px;">
-  STRIDE DAILY Revised Formulation v2 · 30g serving · 2026-04-10<br>
-  OEM 업체 전달용 · Dr. Schloss 최종 검토 대기
+<div style="text-align:center;padding:30px 0;font-size:11px;color:var(--dim);border-top:1px solid rgba(255,255,255,.03);margin-top:40px;">
+STRIDE Formulation v2 · All 6 Products · Compound Basis · 2026-04-10<br>© 2026 Terabiotech Korea
 </div>
-
 </body>
 </html>
