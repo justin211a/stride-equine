@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STRIDE — Development Docs</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#050507;--bg2:#0a0a0e;--gold:#C6A55C;--gold-l:#E2CC8A;--green:#4ECDC4;--blue:#5b9bd5;--red:#e07070;--text:#d8d8e0;--dim:#9999a5;--bright:#eeeef2;--serif:'Cormorant Garamond',serif;--sans:'Outfit',sans-serif;--mono:'JetBrains Mono',monospace;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);max-width:1000px;margin:0 auto;padding:20px 24px;font-size:14px;line-height:1.8;}
+h1{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--bright);text-align:center;letter-spacing:6px;margin:20px 0 4px;}
+h2{font-size:18px;color:var(--bright);margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid rgba(198,165,92,.12);}
+h3{font-size:14px;color:var(--gold);margin:16px 0 6px;}
+a{color:var(--blue);text-decoration:none;}
+a:hover{color:var(--gold-l);}
+table{width:100%;border-collapse:collapse;margin:8px 0 16px;font-size:13px;}
+th{background:rgba(198,165,92,.06);color:var(--gold-l);padding:8px 10px;text-align:left;font-weight:600;font-size:11px;letter-spacing:1px;}
+td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);}
+.sub{text-align:center;font-size:12px;color:var(--dim);margin-bottom:20px;}
+.status{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:1px;}
+.s-done{background:rgba(78,205,196,.12);color:var(--green);}
+.s-prog{background:rgba(198,165,92,.12);color:var(--gold);}
+.s-wait{background:rgba(155,142,196,.12);color:#b5a8d8;}
+.s-todo{background:rgba(224,112,112,.12);color:var(--red);}
+.card{background:var(--bg2);border:1px solid rgba(255,255,255,.04);border-radius:8px;padding:20px;margin:12px 0;}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin:12px 0;}
+.doc-card{background:var(--bg2);border:1px solid rgba(255,255,255,.04);border-radius:8px;padding:16px;transition:all .3s;}
+.doc-card:hover{border-color:rgba(198,165,92,.2);transform:translateY(-2px);}
+.doc-card .icon{font-size:24px;margin-bottom:8px;}
+.doc-card .title{font-weight:600;color:var(--bright);font-size:15px;}
+.doc-card .desc{font-size:12px;color:var(--dim);margin-top:4px;line-height:1.6;}
+.doc-card .link{font-size:11px;color:var(--blue);margin-top:8px;display:block;}
+.warn{background:rgba(224,112,112,.06);border:1px solid rgba(224,112,112,.15);border-radius:6px;padding:10px 14px;font-size:12px;color:var(--red);margin:8px 0;}
+@media(max-width:768px){.card-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav style="position:sticky;top:0;z-index:100;background:rgba(5,5,7,.92);backdrop-filter:blur(20px);padding:12px 24px;display:flex;align-items:center;gap:0;border-bottom:1px solid rgba(255,255,255,.04);flex-wrap:wrap;"><a href="/" style="font-family:Cormorant Garamond,serif;font-size:18px;letter-spacing:8px;color:#eeeef2;text-decoration:none;margin-right:auto;">STRIDE</a><div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;"><a href="/products/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">제품 상세</a><a href="/visual/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">사이언스</a><a href="/coach/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">코치</a><a href="/oem/" style="font-size:11px;letter-spacing:2px;color:#aaa;text-decoration:none;">파트너십</a><a href="/dev/" style="font-size:11px;letter-spacing:2px;color:#e89090;text-decoration:none;font-weight:600;">개발문서</a></div></nav>
+
+<div style="font-size:10px;letter-spacing:4px;color:var(--gold);text-align:center;margin-top:20px;">// INTERNAL — 내부 개발 문서</div>
+<h1>STRIDE Dev Docs</h1>
+<div class="sub">프로젝트 전체 현황 대시보드 · 최종 업데이트: 2026-04-10<br><span style="color:var(--red);">⚠️ 내부용 — 외부 공유 금지</span></div>
+
+<!-- Project Status -->
+<h2>📊 프로젝트 현황</h2>
+<table>
+  <tr><th style="width:50px;">#</th><th>단계</th><th style="width:100px;">상태</th><th>비고</th></tr>
+  <tr><td>1</td><td>성분 설계</td><td><span class="status s-prog">수정 중</span></td><td>DAILY v2 배합비 완료 (30g 맞춤). FLEX 50g 검증 필요. Dr. Schloss 최종 검토 대기</td></tr>
+  <tr><td>2</td><td>OEM 업체 선정</td><td><span class="status s-prog">진행 중</span></td><td>10개 업체 리스트업 완료. 조성현 과장 연락 중. 이글벳 최우선</td></tr>
+  <tr><td>3</td><td>시제품 생산</td><td><span class="status s-wait">대기</span></td><td>OEM 확정 후 DAILY+FLEX 5~10kg × 2종</td></tr>
+  <tr><td>4</td><td>기호성 테스트</td><td><span class="status s-wait">대기</span></td><td>코치님 승마장 5~10마리 3일 급여</td></tr>
+  <tr><td>5</td><td>효능 관찰</td><td><span class="status s-todo">미착수</span></td><td>30~60일 관찰, 마케팅 데이터 수집</td></tr>
+  <tr><td>6</td><td>도핑 테스트</td><td><span class="status s-todo">미착수</span></td><td>한국마사회 기준</td></tr>
+  <tr><td>7</td><td>보조사료 신고</td><td><span class="status s-todo">미착수</span></td><td>사료성분등록 (시·도지사, ~3일)</td></tr>
+  <tr><td>8</td><td>패키지 디자인</td><td><span class="status s-done">컨셉 완료</span></td><td>3개 컨셉 완료. 1차 Concept B (금형비 0)</td></tr>
+  <tr><td>9</td><td>정식 생산</td><td><span class="status s-todo">미착수</span></td><td>초도 500~1,000kg, 2026년 7월 목표</td></tr>
+  <tr><td>10</td><td>런칭</td><td><span class="status s-todo">미착수</span></td><td><strong>2026년 8월 목표</strong></td></tr>
+</table>
+
+<!-- All Documents -->
+<h2>📁 전체 문서 인덱스</h2>
+
+<h3>제품 & 성분</h3>
+<div class="card-grid">
+  <div class="doc-card">
+    <div class="icon">🧬</div>
+    <div class="title">제품 상세 — 6종 라인업</div>
+    <div class="desc">DAILY/FLEX/ELECTRO 성분표, 경쟁사 비교(까발로/이카인/Cortaflex), 코치 세일즈 가이드. 3강 비교표 포함.</div>
+    <a href="/products/" class="link">→ /products/</a>
+  </div>
+  <div class="doc-card">
+    <div class="icon">⚗️</div>
+    <div class="title">DAILY 수정 배합비 v2</div>
+    <div class="desc">30g 서빙 맞춤 재설계. 원소→화합물 환산, 대량 미네랄 축소, 총합 검증 포함. OEM 업체 전달용.</div>
+    <a href="/formulation/" class="link">→ /formulation/ <span class="status s-prog" style="margin-left:4px;">NEW</span></a>
+  </div>
+  <div class="doc-card">
+    <div class="icon">🔬</div>
+    <div class="title">인터랙티브 말 해부학</div>
+    <div class="desc">골격/근육/혈관/영양 흡수 4시스템 시각화. 교육용+마케팅용.</div>
+    <a href="/visual/" class="link">→ /visual/</a>
+  </div>
+</div>
+
+<h3>비즈니스 & 파트너십</h3>
+<div class="card-grid">
+  <div class="doc-card">
+    <div class="icon">🤝</div>
+    <div class="title">SCA 코치 파트너 프로그램</div>
+    <div class="desc">A+B 하이브리드 판매 구조. 4단계 등급(Bronze→Platinum). 커미션율(잠정), 강등 규칙, 장제사 채널, 정기배송 구독 모델.</div>
+    <a href="/coach/" class="link">→ /coach/</a>
+  </div>
+  <div class="doc-card">
+    <div class="icon">📋</div>
+    <div class="title">코치 미팅 제안서</div>
+    <div class="desc">강택 코치님 미팅용. 브랜드 소개, 시장 포지셔닝, 제품 라인(영양제 6+케어 3), SCA 등급, 수익 시뮬레이션, 마케팅 전략, 로드맵.</div>
+    <a href="/proposal/" class="link">→ /proposal/</a>
+  </div>
+  <div class="doc-card">
+    <div class="icon">📦</div>
+    <div class="title">OEM 시제품 요청서</div>
+    <div class="desc">14섹션. 6종 성분표(v2 반영), 기호성 설계, 품질 요구사항, 개발 프로세스 10단계, 체크리스트. 비용 정보 삭제됨.</div>
+    <a href="/oem/" class="link">→ /oem/</a>
+  </div>
+  <div class="doc-card">
+    <div class="icon">🎨</div>
+    <div class="title">패키지 디자인 3컨셉</div>
+    <div class="desc">A(8각형 매트블랙), B(표준 원형 버킷+슈링크), C(디스펜서). 1차 Concept B 추천. 6종 목업.</div>
+    <a href="/package/" class="link">→ /package/</a>
+  </div>
+</div>
+
+<h3>마케팅 & 홈페이지</h3>
+<div class="card-grid">
+  <div class="doc-card">
+    <div class="icon">🏠</div>
+    <div class="title">STRIDE 홈페이지</div>
+    <div class="desc">다국어(한/영/독/불). 히어로+허브 카드+스토리+팀+6제품+CTA. 외부 공개용.</div>
+    <a href="/" class="link">→ / (홈)</a>
+  </div>
+</div>
+
+<!-- Key Decisions -->
+<h2>✅ 확정된 결정 사항</h2>
+<table>
+  <tr><th style="width:40px;">#</th><th>결정</th><th style="width:100px;">날짜</th></tr>
+  <tr><td>1</td><td>1차 런칭: <strong>DAILY + FLEX</strong> 2종. 나머지 4종 순차 출시.</td><td>4/9</td></tr>
+  <tr><td>2</td><td><strong>MSM 제외</strong> — 쓴맛으로 말 사료 거부. L-메티오닌 + 콘드로이틴 대체.</td><td>4/9</td></tr>
+  <tr><td>3</td><td>3종 기호성 시스템: <strong>당밀 + 건조사과 + 호로파</strong> 전 제품 필수 적용.</td><td>4/9</td></tr>
+  <tr><td>4</td><td>FLEX 판매가: <strong>46만원</strong> (까발로 55~58만 / 이카인 48만 대비 포지셔닝)</td><td>4/10</td></tr>
+  <tr><td>5</td><td>판매 구조: <strong>A+B 하이브리드</strong> (마주→STRIDE 직접 결제, 코치 추천 코드, 승마장 직배송)</td><td>4/10</td></tr>
+  <tr><td>6</td><td>코치 프로그램: <strong>SCA 4단계 등급</strong> (Bronze 7% → Platinum 13%). 커미션율 잠정.</td><td>4/10</td></tr>
+  <tr><td>7</td><td>제품 확장: <strong>간식(Treats) + 샴푸 + 발굽크림(Hoof Coat)</strong> STRIDE 브랜드 아래.</td><td>4/10</td></tr>
+  <tr><td>8</td><td>장제사(Farrier) SCA 참여 가능. 발굽 관련 제품 추천 채널.</td><td>4/10</td></tr>
+  <tr><td>9</td><td>DAILY 배합비 v2: <strong>대량 미네랄 축소, 30g 서빙 맞춤</strong>. 원소→화합물 기준 재표기.</td><td>4/10</td></tr>
+  <tr><td>10</td><td>Firebase 프로젝트: <strong>stride-equine</strong> (tapp-1212에서 분리). 추후 stridenutrition.com 연결.</td><td>4/10</td></tr>
+  <tr><td>11</td><td>OEM 요청서에서 <strong>비용 정보 전부 삭제</strong> (업체 가격 앵커링 방지).</td><td>4/10</td></tr>
+  <tr><td>12</td><td>브랜드 스토리에서 <strong>대표 자녀 실명 삭제</strong>. "경기도 대표 승마선수"로 표기.</td><td>4/10</td></tr>
+</table>
+
+<!-- OEM Vendors -->
+<h2>🏭 OEM 후보 업체 (10개)</h2>
+<table>
+  <tr><th>#</th><th>업체</th><th>특징</th><th>우선순위</th><th>상태</th></tr>
+  <tr><td>1</td><td><strong>이글벳</strong> (eaglevet.com)</td><td>말 제품 보유, 코스닥, EU-GMP, 콜드 펠렛팅</td><td style="color:var(--red);font-weight:700;">최우선</td><td><span class="status s-prog">연락 중</span></td></tr>
+  <tr><td>2</td><td><strong>우진비앤지</strong></td><td>동물용 의약품/보조사료</td><td>★★★</td><td><span class="status s-prog">연락 중</span></td></tr>
+  <tr><td>3</td><td><strong>엠오바이오</strong></td><td>보조사료 OEM 전문</td><td>★★★</td><td><span class="status s-prog">연락 중</span></td></tr>
+  <tr><td>4</td><td>대원헬스케어</td><td>HACCP/GMP, 충남 예산</td><td>★★</td><td><span class="status s-wait">대기</span></td></tr>
+  <tr><td>5</td><td>OSP</td><td>HACCP+USDA, 펫 ODM 50%+</td><td>★★</td><td><span class="status s-wait">대기</span></td></tr>
+  <tr><td>6</td><td>펫바이오</td><td>소량 OEM, 서울 강서구</td><td>★</td><td><span class="status s-wait">대기</span></td></tr>
+  <tr><td>7</td><td>에이티바이오</td><td>사료/보조사료 OEM</td><td>★</td><td><span class="status s-wait">대기</span></td></tr>
+  <tr><td>8</td><td>한국프리믹스</td><td>프리믹스 전문 (비타민/미네랄)</td><td>★★</td><td><span class="status s-wait">대기</span></td></tr>
+  <tr><td>9</td><td>제일사료 (하림)</td><td>대기업, MOQ 높을 수 있음</td><td>★</td><td><span class="status s-wait">대기</span></td></tr>
+  <tr><td>10</td><td>대한제당 (웰츠)</td><td>펫푸드 진출</td><td>★</td><td><span class="status s-wait">대기</span></td></tr>
+</table>
+
+<!-- Coach Calls -->
+<h2>📞 코치 통화 기록</h2>
+<table>
+  <tr><th>날짜</th><th>시간</th><th>핵심 내용</th></tr>
+  <tr><td>4/9 오전</td><td>16분</td><td>홈페이지 반응 긍정적 / 커미션 인플루언서 형태 합의 / 해외 인맥(겐지 사토, 마이크 카와이, 프랑스, 중동) / 스폰서 구조(영양제↔유튜브) / 팝업 라운지 아이디어 / "라이더가 만든 영양제 = 업계 최초" 스토리</td></tr>
+  <tr><td>4/9 저녁</td><td>49분</td><td><strong>시장 데이터:</strong> 코치당 3~5마리 관리, 마리당 2~3종 영양제, 까발로 55~58만/이카인 48만 / <strong>제품:</strong> 커큐민 핵심 차별화, 까발로 기호성 문제(2/10 거부), 개똥쑥+노니 / <strong>비즈니스:</strong> 월 100개=안정권, 장제사 네트워크, 간식·샴푸·발굽크림 확장, 리워드 포인트 / <strong>마케팅:</strong> 이카인은 대회 생중계 로고+선수 재킷으로 성장</td></tr>
+</table>
+
+<!-- PENDING Actions -->
+<h2>🔴 PENDING 액션</h2>
+<table>
+  <tr><th>담당</th><th>액션</th><th>기한</th></tr>
+  <tr><td style="font-weight:600;color:var(--gold);">대표님</td><td>Dr. Schloss에게 DAILY v2 배합비 검토 요청 (+ 개똥쑥 GUT 추가 여부)</td><td>이번 주</td></tr>
+  <tr><td style="font-weight:600;color:var(--gold);">대표님</td><td>stridenutrition.com 대안 도메인 검색 (Namecheap)</td><td>이번 주</td></tr>
+  <tr><td style="font-weight:600;color:var(--gold);">대표님</td><td>강택 코치님에게 통화 요약 메일 발송 (Gmail 임시보관함)</td><td>이번 주</td></tr>
+  <tr><td style="font-weight:600;color:var(--blue);">조성현 과장</td><td>OEM 10개 업체 연락처 확보 + 이메일 발송 (이글벳 최우선)</td><td>이번 주</td></tr>
+  <tr><td style="font-weight:600;color:var(--blue);">조성현 과장</td><td>OEM 회신 취합 → 비교표 작성</td><td>회신 후</td></tr>
+  <tr><td style="font-weight:600;color:var(--blue);">조성현 과장</td><td>유력 업체 1~2곳 공장 방문</td><td>4월 중</td></tr>
+  <tr><td style="font-weight:600;color:var(--green);">Claude</td><td>FLEX 50g 배합비 화합물 환산 검증</td><td>Dr. Schloss 검토 후</td></tr>
+  <tr><td style="font-weight:600;color:var(--green);">Claude</td><td>OEM 업체 회신 후 수정 배합비 전달</td><td>업체 확정 후</td></tr>
+  <tr><td style="font-weight:600;color:var(--red);">강택 코치</td><td>해외 선수 인스타/유튜브 링크 공유</td><td>생각날 때</td></tr>
+  <tr><td style="font-weight:600;color:var(--red);">강택 코치</td><td>판매 구조/리워드 아이디어 제안</td><td>다음 미팅</td></tr>
+</table>
+
+<!-- Gmail Drafts -->
+<h2>📧 Gmail 임시보관함 (미발송)</h2>
+<table>
+  <tr><th>제목</th><th>수신</th><th>용도</th></tr>
+  <tr><td>[OEM 제조 문의] 말(馬)용 프리미엄…</td><td>(업체 이메일 입력 필요)</td><td>OEM 업체 문의</td></tr>
+  <tr><td>[STRIDE 프로젝트] 전체 브리핑 & OEM 업체 수배 요청</td><td>조성현 과장</td><td>성현이 브리핑</td></tr>
+  <tr><td>Re: OEM 업체 리스트 추가 — 10개 업체 전체</td><td>조성현 과장</td><td>확장 업체 리스트</td></tr>
+  <tr><td>[STRIDE] 오늘 통화 내용 정리 + 다음 스텝</td><td>(코치 이메일 입력 필요)</td><td>강택 코치님 요약</td></tr>
+  <tr><td>Re: 미네랄 함량 기준 확인</td><td>(업체 이메일 입력 필요)</td><td>배합비 수정 답변</td></tr>
+</table>
+
+<!-- Improvement Suggestions -->
+<h2>💡 개선 제안</h2>
+<div class="card" style="border-color:rgba(224,112,112,.15);">
+  <h3 style="color:var(--red);margin-top:0;">🔴 긴급</h3>
+  <table>
+    <tr><td style="width:30px;font-weight:700;">1</td><td><strong>FLEX 50g 배합비 화합물 검증 필요</strong> — DAILY처럼 원소→화합물 환산 시 50g 초과 여부 확인. 보스웰리아 10,000mg + 글루코사민 10,000mg + 콘드로이틴 5,000mg만 해도 25g. 커큐민, 비타민, 기호성까지 넣으면 50g 빡빡할 수 있음.</td></tr>
+    <tr><td style="font-weight:700;">2</td><td><strong>OEM 업체 회신 시 수정 배합비(v2)로 재전달</strong> — 현재 업체가 받은 건 v1(구버전). 성현이에게 v2 전달 알려줘야 함.</td></tr>
+  </table>
+</div>
+
+<div class="card" style="border-color:rgba(198,165,92,.15);">
+  <h3 style="color:var(--gold);margin-top:0;">🟡 중요</h3>
+  <table>
+    <tr><td style="width:30px;font-weight:700;">3</td><td><strong>ELECTRO/HOOF/CALM/GUT 배합비도 화합물 기준 재계산 필요</strong> — 현재 전부 원소 기준. OEM 진행 시 동일 이슈 발생할 것.</td></tr>
+    <tr><td style="font-weight:700;">4</td><td><strong>Dr. Schloss 영문 요약서 준비</strong> — 6종 배합비 + 변경 사유 + 코치 현장 피드백(커큐민, 개똥쑥, 기호성) 정리해서 영문으로 보내야 함.</td></tr>
+    <tr><td style="font-weight:700;">5</td><td><strong>가격 체계 확정</strong> — DAILY 35만원(잠정), FLEX 46만원(확정). 나머지 4종 가격 미정.</td></tr>
+    <tr><td style="font-weight:700;">6</td><td><strong>도메인 구매</strong> — stridenutrition.com($7,495 비쌈). 대안 검색 필요.</td></tr>
+  </table>
+</div>
+
+<div class="card" style="border-color:rgba(78,205,196,.15);">
+  <h3 style="color:var(--green);margin-top:0;">🟢 개선</h3>
+  <table>
+    <tr><td style="width:30px;font-weight:700;">7</td><td><strong>홈페이지 다국어 전환 테스트</strong> — 독일어/프랑스어 번역 품질 검수 필요. 코치님 해외 인맥에게 보여줄 때 중요.</td></tr>
+    <tr><td style="font-weight:700;">8</td><td><strong>SCA 포인트 시스템 상세 설계</strong> — 코치님 제안: 커미션을 포인트로 전환 → STRIDE 몰에서 소모품 교환. 구체적인 포인트 단가/교환 비율 설계 필요.</td></tr>
+    <tr><td style="font-weight:700;">9</td><td><strong>유튜브 콘텐츠 기획서</strong> — 4편 시리즈 구체적 스크립트/촬영 계획.</td></tr>
+    <tr><td style="font-weight:700;">10</td><td><strong>케어 제품(간식/샴푸/발굽크림) 기획 착수</strong> — 코치님 레시피 수집 → 원가 분석 → 시제품 로드맵.</td></tr>
+  </table>
+</div>
+
+<!-- Site Map -->
+<h2>🗺️ 사이트맵</h2>
+<table>
+  <tr><th>URL</th><th>내용</th><th>대상</th><th>상태</th></tr>
+  <tr><td><a href="/">/</a></td><td>홈페이지 (히어로+허브+스토리+팀+6제품)</td><td>외부 공개</td><td><span class="status s-done">완료</span></td></tr>
+  <tr><td><a href="/products/">/products/</a></td><td>제품 상세+3강 비교+세일즈 가이드</td><td>외부 공개</td><td><span class="status s-done">v2 반영</span></td></tr>
+  <tr><td><a href="/visual/">/visual/</a></td><td>인터랙티브 말 해부학</td><td>외부 공개</td><td><span class="status s-done">완료</span></td></tr>
+  <tr><td><a href="/coach/">/coach/</a></td><td>SCA 코치 파트너 프로그램</td><td>코치/내부</td><td><span class="status s-done">완료</span></td></tr>
+  <tr><td><a href="/oem/">/oem/</a></td><td>OEM 시제품 요청서</td><td>OEM 업체</td><td><span class="status s-done">v2 반영</span></td></tr>
+  <tr><td><a href="/package/">/package/</a></td><td>패키지 디자인 3컨셉</td><td>내부</td><td><span class="status s-done">완료</span></td></tr>
+  <tr><td><a href="/proposal/">/proposal/</a></td><td>코치 미팅 제안서</td><td>코치 미팅용</td><td><span class="status s-done">완료</span></td></tr>
+  <tr><td><a href="/formulation/">/formulation/</a></td><td>DAILY v2 수정 배합비 (화합물 기준)</td><td>OEM/내부</td><td><span class="status s-prog">NEW</span></td></tr>
+  <tr><td><a href="/dev/">/dev/</a></td><td>개발 문서 대시보드 (이 페이지)</td><td>내부 전용</td><td><span class="status s-prog">NEW</span></td></tr>
+</table>
+
+<div style="text-align:center;padding:30px 0;font-size:11px;color:var(--dim);border-top:1px solid rgba(255,255,255,.03);margin-top:40px;">
+  STRIDE Dev Docs — INTERNAL USE ONLY<br>
+  GitHub: justin211a/stride-equine · Firebase: stride-equine.web.app<br>
+  © 2026 Terabiotech Korea
+</div>
+
+</body>
+</html>
